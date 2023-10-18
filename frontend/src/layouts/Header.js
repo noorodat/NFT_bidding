@@ -1,4 +1,6 @@
 import React from 'react'
+import $ from 'jquery';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
@@ -21,7 +23,7 @@ export default function Header() {
               {/* Start Mainmanu Nav */}
               <ul className="mainmenu">
                 <li>
-                  <a href="index.html">Home</a>
+                    <Link to="/">Home</Link>
                 </li>
                 <li>
                   <a href="about.html">About</a>

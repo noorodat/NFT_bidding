@@ -131,7 +131,7 @@ const LogIn = () => {
                         >
                           Log In
                         </button>
-                        <a href="sign-up.html" className="btn btn-primary-alta">
+                        <a href="SignUp" className="btn btn-primary-alta">
                           Sign Up
                         </a>
                       </Form>

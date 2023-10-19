@@ -131,9 +131,9 @@ const LogIn = () => {
                         >
                           Log In
                         </button>
-                        <a href="sign-up.html" className="btn btn-primary-alta">
+                        <Link to ="/SignUp" className="btn btn-primary-alta">
                           Sign Up
-                        </a>
+                        </Link>
                       </Form>
                     </div>
                   </div>

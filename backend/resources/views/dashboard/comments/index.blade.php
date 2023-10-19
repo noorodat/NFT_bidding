@@ -12,11 +12,11 @@
 
 @section('title_page1')
 
-Partners
+comments
 @endsection
 
 @section('title_page2')
-Partners list
+comments
 @endsection
 
 @section('content')
@@ -32,14 +32,63 @@ Partners list
             @endif
           </div>
           <div class="card">
-            <div class="card-header">
+            {{-- <div class="card-header">
                 <!-- Add a link to create a new user -->
                 <a class="btn btn-primary btn-sm float-left" href="{{ route('comments.create') }}">
-                    <i class="fas fa-handshake nav-icon"></i> Add New Partner
+                    <i class="fas fa-handshake nav-icon"></i> Add New comment
                 </a>
-            </div>
-            <!-- /.card-header -->
+            </div> --}}
+
             <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                      <tr>
+                          <th>#ID</th>
+                          <th>Content</th>
+                          <th>User name</th>
+                          <th>Post ID</th>
+                          <th>Likes</th>
+                          <th>Created At</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @php
+                      $i = 1;
+                      @endphp
+                      @foreach ($comments as $comment)
+                      <tr>
+                          <td>{{ $i }}</td>
+                          <td>{{ $comment->content }}</td>
+                          <td>{{ $comment->user->name }}</td>
+                          <td>{{ $comment->post_id }}</td>
+                          <td>{{ $comment->likes }}</td>
+                          <td>{{ $comment->created_at }}</td>
+                          <td class="project-actions">
+                              <a class="btn btn-info btn-sm" href="{{ route('comments.edit', $comment->id) }}">
+                                  <i class="fas fa-pencil-alt"></i> Edit
+                              </a>
+                              <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display: inline;">
+                                  @method('DELETE')
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this comment?')">
+                                      <i class="fas fa-trash"></i> Delete
+                                  </button>
+                              </form>
+                          </td>
+                      </tr>
+                      @php
+                      $i++;
+                      @endphp
+                      @endforeach
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+              </table>
+          </div>
+          
+            <!-- /.card-header -->
+            {{-- <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -64,18 +113,18 @@ Partners list
                       </i>
                       View
                   </a> --}}
-                  <a class="btn btn-info btn-sm" href="{{ route('comments.edit',$comment->id) }}">
+                  {{-- <a class="btn btn-info btn-sm" href="{{ route('comments.edit',$comment->id) }}">
                       <i class="fas fa-pencil-alt">
                       </i>
                       Edit
-                  </a>
+                  </a> --}}
                   {{-- <a class="btn btn-danger btn-sm" href="#">
                       <i class="fas fa-trash">
                       </i>
                       Delete
                   </a> --}}
 
-                  <form action="{{route('comments.destroy',$comment->id)}}"  method="POST"  style="display: inline;">
+                  {{-- <form action="{{route('comments.destroy',$comment->id)}}"  method="POST"  style="display: inline;">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-sm"
@@ -93,7 +142,7 @@ Partners list
                 <tfoot>
                 </tfoot>
               </table>
-            </div>
+            </div> --}} 
             <!-- /.card-body -->
           </div>
           <!-- /.card -->

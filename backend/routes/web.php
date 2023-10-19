@@ -51,5 +51,16 @@ Route::resource('dashboard/posts', PostController::class)->middleware('adminMidd
 Route::resource('dashboard/comments', CommentController::class)->middleware('adminMiddleWar');
 Route::resource('dashboard/biddings', BiddingController::class)->middleware('adminMiddleWar');
 Route::resource('dashboard/emails', ContactController::class)->middleware('adminMiddleWar');
+Route::resource('dashboard/users', UserController::class);
+Route::resource('dashboard/admins', AdminController::class);
+Route::resource('dashboard/categories', CategoryController::class);
+Route::resource('dashboard/products', ProductController::class);
+Route::resource('dashboard/posts', PostController::class);
+Route::resource('dashboard/comments', CommentController::class);
+Route::resource('dashboard/biddings', BiddingController::class);
+Route::resource('dashboard/emails', ContactController::class);
+
+
+
 
 require __DIR__.'/auth.php';

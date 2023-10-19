@@ -15,6 +15,8 @@ class ContactController extends Controller
     public function index()
     {
         //
+        $emails=Contact::get();
+       return view('dashboard.emails.index', compact('emails'));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PostController extends Controller
 {
@@ -15,6 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //
+        $posts=Post::get();
+        return view('dashboard.posts.index', compact('posts'));
     }
 
     /**
@@ -25,6 +28,8 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('dashboard.posts.create');
+
     }
 
     /**
@@ -36,6 +41,31 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'mobile' => ['required', 'regex:/^(079|078|077)\d{7}$/'],
+            'address' => 'required',
+            'role' => 'required',
+            'password' => [
+                'required',
+                'min:8'
+                // 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ]
+        ]);
+
+        $posts = new Post();
+
+        $posts->name = $request->input('name');
+        $posts->email = $request->input('email');
+        $posts->phone = $request->input('mobile');
+        $posts->address = $request->input('address');
+        $posts->role = $request->input('role');
+        $posts->password = Hash::make ($request->input('password'));
+
+        $posts->save();
+
+        return redirect()->route('posts.index')->with('success', 'post created successfully');
     }
 
     /**
@@ -55,9 +85,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $post, $id)
     {
         //
+        $posts = Post::findOrFail($id);
+        return view('dashboard.posts.edit', compact('posts'));
     }
 
     /**
@@ -67,9 +99,30 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, $id)
     {
         //
+        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            // 'image' => 'required',
+            'main_price' => 'required',
+            'description' => 'required',
+        ]);
+        $data = $request->except(['_token', '_method']);
+
+        // Check if a new image was uploaded
+        if ($request->hasFile('image')) {
+            $newImage = $this->storeImage($request);
+
+            // Update the image column only if a new image was uploaded
+            $data['main_image'] = $newImage;
+        }
+
+        Post::where('id', $id)->update($data);
+
+
+        return redirect()->route('posts.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -78,8 +131,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, $id)
     {
         //
+        Post::destroy($id);
+        return back()->with('success', 'Post deleted successfully.');
     }
 }

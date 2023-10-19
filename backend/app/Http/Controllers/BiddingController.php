@@ -15,6 +15,8 @@ class BiddingController extends Controller
     public function index()
     {
         //
+        $biddings=Bidding::get();
+       return view('dashboard.biddings.index', compact('biddings'));
     }
 
     /**

@@ -38,5 +38,9 @@ Route::resource('dashboard/posts', PostController::class);
 Route::resource('dashboard/comments', CommentController::class);
 Route::resource('dashboard/biddings', BiddingController::class);
 Route::resource('dashboard/emails', ContactController::class);
+Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
+
+
+
 
 require __DIR__.'/auth.php';

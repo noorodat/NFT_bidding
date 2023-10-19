@@ -11,11 +11,11 @@
 @endsection
 
 @section('title_page1')
-Volunteers
+post 
 @endsection
 
 @section('title_page2')
-Volunteers list
+posts
 @endsection
 
 @section('content')
@@ -34,12 +34,63 @@ Volunteers list
             <div class="card-header">
                 <!-- Add a link to create a new user -->
                 <a class="btn btn-primary btn-sm float-left" href="{{ route('posts.create') }}">
-                    <i class="fas fa-list nav-icon"></i>    Add New Plan
+                    <i class="fas fa-list nav-icon"></i>    Add New post
                 </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                      <tr>
+                          <th>#ID</th>
+                          <th>Title</th>
+                          <th>Description</th>
+                          <th>Image</th>
+                          <th>User name</th>
+                          <th>Created At</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @php
+                      $i = 1;
+                      @endphp
+                      @foreach ($posts as $post)
+                      <tr>
+                          <td>{{ $i }}</td>
+                          <td>{{ $post->title }}</td>
+                          <td>{{ $post->description }}</td>
+                          <td>
+                              <img src="{{ asset($post->image) }}" alt="" width="100px" height="100px">
+                          </td>
+                          <td>{{ $post->user->name }}</td>
+                          <td>{{ $post->created_at }}</td>
+                          <td class="project-actions">
+                              <a class="btn btn-info btn-sm" href="{{ route('posts.edit', $post->id) }}">
+                                  <i class="fas fa-pencil-alt"></i> Edit
+                              </a>
+                              <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display: inline;">
+                                  @method('DELETE')
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">
+                                      <i class="fas fa-trash"></i> Delete
+                                  </button>
+                              </form>
+                          </td>
+                      </tr>
+                      @php
+                      $i++;
+                      @endphp
+                      @endforeach
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+              </table>
+          </div>
+          
+            
+            
+              {{-- <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>#ID</th>
@@ -63,35 +114,35 @@ Volunteers list
                       </i>
                       View
                   </a> --}}
-                  <a class="btn btn-info btn-sm" href="{{ route('posts.edit',$post->id) }}">
+                  {{-- <a class="btn btn-info btn-sm" href="{{ route('posts.edit',$post->id) }}">
                       <i class="fas fa-pencil-alt">
                       </i>
                       Edit
-                  </a>
+                  </a> --}}
                   {{-- <a class="btn btn-danger btn-sm" href="#">
                       <i class="fas fa-trash">
                       </i>
                       Delete
                   </a> --}}
 
-                  <form action="{{route('posts.destroy',$post->id)}}"  method="POST"  style="display: inline;">
+                  {{-- <form action="{{route('posts.destroy',$post->id)}}"  method="POST"  style="display: inline;">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-sm"
                     onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                  </form>
-              </td>
+                  </form> --}}
+              {{-- </td> --}} 
 
-                @php
+                {{-- @php
                   $i++;
-                @endphp
+                @endphp --}}
 
                 </tr>
-                @endforeach
-                </tbody>
+                {{-- @endforeach --}}
+                {{-- </tbody>
                 <tfoot>
                 </tfoot>
-              </table>
+              </table> --}}
             </div>
             <!-- /.card-body -->
           </div>

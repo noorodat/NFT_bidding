@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Banner() {
+
   return (
     <div>
       <>
@@ -10,12 +11,12 @@ export default function Banner() {
       <div className="row">
         <div className="col-lg-6 order-lg-1 order-md-2 order-sm-2 order-2">
           <div className="left-banner-16-wrapepr mt_md--100 mt_sm--100">
-            <h1 className="title">
+            <h1 className="title" style={{textAlign: 'left'}}>
               Buy and sell <br /> digital art,
               <br />
               <span> NFT,s collection</span>
             </h1>
-            <p className="disc">
+            <p className="disc" style={{textAlign: 'left'}}>
               There is enough digital artworks available online to help you put
               together crypto currency website.
             </p>

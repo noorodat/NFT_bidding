@@ -28,13 +28,6 @@ Create New Category
 
         </div>
 
-        <div class="form-group">
-          <label  for="description">Category description:</label>
-          <input type="text" name="description" class="form-control" id="description"  placeholder="Enter category description ">
-          @error('description')<span class="text-danger">{{ $message }}</span>@enderror
-
-          {{-- @error('email') <span class="text-danger">{{ $message }}</span>   @enderror --}}
-        </div>
 
         <div class="form-group">
             <label for="image">Category Image:</label>

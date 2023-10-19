@@ -24,7 +24,7 @@ Control Board
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>4</h3>
+              <h3>{{$categoryCount}}</h3>
 
               <p>Our Categories</p>
             </div>
@@ -39,9 +39,9 @@ Control Board
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>4<sup style="font-size: 20px"></sup></h3>
+              <h3>{{$productCount}}<sup style="font-size: 20px"></sup></h3>
 
-              <p>Our Products</p>
+              <p>Products</p>
             </div>
             <div class="icon">
                 <i class="fas fa-shopping-cart nav-icon"></i>
@@ -54,7 +54,7 @@ Control Board
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>4</h3>
+              <h3>{{$userCount}}</h3>
 
               <p>Our Users</p>
             </div>
@@ -69,14 +69,14 @@ Control Board
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>4</h3>
+              <h3>{{$biddingCount}}</h3>
 
-              <p>Our Plans</p>
+              <p>Biddings</p>
             </div>
             <div class="icon">
                 <i class="fas fa-list nav-icon"></i>
             </div>
-            <a href="{{url('dashboard/plans')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('dashboard/biddings')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

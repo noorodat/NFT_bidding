@@ -54,13 +54,11 @@ class CategoryController extends Controller
         $request->validate([
         'name' => 'required',
         // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif |max:2048',
-        'description' => 'required',
 
     ]);
 
     Category::create([
         'name' => $request->input('name'),
-        'description' => $request->input('description'),
         'image' => $relativeImagePath,
     ]);
    // This code creates a new category record using Laravel's Eloquent ORM. It assigns the 'name' and 'description' values from the request data and sets the 'image' column to the previously calculated $relativeImagePath.
@@ -90,7 +88,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, $id)
+    public function edit($id)
     {
         //
         $categories = Category::findOrFail($id);
@@ -106,12 +104,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category, $id)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
         ]);
 
         $data = $request->except(['_token', '_method']);
@@ -136,11 +133,20 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, $id)
-    {
-        Category::destroy($id);
-        return back()->with('success', 'Category deleted successfully.');
-    }
+    public function destroy($id)
+{
+    // Find the category
+    $category = Category::findOrFail($id);
+
+    // Delete associated products
+    $category->products()->delete();
+
+    // Delete the category
+    $category->delete();
+
+    return back()->with('success', 'Category and associated products deleted successfully.');
+}
+
 
     public function storeImage($request)
     {

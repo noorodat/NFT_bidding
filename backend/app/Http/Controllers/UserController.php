@@ -63,6 +63,15 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
+
+    public function getUserData()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *

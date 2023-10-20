@@ -1,5 +1,4 @@
 // src/redux/actions/userActions.js
-
 import axios from 'axios';
 
 export const getUsers = () => async (dispatch) => {
@@ -38,4 +37,12 @@ export const deleteUser = (userId) => async (dispatch) => {
   } catch (error) {
     console.error('Error deleting user', error);
   }
+};
+
+
+export const setUser = (id, name) => {
+  return {
+    type: 'SET_USER',
+    payload: { id, name },
+  };
 };

@@ -44,6 +44,9 @@ Route::get('/product/{id}', [ProductController::class, 'handleCountDownTimer']);
 Route::get('/products', [ProductController::class, 'index'])
 ->middleware('auth');
 
+// Get user data
+Route::get('/getUserData', [UserController::class,'getUserData']);
+
 
                 // login + register
 // Route::post('register', [UserController::class, 'registerAPI']);

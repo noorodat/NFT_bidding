@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import sal from 'sal.js';
 
+
+
 const Category = () => {
     const [data, setData] = useState([]);
-    const apiUrl = 'http://127.0.0.1:8000/api/categories';
+    const apiUrl = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories';
     const productApiUrl = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products'; // Use your product API URL here
     const [loading, setLoading] = useState(true);
     const [productCounts, setProductCounts] = useState({});

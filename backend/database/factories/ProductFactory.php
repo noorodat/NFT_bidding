@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'user_id' => $user->id,
             'category_id' => $category->id,
             'winning_user' => null,
+            'highest_bid' => 0,
         ];
     }
 }

@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,3 +58,22 @@ Route::get('/products/{id}',[ProductController::class, 'getProduct']);
 Route::post('/products', [ProductController::class, 'createProduct'] );
 Route::put('/products/{id}', [ProductController::class, 'updateProduct']);
 Route::delete('/products/{id}', [ProductController::class, 'deleteProduct']);
+// Get user data
+Route::get('/getUserData', [UserController::class,'getUserData']);
+
+
+                // login + register
+// Route::post('register', [UserController::class, 'registerAPI']);
+// Route::post('login', [UserController::class, 'loginAPI']);
+// Route::get('getuser/{id}', [UserController::class, 'getUser']);
+
+
+//profile + update
+Route::get('users/{id}', [UserController::class, 'getUser']);
+Route::post('update/{id}', [UserController::class, 'updateProfile']);
+//all users
+Route::get('users', [UserController::class, 'getAllUsers']);
+
+Route::delete('delete/{id}', [UserController::class, 'deleteUser']);
+
+// sara

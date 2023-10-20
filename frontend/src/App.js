@@ -8,7 +8,7 @@ import UserProfile from './pages/profile/UserProfile';
 import EditProfile from './pages/profile/EditProfile'; 
 import { useEffect } from 'react';
 import ProductDetails from './pages/single-product/ProductDetails';
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom"; // Import the necessary components from react-router-dom
+// import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom"; // Import the necessary components from react-router-dom
 import { useLocation } from "react-router-dom";
 import Login from './pages/Login-out/LogIn';
 import SignUp from './pages/Login-out/SignUp';
@@ -19,7 +19,7 @@ function App() {
        {/* <Header/>
       <Home/>
       <Footer/> */}
-      <Router>
+      {/* <Router> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -35,7 +35,7 @@ function App() {
       </Routes>
       {/* <Login/> */}
       <Footer/>
-      </Router>
+      {/* </Router> */}
 
     </div>
   );

@@ -4,8 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
-
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,3 +40,17 @@ Route::get('/product/{id}', [ProductController::class, 'handleCountDownTimer']);
 
 Route::get('/products', [ProductController::class, 'index'])
 ->middleware('auth');
+
+
+Route::get('/categories',[CategoryController::class, 'getAllCategory']);
+Route::get('/categories/{id}',[CategoryController::class, 'getCategory']);
+Route::post('/categories', [CategoryController::class, 'createCategory'] );
+Route::put('/categories/{id}', [CategoryController::class, 'updateCategory']);
+Route::delete('/categories/{id}', [CategoryController::class, 'deleteCategory']);
+
+
+Route::get('/products',[ProductController::class, 'getAllProduct']);
+Route::get('/products/{id}',[ProductController::class, 'getProduct']);
+Route::post('/products', [ProductController::class, 'createProduct'] );
+Route::put('/products/{id}', [ProductController::class, 'updateProduct']);
+Route::delete('/products/{id}', [ProductController::class, 'deleteProduct']);

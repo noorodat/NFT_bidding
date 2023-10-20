@@ -3,6 +3,7 @@ import './App.css';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import Home from './pages/home/Home';
+import AddProduct from './pages/add-product/add';
 import { useEffect } from 'react';
 import ProductDetails from './pages/single-product/ProductDetails';
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom"; // Import the necessary components from react-router-dom
@@ -19,6 +20,7 @@ function App() {
         <Route path='/Login' element={<Login/>}></Route>
         <Route path='/SignUp' element={<SignUp/>}></Route>
         <Route path='/ProductDetails/:id' element={<ProductDetails/>}></Route>
+        <Route path='/AddProduct' element={<AddProduct/>}></Route>
       </Routes>
       {/* <Login/> */}
       <Footer/>

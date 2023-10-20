@@ -35,4 +35,13 @@ class AuthenticatedSessionController extends Controller
 
         return response()->noContent();
     }
+
+    public function user()
+    {
+
+        $user = auth()->user();
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
 }

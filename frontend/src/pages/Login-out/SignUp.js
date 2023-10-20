@@ -3,7 +3,8 @@ import axios from "../../components/axios";
 import { Form } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
-import { addUser } from '../../redux/actions/userActions';
+import { loginSuccess } from '../../redux/actions/userActions';
+
 
 const SignUp = () => {
   document.title = "Sign Up";
@@ -29,6 +30,8 @@ const SignUp = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    //  console.log(userData.data.user.name);
+// line 32
 
     try {
       const csrfResponse = await axios.get("/get-csrf-token");
@@ -217,5 +220,9 @@ const SignUp = () => {
     </React.Fragment>
   );
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.isAuthenticated,
+  user: state.user,
+});
 
-export default connect(null, { addUser })(SignUp);
+export default connect(mapStateToProps, { loginSuccess })(SignUp);

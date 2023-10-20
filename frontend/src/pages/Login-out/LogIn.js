@@ -2,44 +2,49 @@ import React, { useState } from "react";
 import { Col, Input, Row } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "../../components/axios";
-import { useDispatch } from 'react-redux';
-// import { login } from '../../redux/actions/userActions';
+import { connect } from 'react-redux';
+import { loginSuccess } from '../../redux/actions/userActions';
+
 //Import Image;
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { setUser } from '../redux/actions/userActions'; // Import the action
 
-const LogIn = () => {
-  const dispatch = useDispatch();
+const LogIn = ({isAuthenticated, user, loginSuccess}) => {
+  
   document.title = "Log In";
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [email,setemail] = useState("");
+  const [password,setpassword] = useState("");
+  const [errors,seterrors] = useState([]);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
-
+    e.preventDefault();
+    seterrors([])
     try {
-      const csrfResponse = await axios.get("/get-csrf-token");
-      const csrfToken = csrfResponse.data.csrf_token;
+    
+    const csrfResponse = await axios.get('/get-csrf-token');
+    const csrfToken = csrfResponse.data.csrf_token;
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+    // Now, make your login request
+    const response = await axios.post("/login", { email, password });
 
-      // Now, make your login request
-      const response = await axios.post("/login", { email, password });   
-      const userData = await axios.get("/getUserData"); 
-      console.log(userData.data.user.name);
-      console.log(userData.data.user.id);
-      // dispatch(setUser(id, name));
-      setemail("");
-      setpassword("");
-      navigate("/");
-      // dispatch(login(email, password));
-      console.log(response.data); // Log the user information
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    setemail('');
+    setpassword('');
+    const data = await axios.get('/user')
+   
+    loginSuccess(data.data.user)
+    navigate(-1);
+    // console.log(response.data); // Log the user information
+  } catch (e) {
+   
+    // if (e.response.status === 422){
+    //   seterrors(e.response.data.errors)
+      console.log(e);
+
+    // }
+  }
+}
 
   return (
     <React.Fragment>
@@ -199,5 +204,9 @@ const LogIn = () => {
     </React.Fragment>
   );
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.isAuthenticated,
+  user: state.user,
+});
 
-export default LogIn;
+export default connect(mapStateToProps, { loginSuccess })(LogIn);

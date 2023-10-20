@@ -31,7 +31,7 @@
             imJs.unloadImage2();
             imJs.unloadImage();
             imJs.unloadImage3();
-            imJs.darkLight();
+            // imJs.darkLight();
             imJs.vedioActivation();
             imJs.tiltJS();
         },
@@ -109,8 +109,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1124,
                         settings: {
@@ -145,8 +145,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1124,
                         settings: {
@@ -181,8 +181,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1399,
                         settings: {
@@ -234,8 +234,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1399,
                         settings: {
@@ -277,8 +277,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1399,
                         settings: {
@@ -338,8 +338,8 @@
                 arrows: true,
                 cssEase: 'linear',
                 adaptiveHeight: true,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1399,
                         settings: {
@@ -443,8 +443,8 @@
                 adaptiveHeight: true,
                 autoplay: false,
                 autoplaySpeed: 2000,
-                prevArrow: '<button class="slide-arrow prev-arrow"><i class="feather-arrow-left"></i></button>',
-                nextArrow: '<button class="slide-arrow next-arrow"><i class="feather-arrow-right"></i></button>',
+                prevArrow: '<button className="slide-arrow prev-arrow"><i className="feather-arrow-left"></i></button>',
+                nextArrow: '<button className="slide-arrow next-arrow"><i className="feather-arrow-right"></i></button>',
                 responsive: [{
                         breakpoint: 1399,
                         settings: {
@@ -496,11 +496,11 @@
 						_self.closest('div').find('button[type="submit"]').removeAttr('disabled');
 						if (data.code == false) {
 							_self.closest('div').find('[name="' + data.field + '"]');
-							_self.find('.rn-btn').after('<div class="error-msg"><p>*' + data.err + '</p></div>');
+							_self.find('.rn-btn').after('<div className="error-msg"><p>*' + data.err + '</p></div>');
 						} else {
 							$('.error-msg').hide();
 							$('.form-group').removeClass('focused');
-							_self.find('.rn-btn').after('<div class="success-msg"><p>' + data.success + '</p></div>');
+							_self.find('.rn-btn').after('<div className="success-msg"><p>' + data.success + '</p></div>');
 							_self.closest('div').find('input,textarea').val('');
 
 							setTimeout(function () {
@@ -676,26 +676,26 @@
         },
 
         
-        darkLight: function () {
-            var styleMode = document.querySelector('meta[name="theme-style-mode"]').content;
-            var cookieKey = styleMode == 1 ? 'client_dark_mode_style_cookie' : 'client_light_mode_style_cookie';
-            if (Cookies.get(cookieKey) == 'dark') {
-                $('body').removeClass('active-light-mode');
-                $('body').addClass('active-dark-mode');
+        // darkLight: function () {
+        //     var styleMode = document.querySelector('meta[name="theme-style-mode"]').content;
+        //     var cookieKey = styleMode == 1 ? 'client_dark_mode_style_cookie' : 'client_light_mode_style_cookie';
+        //     if (Cookies.get(cookieKey) == 'dark') {
+        //         $('body').removeClass('active-light-mode');
+        //         $('body').addClass('active-dark-mode');
 
-            } else if( Cookies.get(cookieKey) == 'light') {
-                $('body').removeClass('active-dark-mode');
-                $('body').addClass('active-light-mode');
+        //     } else if( Cookies.get(cookieKey) == 'light') {
+        //         $('body').removeClass('active-dark-mode');
+        //         $('body').addClass('active-light-mode');
 
-            } else {
-                if(styleMode == 1){
-                    $('body').addClass('active-dark-mode');
-                } else{
-                    $('body').addClass('active-light-mode');
-                }
+        //     } else {
+        //         if(styleMode == 1){
+        //             $('body').addClass('active-dark-mode');
+        //         } else{
+        //             $('body').addClass('active-light-mode');
+        //         }
                 
-            }
-        },
+        //     }
+        // },
         vedioActivation: function (e) {
             $('#play-video').on('click', function (e) {
                 e.preventDefault();

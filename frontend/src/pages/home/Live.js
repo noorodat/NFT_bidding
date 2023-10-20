@@ -7,12 +7,12 @@ const Live = () => {
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState({});
 
-    const usersAPI = `https://653009cd6c756603295e26df.mockapi.io/users/5`;
+    const usersAPI = `http://127.0.0.1:8000/api/users`;
     const { data: user } = useApiData(usersAPI);
 
     useEffect(() => {
         // Fetch data from the API
-        fetch('https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products')
+        fetch('http://127.0.0.1:8000/api/products')
             .then((response) => response.json())
             .then((data) => {
                 // Filter products with status true

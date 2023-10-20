@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
@@ -19,7 +19,7 @@ function App() {
        {/* <Header/>
       <Home/>
       <Footer/> */}
-      <Router>
+      {/* <Router> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -35,7 +35,7 @@ function App() {
       </Routes>
       {/* <Login/> */}
       <Footer/>
-      </Router>
+      {/* </Router> */}
 
     </div>
   );

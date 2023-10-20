@@ -22,14 +22,14 @@ const LogIn = () => {
     try {
       const csrfResponse = await axios.get("/get-csrf-token");
       const csrfToken = csrfResponse.data.csrf_token;
-     
 
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
       // Now, make your login request
       const response = await axios.post("/login", { email, password });   
-      const userData = await axios.get("/getUserData");   
-      // console.log(userData.data.user.name);
+      const userData = await axios.get("/getUserData"); 
+      console.log(userData.data.user.name);
+      console.log(userData.data.user.id);
       // dispatch(setUser(id, name));
       setemail("");
       setpassword("");

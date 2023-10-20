@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('description');
             $table->bigInteger('min_target');
             $table->bigInteger('highest_bid');
-            $table->time('timer');
+            $table->date('time');
             $table->boolean('status');
             $table->unsignedBigInteger('winning_user')->nullable();
             $table->foreign('winning_user')->references('id')->on('users');

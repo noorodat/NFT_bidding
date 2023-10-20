@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class ProductController extends Controller
 {
@@ -14,7 +16,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return response()->json($products);
+    }
+
+    public function handleCountDownTimer($id) 
+    {
+        $product = Product::find($id);
+        $currentDate = Carbon::now();
+        if($currentDate > $product->timer && $product->status) {
+            $product->status = false;
+            $product->save();
+        }
+        return response()->json($product);
     }
 
     /**

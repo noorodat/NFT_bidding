@@ -34,6 +34,7 @@ const SignUp = () => {
       setpassword("");
       setname("");
       setpasswordConfirmation("");
+      console.log("YESYESYESYES");
       console.log(response.data);
       navigate("/");
     } catch (e) {

@@ -22,6 +22,7 @@
     "reactstrap": "^9.2.0",
     "sal.js": "^0.8.5",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.7.32",
     "vanilla-tilt": "^1.8.1",
     "web-vitals": "^2.1.4"
   },

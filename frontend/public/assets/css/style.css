@@ -15223,6 +15223,7 @@ figcaption {
   margin-right: 15px;
   border: 1px solid var(--color-border);
   background: var(--background-color-4);
+  opacity: 1;
 }
 .odometer-area-slide .single-odometer:last-child {
   margin-right: 0;
@@ -15753,6 +15754,7 @@ figcaption {
   margin-bottom: 5px;
   width: 100%;
   margin-right: 0;
+  opacity: 1;
 }
 .expo-15-wrapper .odometer-area-slide .single-odometer:last-child {
   margin-bottom: 0;
@@ -16160,6 +16162,7 @@ figcaption {
 
 .single-odometer {
   transition: var(--transition);
+  opacity: 1;
 }
 .single-odometer.banner {
   padding: 92px 30px 25px 30px;
@@ -24099,6 +24102,7 @@ body.active-light-mode {
   background-image: linear-gradient(to top, #0c0c2100 0%, #edf0f2 87%);
 }
 .active-light-mode .odometer-area-slide .single-odometer {
+  opacity: 1;
   background: #fff;
 }
 .active-light-mode .single-community-box .rn-community-footer .community-reaction a i {
@@ -24168,3 +24172,8 @@ body.active-light-mode {
   background-image: linear-gradient(to top, #0c0c2100 0%, #edf0f2ab 87%);
 }
 /*# sourceMappingURL=../maps/style.css.map */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

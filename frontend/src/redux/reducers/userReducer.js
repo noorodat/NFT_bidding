@@ -1,40 +1,33 @@
+// authReducer.js
+import { loadState, saveState } from "../sessionStorage";
+const user = "user";
+const isAuthenticated = "isAuthenticated";
 const initialState = {
-  users: [],
+  user: loadState(user,null),
+  isAuthenticated: loadState(isAuthenticated,false),
 };
 
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_USERS':
+    case 'LOGIN_SUCCESS':
+        saveState(user,action.payload)
+        saveState(isAuthenticated,true)
       return {
         ...state,
-        users: action.payload,
+        user: action.payload,
+        isAuthenticated: true,
       };
-    case 'ADD_USER':
+    case 'LOGOUT_SUCCESS':
+        saveState(user,null)
+        saveState(isAuthenticated,false)
       return {
         ...state,
-        users: [...state.users, action.payload],
-      };
-    case 'UPDATE_USER':
-      const updatedUserIndex = state.users.findIndex(user => user.id === action.payload.id);
-
-      if (updatedUserIndex !== -1) {
-        const updatedUsers = [...state.users];
-        updatedUsers[updatedUserIndex] = action.payload;
-        return {
-          ...state,
-          users: updatedUsers,
-        };
-      }
-      return state;
-
-    case 'DELETE_USER':
-      return {
-        ...state,
-        users: state.users.filter((user) => user.id !== action.payload),
+        user: null,
+        isAuthenticated: false,
       };
     default:
       return state;
   }
 };
 
-export default userReducer;
+export default authReducer;

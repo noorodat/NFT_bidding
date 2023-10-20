@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('description');
             $table->bigInteger('min_target');
+            $table->bigInteger('highest_bid');
             $table->time('timer');
             $table->boolean('status');
             $table->unsignedBigInteger('winning_user')->nullable();

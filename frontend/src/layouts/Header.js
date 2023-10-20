@@ -7,8 +7,10 @@ import { useDispatch } from "react-redux";
 import axios from "../components/axios";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { User } from 'react-feather';
 
- const Header = (props) => {
+const Header = ({ logoutSuccess }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log(user);
@@ -18,6 +20,7 @@ import { isAxiosError } from "axios";
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
+
   const handleLogout = async (e) => {
     e.preventDefault();
 
@@ -27,16 +30,21 @@ import { isAxiosError } from "axios";
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
       await axios.post("/logout");
       dispatch(logoutSuccess());
-
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-   console.log ( isAuthenticated );
+  console.log('isAuthenticated ', isAuthenticated);
+  console.log("Is Logged In? ", sessionStorage.getItem('isLoggedIn'))
 
-   
+  const handleLogoutSession = () => {
+    sessionStorage.setItem('isLoggedIn', false);
+    console.log("IS NOW? ", sessionStorage.getItem('isLoggedIn'));
+  }
+
+
   return (
     <div>
       {/* Start Header */}
@@ -431,17 +439,7 @@ import { isAxiosError } from "axios";
                     className="btn btn-primary-alta btn-small"
                     href="connect.html"
                   >
-                    Wallet connect
-                  </Link>
-                </div>
-
-                <div className="icon-box">
-                  <Link
-                    id="connectbtn"
-                    className="btn btn-primary-alta btn-small"
-                    href="connect.html"
-                  >
-                    Wallet connect
+                    Wallet
                   </Link>
                 </div>
               </div>
@@ -549,36 +547,29 @@ import { isAxiosError } from "axios";
                   </button>
                 </div>
               </div>
-              <div id="my_switcher" className="my_switcher setting-option">
-                <ul>
-                  <li>
-                    <Link
-                      href="javascript: void(0);"
-                      data-theme="light"
-                      className="setColor light"
-                    >
-                      <img
-                        className="sun-image"
-                        src="/assets/images/icons/sun-01.svg"
-                        alt="Sun images"
-                      />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="javascript: void(0);"
-                      data-theme="dark"
-                      className="setColor dark"
-                    >
-                      <img
-                        className="Victor Image"
-                        src="/assets/images/icons/vector.svg"
-                        alt="Vector Images"
-                      />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              {/* Show if logged in */}
+              {
+                sessionStorage.getItem('isLoggedIn') === 'true' ? (
+                  <>
+                    <div className="userProfile setting-option">
+                      <ul style={{ listStyle: 'none', padding: '0' }}>
+                        <li className="with-megamenu">
+                          <Link to="/UserProfile" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <User size={28} color="gray" />
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <span style={{ paddingLeft: '15px' }}>
+                      <Link onClick={handleLogoutSession} to="/">Logout</Link>
+                    </span>
+                  </>
+                ) : (
+                  <span>
+                    <Link to="/Login">Login</Link>
+                  </span>
+                )
+              }
             </div>
           </div>
         </div>
@@ -799,7 +790,7 @@ import { isAxiosError } from "axios";
                   </li>
                   <li>
                     <Link className="live-expo" href="explore-live-two.html">
-                      Live Explore Carousel
+                      Live Explore Carouselwith-meEx
                     </Link>
                   </li>
                   <li>

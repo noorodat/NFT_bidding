@@ -4,6 +4,10 @@ import { Form, FormControl } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 // import axios from 'axios';
 
+import { connect } from 'react-redux';
+import { addUser } from '../../redux/actions/userActions';
+
+// sara
 
 const SignUp = () => {
   document.title = "Sign Up";
@@ -13,15 +17,38 @@ const SignUp = () => {
   const [name, setname] = useState("");
   const [password_confirmation, setpasswordConfirmation] = useState("");
   const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+    image: '',
+  });
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   // You need to define the `handleLogin` function
   const handleRegister = async (e) => {
     e.preventDefault(); // Use e.preventDefault() to prevent form submission
+    addUser(user);
+    setUser({
+      name: '',
+      phone: '',
+      email: '',
+      password: '',
+      image: '',
+    });
 
     try {
       const csrfResponse = await axios.get("/get-csrf-token");
       const csrfToken = csrfResponse.data.csrf_token;
       console.log(name);
+      console.log(csrfToken);
+      console.log(csrfResponse );
 
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
       const response = await axios.post("/register", {
@@ -86,7 +113,8 @@ const SignUp = () => {
                            type="text"
                            value={name}
                            id="firstName"
-                          onChange={(e) =>setname(e.target.value)}
+                          // onChange={(e) =>setname(e.target.value)}
+                          onChange={handleChange}
                           required />
                         </div>
                         {/* <div className="mb-5">
@@ -108,7 +136,8 @@ const SignUp = () => {
                             className="form-control"
                             id="usernameInput"
                             placeholder="Enter your username"
-                            onChange={(e) => setemail(e.target.value)}
+                            // onChange={(e) => setemail(e.target.value)}
+                            onChange={handleChange}
                             required
                           />
                         </div>
@@ -122,7 +151,8 @@ const SignUp = () => {
                             id="passInput"
                             placeholder="Enter your password"
                             value={password}
-                            onChange={(e) => setpassword(e.target.value)}
+                            // onChange={(e) => setpassword(e.target.value)}
+                            onChange={handleChange}
                             required
                           />
                         </div>
@@ -137,9 +167,10 @@ const SignUp = () => {
                             className="form-control"
                             id="passwordInput"
                             placeholder="Enter your password"
-                            onChange={(e) =>
-                              setpasswordConfirmation(e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //   setpasswordConfirmation(e.target.value)
+                            // }
+                            onChange={handleChange}
                           />
                         </div>
 
@@ -221,4 +252,5 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+
+export default connect(null, { addUser })(SignUp);

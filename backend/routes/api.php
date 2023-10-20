@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\UserController;
+
 
 
 /*
@@ -41,3 +43,20 @@ Route::get('/product/{id}', [ProductController::class, 'handleCountDownTimer']);
 
 Route::get('/products', [ProductController::class, 'index'])
 ->middleware('auth');
+
+
+                // login + register
+// Route::post('register', [UserController::class, 'registerAPI']);
+// Route::post('login', [UserController::class, 'loginAPI']);
+// Route::get('getuser/{id}', [UserController::class, 'getUser']);
+
+
+//profile + update 
+Route::get('users/{id}', [UserController::class, 'getUser']);
+Route::post('update/{id}', [UserController::class, 'updateProfile']);
+//all users
+Route::get('users', [UserController::class, 'getAllUsers']);
+
+Route::delete('delete/{id}', [UserController::class, 'deleteUser']);
+
+// sara

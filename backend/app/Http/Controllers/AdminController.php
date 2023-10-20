@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -15,6 +16,8 @@ class AdminController extends Controller
     public function index()
     {
         //
+        $admins=Admin::get();
+        return view('dashboard.admins.index', compact('admins'));
     }
 
     /**
@@ -25,6 +28,8 @@ class AdminController extends Controller
     public function create()
     {
         //
+        return view('dashboard.admins.create');
+
     }
 
     /**
@@ -36,6 +41,30 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
+        $relativeImagePath = null; // Initialize relativeImagePath as null
+
+        $newImageName = uniqid() . '-' . $request->name . '.' . $request->file('image')->extension();
+        $relativeImagePath = 'assets/images/' . $newImageName;
+        $request->file('image')->move(public_path('assets/images'), $newImageName);
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
+                'min:8'
+            ]
+        ]);
+
+        Admin::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'image' => $relativeImagePath,
+        ]);
+
+        return redirect()->route('admins.index')->with('success', 'Admin created successfully');
     }
 
     /**
@@ -44,7 +73,7 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function show(Request $request,Admin $admin)
     {
         //
     }
@@ -78,8 +107,20 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function destroy(Admin $admin, $id)
     {
         //
+        Admin::destroy($id);
+        return back()->with('success', 'Admin deleted successfully.');
+    }
+
+    public function storeImage($request)
+    {
+        $newImageName = uniqid() . '-' . $request->addedCategoryName . '.' . $request->file('image')->extension();
+        $relativeImagePath = 'assets/images/' . $newImageName;
+        $request->file('image')->move(public_path('assets/images'), $newImageName);
+
+
+        return $relativeImagePath;
     }
 }

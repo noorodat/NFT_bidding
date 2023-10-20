@@ -162,7 +162,7 @@ const SignUp = () => {
                         >
                           Sign Up
                         </button>
-                        <Link to="login.html" className="btn btn-primary-alta">
+                        <Link to ="/Login" className="btn btn-primary-alta">
                           Log In
                         </Link>
                       </Form>

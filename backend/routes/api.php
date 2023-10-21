@@ -37,3 +37,24 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 Route::get('/user', [AuthenticatedSessionController::class, 'user'])
                 ->middleware('auth')
                 ;
+          
+      Route::get('/Biddings',[BiddingController::class, 'getAllBidding']);
+      Route::get('/Biddings/{id}',[BiddingController::class, 'getBidding']);
+      Route::post('/Biddings', [BiddingController::class, 'createBidding'] );
+      Route::put('/Biddings/{id}', [BiddingController::class, 'updateBidding']);
+      Route::delete('/Biddings/{id}', [BiddingController::class, 'deleteBidding']);
+
+
+      Route::get('/Comments',[CommentController::class, 'getAllComment']);
+      Route::get('/Comments/{id}',[CommentController::class, 'getComment']);
+      Route::post('/Comments', [CommentController::class, 'createComment'] );
+      Route::put('/Comments/{id}', [CommentController::class, 'updateComment']);
+      Route::delete('/Comments/{id}', [CommentController::class, 'deleteComment']);
+
+
+
+      Route::get('/Posts',[PostController::class, 'getAllPost']);
+      Route::get('/Posts/{id}',[PostController::class, 'getPost']);
+      Route::post('/Posts', [PostController::class, 'createPost'] );
+      Route::put('/Posts/{id}', [PostController::class, 'updatePost']);
+      Route::delete('/Posts/{id}', [PostController::class, 'deletePost']);

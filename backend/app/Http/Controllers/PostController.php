@@ -89,7 +89,7 @@ class PostController extends Controller
         $imagePath = $request->file('image')->store('public/images');
         return asset('storage/' . $imagePath);
     }
-}
+
 
 
 // class PostController extends Controller
@@ -224,3 +224,87 @@ class PostController extends Controller
 //         return back()->with('success', 'Post deleted successfully.');
 //     }
 // }
+public function getAllPost()
+    {
+        //
+        $posts = post::all();
+        return response()->json($posts);
+        
+    }
+
+   
+    public function createPost(Request $request)
+    {
+        $posts = new post();
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $posts->image = $filename;
+        }
+
+        $posts->title = $request->title;
+
+        $posts->description = $request->description;
+
+       
+
+        $posts->user_id = $request->user_id;
+
+        $posts->save();
+
+        return response($posts, 201);
+    }
+
+    
+    public function getPost($id)
+    {
+        $posts = post::find($id);
+        if (!$posts) {
+            return response()->json(['error' => 'post not found'], 404);
+        }
+        return response()->json($posts);
+    }
+
+    public function updatePost( Request  $request ,$id )
+    {
+        $posts = post::find($id);
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $posts->image = $filename;
+        }
+
+
+
+       $posts->title = $request->title;
+
+        $posts->description = $request->description;
+
+        
+
+        $posts->user_id = $request->user_id;
+
+        $posts->updat();
+
+        return response($posts, 201);
+    }
+
+    
+    public function destroyPost($id)
+    {
+        $posts = Post::find($id); 
+        if (!$posts) {
+            return response()->json(['error' => 'post not found'], 404);
+        }
+    
+        $posts->delete(); 
+    
+        return response()->json(['message' => 'posts deleted']);
+    }
+}

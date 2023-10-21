@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BiddingController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 
@@ -38,6 +41,30 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
 
+Route::get('/user', [AuthenticatedSessionController::class, 'user'])
+                ->middleware('auth')
+                ;
+          
+      Route::get('/Biddings',[BiddingController::class, 'getAllBidding']);
+      Route::get('/Biddings/{id}',[BiddingController::class, 'getBidding']);
+      Route::post('/Biddings', [BiddingController::class, 'createBidding'] );
+      Route::put('/Biddings/{id}', [BiddingController::class, 'updateBidding']);
+      Route::delete('/Biddings/{id}', [BiddingController::class, 'deleteBidding']);
+
+
+      Route::get('/Comments',[CommentController::class, 'getAllComment']);
+      Route::get('/Comments/{id}',[CommentController::class, 'getComment']);
+      Route::post('/Comments', [CommentController::class, 'createComment'] );
+      Route::put('/Comments/{id}', [CommentController::class, 'updateComment']);
+      Route::delete('/Comments/{id}', [CommentController::class, 'deleteComment']);
+
+
+
+      Route::get('/Posts',[PostController::class, 'getAllPost']);
+      Route::get('/Posts/{id}',[PostController::class, 'getPost']);
+      Route::post('/Posts', [PostController::class, 'createPost'] );
+      Route::put('/Posts/{id}', [PostController::class, 'updatePost']);
+      Route::delete('/Posts/{id}', [PostController::class, 'deletePost']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
@@ -59,6 +86,8 @@ Route::put('/products/{id}', [ProductController::class, 'updateProduct']);
 Route::delete('/products/{id}', [ProductController::class, 'deleteProduct']);
 // Get user data
 Route::get('/getUserData', [UserController::class,'getUserData']);
+// Charge wallet
+Route::post('/chargeWallet/{id}', [UserController::class, 'chargeWallet']);
 
 
                 // login + register

@@ -49,6 +49,8 @@ export default function ProductDetails() {
 
     let targetDate = product.timer;
 
+    console.log("USER Balance: ", user.balance)
+
     // let currentBiddings = biddings.filter(bidding => bidding.product_id === product.id);
 
     // console.log(currentBiddings);

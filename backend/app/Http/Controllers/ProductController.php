@@ -203,7 +203,15 @@ class ProductController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-        $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            // $products->image = $filename;
+        }
+
+        // $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
 
         // Create Product
         Product::create([
@@ -211,8 +219,8 @@ class ProductController extends Controller
             'min_target' => $request->min_target,
             'description' => $request->description,
             'category_id' => $request->category_id,
-            'user_id' => 1,
-            'image' => $imageName,
+            'user_id' => $request->user_id,
+            'image' => $filename,
             'timer' => $request->timer,
             'winning_user' => null,
             'status' => 1,
@@ -220,7 +228,7 @@ class ProductController extends Controller
         ]);
 
         // Save Image in Storage folder
-        Storage::disk('public')->put($imageName, file_get_contents($request->image));
+        // Storage::disk('public')->put($imageName, file_get_contents($request->image));
 
 
 

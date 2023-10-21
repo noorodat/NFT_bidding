@@ -211,10 +211,8 @@ class UserController extends Controller
     public function chargeWallet(Request $request, $id)
     {
         $user = User::find($id);
-        try {
-            $user->balance += $request->money_amount;
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+
+        $user->balance += $request->money_amount;
+
     }
 }

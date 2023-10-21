@@ -43,7 +43,9 @@ export default function Wallet() {
                     <label htmlFor="dollerValue" className="form-label">
                       Charge wallet $
                     </label>
-                    <input name='money_amount' id="dollerValue" placeholder="e. g. `20$`" />
+                    <form action="" method='POST'>
+                        <input name='money_amount' id="dollerValue" placeholder="e. g. `20$`" />
+                    </form>
                   </div>
                 </div>
                 <div className="col-md-12 col-12">

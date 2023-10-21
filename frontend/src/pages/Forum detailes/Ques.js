@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons"; // You can choose a different icon if needed
 import CommentForm from "./CommentForm";
 import Comment from "./answer";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import {
   getComments as getCommentsApi,
@@ -12,7 +12,6 @@ import {
   updateComment as updateCommentApi,
   deleteComment as deleteCommentApi,
 } from "../../components/api";
-
 
 const Comments = ({ commentsUrl, currentUserId, userName }) => {
   const [backendComments, setBackendComments] = useState([]);
@@ -22,21 +21,21 @@ const Comments = ({ commentsUrl, currentUserId, userName }) => {
     (backendComment) => backendComment.parentId === null
   );
 
-
-
-
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
       .sort(
         (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        parseFloat(new Date(a.createdAt).getTime()) - parseFloat(new Date(b.createdAt).getTime())
       );
+      // sara
   const addComment = (text, parentId, currentUserId, userName) => {
-    createCommentApi(text, parentId, currentUserId, userName).then((comment) => {
-      setBackendComments([comment, ...backendComments]);
-      setActiveComment(null);
-    });
+    createCommentApi(text, parentId, currentUserId, userName).then(
+      (comment) => {
+        setBackendComments([comment, ...backendComments]);
+        setActiveComment(null);
+      }
+    );
   };
 
   const updateComment = (text, commentId) => {
@@ -51,6 +50,7 @@ const Comments = ({ commentsUrl, currentUserId, userName }) => {
       setActiveComment(null);
     });
   };
+  
   const deleteComment = (commentId) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
       deleteCommentApi(commentId).then(() => {
@@ -70,22 +70,42 @@ const Comments = ({ commentsUrl, currentUserId, userName }) => {
 
   return (
     <div className="comments">
-      {/* <h3 className="comments-title">Comments</h3> */}
       {!isform && (
-        <button
-          className="btn btn-primary"
-          onClick={() => setisform(true)}
-        >
-          Start New Question <i className="feather-plus"></i>
-        </button>
+      <div class="forum-top rn-section-gap ">
+        <div class="container">
+          <div class="row g-5 align-items-center d-flex">
+            <div class="col-lg-8 offset-lg-3">
+              <div class="forum-search">
+                <div class="input-group">
+                  {/* <input type="text" class="form-control" placeholder="Search Hear..." aria-label="Recipient's username"/> */}
+                  <div class="input-group-append">
+                    
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => setisform(true)}
+                    >
+                      Start New Question <i className="feather-plus"></i>
+                    </button>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       )}
+
+ 
       <div className="row">
         {isform && (
           <>
             <div className="col-8">
               <CommentForm
                 submitLabel="Add"
-                handleSubmit={(text) => addComment(text, null, currentUserId, userName)} //
+                handleSubmit={(text) =>
+                  addComment(text, null, currentUserId, userName)
+                } //
                 handleCancel={() => setisform(false)}
               />
             </div>
@@ -103,7 +123,8 @@ const Comments = ({ commentsUrl, currentUserId, userName }) => {
 
       {/* display all Question and answer fields */}
       <div className="comments-container">
-        {rootComments.slice().reverse().map((rootComment) => (
+        {rootComments  .slice()
+           .reverse().map((rootComment) => (
           <Comment
             key={rootComment.id}
             comment={rootComment}

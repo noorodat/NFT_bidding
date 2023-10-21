@@ -15,6 +15,7 @@ import Login from './pages/Login-out/LogIn';
 import SignUp from './pages/Login-out/SignUp';
 import Activity_pages from './pages/Forum detailes/Activity_pages';
 import Products from './pages/products/Products';
+import Wallet from './pages/wallet/Wallet';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path='ProductDetails' element={<ProductDetails />}></Route>
         <Route path='/ProductDetails/:id' element={<ProductDetails />}></Route>
         <Route path='/AddProduct' element={<AddProduct />}></Route>
+        <Route path='/Wallet' element={<Wallet/>}></Route>
       </Routes>
       {/* <Login/> */}
       <Footer />

@@ -14,7 +14,7 @@ import {
 } from "../../components/api";
 
 
-const Comments = ({ commentsUrl, currentUserId,userName }) => {
+const Comments = ({ commentsUrl, currentUserId, userName }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const [isform, setisform] = useState(null);
@@ -32,15 +32,15 @@ const Comments = ({ commentsUrl, currentUserId,userName }) => {
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
-  const addComment = (text, parentId,currentUserId,userName) => {
-    createCommentApi(text, parentId,currentUserId,userName).then((comment) => {
+  const addComment = (text, parentId, currentUserId, userName) => {
+    createCommentApi(text, parentId, currentUserId, userName).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
   };
 
   const updateComment = (text, commentId) => {
-    updateCommentApi(text,commentId).then(() => {
+    updateCommentApi(text, commentId).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
           return { ...backendComment, body: text };
@@ -85,7 +85,7 @@ const Comments = ({ commentsUrl, currentUserId,userName }) => {
             <div className="col-8">
               <CommentForm
                 submitLabel="Add"
-                handleSubmit={(text) => addComment(text,null,currentUserId,userName)} //
+                handleSubmit={(text) => addComment(text, null, currentUserId, userName)} //
                 handleCancel={() => setisform(false)}
               />
             </div>
@@ -103,7 +103,7 @@ const Comments = ({ commentsUrl, currentUserId,userName }) => {
 
       {/* display all Question and answer fields */}
       <div className="comments-container">
-        {rootComments.map((rootComment) => (
+        {rootComments.slice().reverse().map((rootComment) => (
           <Comment
             key={rootComment.id}
             comment={rootComment}

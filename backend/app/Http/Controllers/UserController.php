@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Exception;
+
 
 class UserController extends Controller
 {
@@ -18,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users=User::get();
+        $users = User::get();
         return view('dashboard.users.index', compact('users'));
     }
 
@@ -56,7 +58,7 @@ class UserController extends Controller
 
         $users->name = $request->input('name');
         $users->email = $request->input('email');
-        $users->password = Hash::make ($request->input('password'));
+        $users->password = Hash::make($request->input('password'));
 
         $users->save();
 
@@ -154,9 +156,9 @@ class UserController extends Controller
 
         $user = new User();
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = time().'.'.$image->getClientOriginalExtension();
+            $filename = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $filename);
             $user->image = $filename;
@@ -170,7 +172,6 @@ class UserController extends Controller
 
         return response($user, 201);
         return response()->json(['message' => 'User registered successfully']);
-
     }
 
     public function updateProfile(Request $request, $id)
@@ -180,10 +181,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
             $image = $request->file('image');
-            $filename = time().'.'.$image->getClientOriginalExtension();
+            $filename = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $filename);
             $user->image = $filename;
@@ -193,10 +194,7 @@ class UserController extends Controller
 
         $user->save();
         return response()->json($user);
-
     }
-
-
 
     public function deleteUser($id)
     {
@@ -208,7 +206,15 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['message' => 'User deleted']);
     }
+
+
+    public function chargeWallet(Request $request, $id)
+    {
+        $user = User::find($id);
+        try {
+            $user->balance += $request->money_amount;
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
-
-
-

@@ -7,7 +7,11 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Requests\ProductStoreRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage; //php artisan storage:link = php artisan storage:link = http://127.0.0.1:8000/storage/1.jpg
 
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -18,11 +22,11 @@ class ProductController extends Controller
         $category = Category::all();
         $user = User::all();
         // dd($categoryName);
-        return view('dashboard.products.index', compact('products', 'category','user'));
-
+        return view('dashboard.products.index', compact('products', 'category', 'user'));
     }
 
-    public function productsAPI() {
+    public function productsAPI()
+    {
         $products = Product::get();
         return response()->json($products);
     }
@@ -31,7 +35,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $currentDate = Carbon::now();
-        if($currentDate > $product->timer && $product->status) {
+        if ($currentDate > $product->timer && $product->status) {
             $product->status = false;
             $product->save();
         }
@@ -164,7 +168,7 @@ class ProductController extends Controller
      */
 
 
-     public function getAllProduct()
+    public function getAllProduct()
     {
         $products = Product::all();
         return response()->json($products);
@@ -179,55 +183,85 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function createCategory(Request $request)
+    public function createProduct(ProductStoreRequest $request)
     {
 
-        // $validator = Validator::make(
-        //     $request->all(),
-        //     [
-        //         'name' => 'required|string',
-        //         'email' => 'email|required|unique:users',
-        //         'password' => 'required|min:8',
-        //         'phone' => 'required|min:10|max:10',
-        //         'image' => 'required|max:5048',
-        //     ]
-        // );
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'min_target' => 'required',
+                'description' => 'required',
+                'category_id' => 'required',
+                'user_id' => 'required',
+                'timer' => 'required',
+                'image' => 'required',
+            ]
+        );
 
-        // if ($validator->fails()) {
-        //     return response()->json(['errors' => $validator->errors()->all()]);
-        // }
-
-
-        $products = new Product();
-
-        if($request->hasFile('image')){
-            $image = $request->file('image');
-            $filename = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/img');
-            $image->move($destinationPath, $filename);
-            $products->image = $filename;
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-        $products->name = $request->name;
-        $products->min_target = $request->min_target;
-        $products->description = $request->description;
-        $products->category_id = $request->category_id;
-        $products->user_id= $request->user_id;
-        $products->timer= $request->timer;
+        $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
 
-        $products->save();
+        // Create Product
+        Product::create([
+            'name' => $request->name,
+            'min_target' => $request->min_target,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'user_id' => 1,
+            'image' => $imageName,
+            'timer' => $request->timer,
+            'winning_user' => null,
+            'status' => 1,
+            'highest_bid' => 0
+        ]);
 
-        return response($products, 201);
+        // Save Image in Storage folder
+        Storage::disk('public')->put($imageName, file_get_contents($request->image));
+
+
+
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $filename = time() . '.' . $image->getClientOriginalExtension();
+        //     $destinationPath = public_path('/img');
+        //     $image->move($destinationPath, $filename);
+        //     $products->image = $filename;
+        // }
+
+        // $products->name = $request->name;
+        // $products->min_target = $request->min_target;
+        // $products->description = $request->description;
+        // $products->category_id = $request->category_id;
+        // $products->user_id = 1;
+        // $products->timer = $request->timer;
+        // $products->winning_user = null;
+        // $products->status = 1;
+        // $products->highest_bid = 0;
+
+        // $products->save();
+
+        // Return Json Response
+        return response()->json([
+            'message' => "Product successfully created."
+        ], 200);
+
     }
 
     public function updateProduct(Request $request, $id)
     {
 
-        $products = new Product();
+        $products = Product::find($id);
+        if (!$products) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
         $products->name = $request->name;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = time().'.'.$image->getClientOriginalExtension();
+            $filename = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $filename);
             $products->image = $filename;
@@ -236,7 +270,6 @@ class ProductController extends Controller
 
         $products->save();
         return response()->json($products);
-
     }
 
 

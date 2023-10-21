@@ -38,7 +38,7 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
 
-Route::get('/user', [AuthenticatedSessionController::class, 'user'])
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
@@ -49,7 +49,8 @@ Route::get('/categories/{id}',[CategoryController::class, 'getCategory']);
 Route::post('/categories', [CategoryController::class, 'createCategory'] );
 Route::put('/categories/{id}', [CategoryController::class, 'updateCategory']);
 Route::delete('/categories/{id}', [CategoryController::class, 'deleteCategory']);
-
+// get products based on the category id
+Route::get('/categories/{id}/products', [ProductController::class, 'getProductsOnCategory']);
 
 Route::get('/products',[ProductController::class, 'getAllProduct']);
 Route::get('/products/{id}',[ProductController::class, 'getProduct']);

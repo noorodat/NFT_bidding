@@ -32,8 +32,8 @@ const Comments = ({ commentsUrl, currentUserId,userName }) => {
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
-  const addComment = (text, parentId,) => {
-    createCommentApi(text, parentId,).then((comment) => {
+  const addComment = (text, parentId,currentUserId,userName) => {
+    createCommentApi(text, parentId,currentUserId,userName).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
@@ -85,7 +85,7 @@ const Comments = ({ commentsUrl, currentUserId,userName }) => {
             <div className="col-8">
               <CommentForm
                 submitLabel="Add"
-                handleSubmit={(text) => addComment(text)} //
+                handleSubmit={(text) => addComment(text,null,currentUserId,userName)} //
                 handleCancel={() => setisform(false)}
               />
             </div>

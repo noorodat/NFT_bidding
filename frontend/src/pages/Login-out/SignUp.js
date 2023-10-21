@@ -30,6 +30,7 @@ const SignUp = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    // window.location.href = '/Login'; 
     //  console.log(userData.data.user.name);
 // line 32
 
@@ -54,7 +55,7 @@ const SignUp = () => {
       setName("");
       setPasswordConfirmation("");
       console.log(response.data);
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       console.log(e);
     }

@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import Login from './pages/Login-out/LogIn';
 import SignUp from './pages/Login-out/SignUp';
 import Activity_pages from './pages/Forum detailes/Activity_pages';
+import Products from './pages/products/Products';
 
 function App() {
   return (
@@ -31,8 +32,9 @@ function App() {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/About" element={<About />} />
         <Route path="/EditProfile" element={<EditProfile />} />
-        <Route path='/' element={<Home />}></Route>
+        {/* <Route path='/' element={<Home />}></Route> */}
         <Route path='/Login' element={<Login />}></Route>
+        <Route path='/Category/:id/Products' element={<Products />}></Route>
         <Route path='/SignUp' element={<SignUp />}></Route>
         <Route path='/Activity_pages' element={<Activity_pages />}></Route>
         <Route path='ProductDetails' element={<ProductDetails />}></Route>

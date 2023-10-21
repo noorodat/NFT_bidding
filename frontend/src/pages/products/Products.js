@@ -1,15 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import useApiData from '../../hooks/fetchAPI'
 import { data } from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, useParams  } from 'react-router-dom';
 import CountdownTimer from '../../hooks/countDownTimer';
+import axios from '../../components/axios';
 
 
 export default function Products() {
 
-  const productsAPI = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products';
+  const { id } = useParams();
 
-  const { data: products } = useApiData(productsAPI);
+  const productsAPI = `/categories/${id}/products`;
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Make an Axios GET request to the products API
+    axios.get(productsAPI)
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching products: ", error);
+      });
+  }, [productsAPI]);
 
   return (
 
@@ -61,7 +75,7 @@ export default function Products() {
           </div>
         </div>
       </div>
-      <div className="default-exp-wrapper default-exp-expand" style={{display: 'block'}}>
+      {/* <div className="default-exp-wrapper default-exp-expand" style={{display: 'block'}}>
         <div className="inner">
           <div className="filter-select-option">
             <label className="filter-leble">LIKES</label>
@@ -100,7 +114,7 @@ export default function Products() {
               <option value={4}>Open for offers</option>
             </select>
           </div>
-          {/* <div className="filter-select-option">
+          <div className="filter-select-option">
             <label className="filter-leble">Price Range</label>
             <div className="price_filter s-filter clear">
               <form action="#" method="GET">
@@ -120,9 +134,9 @@ export default function Products() {
                 </div>
               </form>
             </div>
-          </div> */}
+          </div>
         </div>
-      </div>
+      </div> */}
       <div className="row g-5">
         {/* start single product */}
         {
@@ -141,7 +155,7 @@ export default function Products() {
                   <div className="card-thumbnail">
                     <Link to={`/ProductDetails/${product.id}`}>
                       <img
-                        src="/assets/images/portfolio/portfolio-01.jpg"
+                        src={`http://127.0.0.1:8000/${product.image}`}
                         alt="NFT_portfolio"
                       />
                     </Link>

@@ -53,7 +53,7 @@ Route::delete('/categories/{id}', [CategoryController::class, 'deleteCategory'])
 
 Route::get('/products',[ProductController::class, 'getAllProduct']);
 Route::get('/products/{id}',[ProductController::class, 'getProduct']);
-Route::post('/products', [ProductController::class, 'createProduct'] );
+Route::post('/products', [ProductController::class, 'createProduct'])->middleware('web');
 Route::put('/products/{id}', [ProductController::class, 'updateProduct']);
 Route::delete('/products/{id}', [ProductController::class, 'deleteProduct']);
 // Get user data

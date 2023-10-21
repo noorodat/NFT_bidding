@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('image');
             $table->string('description');
             $table->bigInteger('min_target');
-            $table->bigInteger('highest_bid');
-            $table->time('timer');
-            $table->boolean('status');
+            $table->bigInteger('highest_bid')->nullable();
+            $table->date('timer');
+            $table->boolean('status')->nullable();
             $table->unsignedBigInteger('winning_user')->nullable();
             $table->foreign('winning_user')->references('id')->on('users');
             $table->unsignedBigInteger('category_id');

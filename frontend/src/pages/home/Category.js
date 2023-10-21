@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import sal from 'sal.js';
+import { Link } from 'react-router-dom';
 
 
 
@@ -73,13 +74,15 @@ const Category = () => {
                         </div>
                     </div>
 
+                                      
                     <div className="row g-5">
                         {loading ? (
                             <p>Loading...</p>
                         ) : (
                             data.map((Category, index) => (
-                                <div key={index} data-sal="" data-sal-delay="150" data-sal-duration="800" className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12">
-                                    <a href={Category.link} className="rn-collection-inner-one">
+                                <div key={index} data-sal="" className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12">
+                                    <Link to={`/Category/${Category.id}/Products`} className="rn-collection-inner-one">   
+                                    <a className="rn-collection-inner-one">
                                         <div className="collection-wrapper">
                                             <div className="collection-big-thumbnail">
                                             <img src={`http://127.0.0.1:8000/${Category.image}`} alt={Category.image} />
@@ -91,6 +94,7 @@ const Category = () => {
                                             </div>
                                         </div>
                                     </a>
+                                    </Link>
                                 </div>
                             ))
                         )}

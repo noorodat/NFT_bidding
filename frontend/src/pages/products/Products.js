@@ -1,15 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import useApiData from '../../hooks/fetchAPI'
 import { data } from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, useParams  } from 'react-router-dom';
 import CountdownTimer from '../../hooks/countDownTimer';
+import axios from '../../components/axios';
 
 
 export default function Products() {
 
-  const productsAPI = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products';
+  const { id } = useParams();
 
-  const { data: products } = useApiData(productsAPI);
+  const productsAPI = `/categories/${id}/products`;
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Make an Axios GET request to the products API
+    axios.get(productsAPI)
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching products: ", error);
+      });
+  }, [productsAPI]);
 
   return (
 

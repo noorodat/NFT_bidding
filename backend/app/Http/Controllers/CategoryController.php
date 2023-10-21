@@ -229,8 +229,6 @@ class CategoryController extends Controller
 
     }
 
-
-
     public function deleteCategory($id)
     {
         $categories = Category::find($id);
@@ -241,4 +239,6 @@ class CategoryController extends Controller
         $categories->delete();
         return response()->json(['message' => 'Category deleted']);
     }
+
+
 }

@@ -10,7 +10,8 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
-        saveState(user,action.payload)
+        saveState(state.user,action.payload)
+        console.log("USER FROM REDUCER", state.user);
         saveState(isAuthenticated,true)
       return {
         ...state,

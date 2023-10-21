@@ -38,7 +38,6 @@ const Header = ({ logoutSuccess }) => {
 
   console.log('isAuthenticated ', isAuthenticated);
   console.log("Is Logged In? ", sessionStorage.getItem('isLoggedIn'))
-
   const handleLogoutSession = () => {
     sessionStorage.setItem('isLoggedIn', false);
     console.log("IS NOW? ", sessionStorage.getItem('isLoggedIn'));

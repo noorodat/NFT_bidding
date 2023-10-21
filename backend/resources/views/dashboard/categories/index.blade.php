@@ -45,7 +45,6 @@ Categories list
                 <tr>
                     <th>#ID</th>
                     <th>category_name</th>
-                    <th style="width: 30%">category_description</th>
                     <th>category_image</th>
                     <th>Action</th>
                 </tr>
@@ -58,7 +57,6 @@ Categories list
                   @foreach ($categories as $category)
                   <td>{{ $i }}</td>
                   <td>{{ $category->name }}</td>
-                  <td>{{ $category->description }}</td>
                   <td><img src="{{ asset($category->image) }}" alt="" width="100px" height="100px"></td>
 
                   <td class="project-actions">

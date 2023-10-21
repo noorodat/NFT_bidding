@@ -1,7 +1,58 @@
-import React from 'react'
+import React, { useState, useRef } from 'react';
+import Products from '../products/Products'
+import useApiData from '../../hooks/fetchAPI';
+import { useParams } from 'react-router-dom';
+import CountdownTimer from '../../hooks/countDownTimer';
+import Swal from 'sweetalert2';
+
 
 
 export default function ProductDetails() {
+
+    const [formData, setFormData] = useState({
+        value: '',
+    });
+
+    const formRef = useRef(null);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const bidValue = formData.value;
+        if(bidValue < product.min_target) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You Can\'t Bid Lower Than The Minimum Traget',
+              });
+        }
+        // 
+        // else if(bidValue <= ) {
+
+        // }
+        // console.log("Bid Value:", bidValue); // Add this line to print the value
+    };
+
+    const { id } = useParams();// Replace with your target date
+    const productAPI = `http://127.0.0.1:8000/api/products/${id}`;
+    const { data: product } = useApiData(productAPI);
+
+
+    const categoryAPI = `http://127.0.0.1:8000/api/categories/${product.category_id}`;
+    const { data: category } = useApiData(categoryAPI);
+
+
+    const userAPI = `http://127.0.0.1:8000/api/users/${product.user_id}`;
+
+    const { data: user } = useApiData(userAPI);
+
+    // const { data: biddings } = useApiData(biddingsAPI);
+
+    let targetDate = product.timer;
+
+    // let currentBiddings = biddings.filter(bidding => bidding.product_id === product.id);
+
+    // console.log(currentBiddings);
+
     return (
         <div>
             {/* start product details area */}
@@ -24,7 +75,7 @@ export default function ProductDetails() {
                                         >
                                             <div className="rn-pd-thumbnail">
                                                 <img
-                                                    src="assets/images/portfolio/lg/portfolio-01.jpg"
+                                                    src={`http://127.0.0.1:8000/${product.image}`}
                                                     alt="Nft_Profile"
                                                 />
                                             </div>
@@ -63,89 +114,22 @@ export default function ProductDetails() {
                         <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
                             <div className="rn-pd-content-area">
                                 <div className="pd-title-area">
-                                    <h4 className="title">The Amazing Game</h4>
-                                    <div className="pd-react-area">
-                                        <div className="heart-count">
-                                            <i data-feather="heart" />
-                                            <span>33</span>
-                                        </div>
-                                        <div className="count">
-                                            <div className="share-btn share-btn-activation dropdown">
-                                                <button
-                                                    className="icon"
-                                                    type="button"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                >
-                                                    <svg
-                                                        viewBox="0 0 14 4"
-                                                        fill="none"
-                                                        width={16}
-                                                        height={16}
-                                                        className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                                    >
-                                                        <path
-                                                            fillRule="evenodd"
-                                                            clipRule="evenodd"
-                                                            d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                            fill="currentColor"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                                <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                                    <button
-                                                        type="button"
-                                                        className="btn-setting-text share-text"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#shareModal"
-                                                    >
-                                                        Share
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="btn-setting-text report-text"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#reportModal"
-                                                    >
-                                                        Report
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h4 className="title">{product.name}</h4>
                                 </div>
-                                <span className="bid">
+                                {/* <span className="bid">
                                     Height bid <span className="price">0.11wETH</span>
-                                </span>
-                                <h6 className="title-name">#22 Portal , Info bellow</h6>
+                                </span> */}
                                 <div className="catagory-collection">
                                     <div className="catagory">
                                         <span>
-                                            Catagory <span className="color-body">10% royalties</span>
+                                            Catagory <span className="color-body">{category.name}</span>
                                         </span>
-                                        <div className="top-seller-inner-one">
-                                            <div className="top-seller-wrapper">
-                                                <div className="thumbnail">
-                                                    <a href="#">
-                                                        <img
-                                                            src="assets/images/client/client-1.png"
-                                                            alt="Nft_Profile"
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div className="top-seller-content">
-                                                    <a href="#">
-                                                        <h6 className="name">Brodband</h6>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div className="rn-bid-details">
                                     <div className="tab-wrapper-one">
                                         <nav className="tab-button-one">
-                                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                            <div className="nav nav-tabs" style={{ justifyContent: 'space-around' }} id="nav-tab" role="tablist">
                                                 <button
                                                     className="nav-link"
                                                     id="nav-home-tab"
@@ -170,6 +154,9 @@ export default function ProductDetails() {
                                                 >
                                                     Details
                                                 </button>
+                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                    Minimum target: ${product.min_target}
+                                                </div>
                                             </div>
                                         </nav>
                                         <div className="tab-content rn-bid-content" id="nav-tabContent">
@@ -311,19 +298,19 @@ export default function ProductDetails() {
                                                     <div className="top-seller-inner-one">
                                                         {/* <p class="disc">Lorem ipsum dolor, sit amet consectetur adipisicing
                                               elit. Doloribus debitis nemo deserunt.</p> */}
-                                                        <h6 className="name-title">Owner</h6>
+                                                        <h6 style={{ textAlign: 'left' }} className="name-title">Owner</h6>
                                                         <div className="top-seller-wrapper">
                                                             <div className="thumbnail">
                                                                 <a href="#">
                                                                     <img
-                                                                        src="assets/images/client/client-1.png"
+                                                                        src={`${user.image}`}
                                                                         alt="Nft_Profile"
                                                                     />
                                                                 </a>
                                                             </div>
                                                             <div className="top-seller-content">
                                                                 <a href="#">
-                                                                    <h6 className="name">Brodband</h6>
+                                                                    <h6 className="name">{user.name}</h6>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -444,20 +431,20 @@ export default function ProductDetails() {
                                     <div className="place-bet-area">
                                         <div className="rn-bet-create">
                                             <div className="bid-list winning-bid">
-                                                <h6 className="title">Winning bit</h6>
+                                                <h6 style={{ textAlign: 'left' }} className="title">Winning bit</h6>
                                                 <div className="top-seller-inner-one">
                                                     <div className="top-seller-wrapper">
                                                         <div className="thumbnail">
                                                             <a href="#">
                                                                 <img
-                                                                    src="assets/images/client/client-7.png"
+                                                                    src={`${user.image}`}
                                                                     alt="Nft_Profile"
                                                                 />
                                                             </a>
                                                         </div>
-                                                        <div className="top-seller-content">
+                                                        <div className="top-seller-content" style={{ display: 'flex' }}>
                                                             <span className="heighest-bid">
-                                                                Heighest bid <a href="#">Atif aslam</a>
+                                                                Heighest bid <a href="#">{user.first_name} {user.last_name}</a>
                                                             </span>
                                                             <span className="count-number">0.115wETH</span>
                                                         </div>
@@ -465,25 +452,26 @@ export default function ProductDetails() {
                                                 </div>
                                             </div>
                                             <div className="bid-list left-bid">
-                                                <h6 className="title">Auction has ended</h6>
-                                                <div className="countdown mt--15" data-date="2025-12-09">
+                                                <h6 className="title">Auction will end in:</h6>
+                                                {/* <div className="countdown mt--15" data-date="2023-12-09">
                                                     <div className="countdown-container days">
-                                                        <span className="countdown-value">87</span>
-                                                        <span className="countdown-heading">D's</span>
+                                                        <span className="countdown-value"></span>
+                                                        <span className="countdown-heading"></span>
                                                     </div>
                                                     <div className="countdown-container hours">
-                                                        <span className="countdown-value">23</span>
-                                                        <span className="countdown-heading">H's</span>
+                                                        <span className="countdown-value"></span>
+                                                        <span className="countdown-heading"></span>
                                                     </div>
                                                     <div className="countdown-container minutes">
-                                                        <span className="countdown-value">38</span>
-                                                        <span className="countdown-heading">Min's</span>
+                                                        <span className="countdown-value"></span>
+                                                        <span className="countdown-heading"></span>
                                                     </div>
                                                     <div className="countdown-container seconds">
-                                                        <span className="countdown-value">27</span>
-                                                        <span className="countdown-heading">Sec</span>
+                                                        <span className="countdown-value"></span>
+                                                        <span className="countdown-heading"></span>
                                                     </div>
-                                                </div>
+                                                </div> */}
+                                                <CountdownTimer targetDate={targetDate} productName={product.id} />
                                             </div>
                                         </div>
                                         {/* <a class="btn btn-primary-alta mt--30" href="#">Place a Bid</a> */}
@@ -1261,27 +1249,32 @@ export default function ProductDetails() {
                                 <div className="bid-content">
                                     <div className="bid-content-top">
                                         <div className="bid-content-left">
-                                            <input id="value" type="text" name="value" />
-                                            <span>wETH</span>
+                                            <form ref={formRef} className='w-100' >
+                                                <input
+                                                    min={product.min_target}
+                                                    id="value"
+                                                    type="number"
+                                                    name="value"
+                                                    onChange={(e) => setFormData({ value: e.target.value })} />
+                                            </form>
+                                            <span>$</span>
                                         </div>
                                     </div>
                                     <div className="bid-content-mid">
                                         <div className="bid-content-left">
                                             <span>Your Balance</span>
-                                            <span>Service fee</span>
                                             <span>Total bid amount</span>
                                         </div>
                                         <div className="bid-content-right">
-                                            <span>9578 wETH</span>
-                                            <span>10 wETH</span>
-                                            <span>9588 wETH</span>
+                                            <span>${user.balance}</span>
+                                            <span>$0</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="bit-continue-button">
-                                    <a href="connect.html" className="btn btn-primary w-100">
+                                    <button onClick={handleSubmit} type='submit' className="btn btn-primary w-100">
                                         Place a bid
-                                    </a>
+                                    </button>
                                     <button
                                         type="button"
                                         className="btn btn-primary-alta mt--10"
@@ -1295,7 +1288,6 @@ export default function ProductDetails() {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

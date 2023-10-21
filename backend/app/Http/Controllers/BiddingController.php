@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Bidding;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BiddingController extends Controller
@@ -22,6 +24,10 @@ class BiddingController extends Controller
         $product = Product::get();
         $biddings = Bidding::get();
         return view('dashboard.biddings.index', compact('biddings', 'user', 'product'));
+        $user=User::get();
+        $product=Product::get();
+        $biddings=Bidding::get();
+       return view('dashboard.biddings.index', compact('biddings','user','product'));
     }
 
 
@@ -126,4 +132,8 @@ class BiddingController extends Controller
     
         return response()->json(['message' => 'Bidding deleted']);
     }
+}
+        //
+    }
+    
 }

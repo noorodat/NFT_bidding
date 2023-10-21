@@ -1,62 +1,34 @@
-// userReducer.js
-
+// authReducer.js
+import { loadState, saveState } from "../sessionStorage";
+const user = "user";
+const isAuthenticated = "isAuthenticated";
 const initialState = {
-  user: null, // Initially, the user is not logged in
+  user: loadState(user,null),
+  isAuthenticated: loadState(isAuthenticated,false),
 };
 
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_USER':
+    case 'LOGIN_SUCCESS':
+        saveState(state.user,action.payload)
+        console.log("USER FROM REDUCER", state.user);
+        saveState(isAuthenticated,true)
       return {
         ...state,
-        user: action.payload, // Set the user data in the store
+        user: action.payload,
+        isAuthenticated: true,
+      };
+    case 'LOGOUT_SUCCESS':
+        saveState(user,null)
+        saveState(isAuthenticated,false)
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
       };
     default:
       return state;
   }
 };
 
-export default userReducer;
-
-
-
-// const initialState = {
-//   users: [],
-// };
-
-// const userReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case 'GET_USERS':
-//       return {
-//         ...state,
-//         users: action.payload,
-//       };
-//     case 'ADD_USER':
-//       return {
-//         ...state,
-//         users: [...state.users, action.payload],
-//       };
-//     case 'UPDATE_USER':
-//       const updatedUserIndex = state.users.findIndex(user => user.id === action.payload.id);
-
-//       if (updatedUserIndex !== -1) {
-//         const updatedUsers = [...state.users];
-//         updatedUsers[updatedUserIndex] = action.payload;
-//         return {
-//           ...state,
-//           users: updatedUsers,
-//         };
-//       }
-//       return state;
-
-//     case 'DELETE_USER':
-//       return {
-//         ...state,
-//         users: state.users.filter((user) => user.id !== action.payload),
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
-// export default userReducer;
+export default authReducer;

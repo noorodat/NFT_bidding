@@ -33,29 +33,21 @@
                         @endif
                       </div>
                     <div class="card">
-                        <div class="card-header">
-                            <!-- Add a link to create a new user -->
-                            <a class="btn btn-primary btn-sm float-left" href="{{ route('products.create') }}">
-                                <i class="fas fa-shopping-cart nav-icon"></i> Add New Product
-                            </a>
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>category_Name</th>
-                                        <th>product_name</th>
-                                        <th  style="width: 30%">product_description</th>
-                                        <th>product_image</th>
-                                        <th>product_price</th>
-                                        <th>Availability</th>
-                                        <th>Quntity</th>
-                                        <th>Unit</th>
-                                        <th>weight</th>
-                                        <th>Discount</th>
-                                        <th>Expire_date</th>
+                                        <th>Product Name</th>
+                                        <th>Category Name</th>
+                                        <th>User Name</th>
+                                        <th>Product Description</th>
+                                        <th>Product Image</th>
+                                        <th>Minimum Target</th>
+                                        <th>Status</th>
+                                        <th>Timer</th>
+                                        <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -66,25 +58,18 @@
                                         @endphp
                                         @foreach ($products as $product)
                                             <td>{{ $i }}</td>
-                                            <td>{{ $product->category->name }}</td>
                                             <td>{{ $product->name }}</td>
+                                            <td>{{ $product->category->name }}</td>
+                                            <td>{{ $product->user->name }}</td>
                                             <td>{{ $product->description }}</td>
-                                            <td><img src="{{ asset($product->main_image) }}" alt="" width="100px" height="100px"></td>
-                                            <td>{{ $product->main_price }}</td>
-                                            <td>{{ $product->availability }}</td>
-                                            <td>{{ $product->Qty }}</td>
-                                            <td>{{ $product->main_unit }}</td>
-                                            <td>{{ $product->main_weight }}</td>
-                                            <td>{{ $product->discount->percent }}</td>
-                                            <td>{{ $product->Expiration_Date }}</td>
+                                            <td><img src="{{ asset($product->image) }}" alt="" width="100px" height="100px"></td>
+                                            <td>{{ $product->min_target }}</td>
+                                            <td>{{ $product->status }}</td>
+                                            <td>{{ $product->timer }}</td>
+                                            <td>{{ $product->created_at}}</td>
 
                                             <td class="project-actions">
-                                                <div style="margin-bottom: 5px;">
-                                                    <a class="btn btn-info btn-sm" href="{{ route('products.edit', $product->id) }}" style="width: 100%;">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                        Edit
-                                                    </a>
-                                                </div>
+
 
                                                 <div style="margin-bottom: 5px;">
                                                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">

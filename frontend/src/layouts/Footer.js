@@ -11,49 +11,49 @@ export default function Footer() {
           <ul className="nu-brand-area">
             <li>
               <img
-                src="assets/images/brand/brand-01.png"
+                src="/assets/images/brand/brand-01.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-03.png"
+                src="/assets/images/brand/brand-03.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-06.png"
+                src="/assets/images/brand/brand-06.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-07.png"
+                src="/assets/images/brand/brand-07.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-04.png"
+                src="/assets/images/brand/brand-04.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-02.png"
+                src="/assets/images/brand/brand-02.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-01.png"
+                src="/assets/images/brand/brand-01.png"
                 alt="nuron-brand_nft"
               />
             </li>
             <li>
               <img
-                src="assets/images/brand/brand-03.png"
+                src="/assets/images/brand/brand-03.png"
                 alt="nuron-brand_nft"
               />
             </li>
@@ -68,10 +68,10 @@ export default function Footer() {
             <div className="footer-left">
               <div className="logo-thumbnail logo-custom-css">
                 <a className="logo-light" href="index.html">
-                  <img src="assets/images/logo/logo-white.png" alt="nft-logo" />
+                  <img src="/assets/images/logo/logo-white.png" alt="nft-logo" />
                 </a>
                 <a className="logo-dark" href="index.html">
-                  <img src="assets/images/logo/logo-dark.png" alt="nft-logo" />
+                  <img src="/assets/images/logo/logo-dark.png" alt="nft-logo" />
                 </a>
               </div>
               <p className="rn-footer-describe">
@@ -167,7 +167,7 @@ export default function Footer() {
                 <div className="thumbnail">
                   <a href="product-details.html">
                     <img
-                      src="assets/images/portfolio/portfolio-01.jpg"
+                      src="/assets/images/portfolio/portfolio-01.jpg"
                       alt="Product Images"
                     />
                   </a>
@@ -184,7 +184,7 @@ export default function Footer() {
                 <div className="thumbnail">
                   <a href="product-details.html">
                     <img
-                      src="assets/images/portfolio/portfolio-02.jpg"
+                      src="/assets/images/portfolio/portfolio-02.jpg"
                       alt="Product Images"
                     />
                   </a>
@@ -201,7 +201,7 @@ export default function Footer() {
                 <div className="thumbnail">
                   <a href="product-details.html">
                     <img
-                      src="assets/images/portfolio/portfolio-03.jpg"
+                      src="/assets/images/portfolio/portfolio-03.jpg"
                       alt="Product Images"
                     />
                   </a>

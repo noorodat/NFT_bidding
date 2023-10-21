@@ -9,11 +9,11 @@
 @endsection
 
 @section('title_page1')
-    User - Orders
+    Biddings
 @endsection
 
 @section('title_page2')
-    User - Orders list
+    Biddings list
 @endsection
 
 @section('content')
@@ -31,12 +31,10 @@
                                 <thead>
                                     <tr>
                                         <th>#ID</th>
-                                        <th>User_Name</th>
-                                        <th>Total_price</th>
-                                        <th>require_date</th>
-                                        <th>delivery_id</th>
-                                        <th>payment_id</th>
-                                        <th>created_at</th>
+                                        <th>User Name</th>
+                                        <th>Product Name</th>
+                                        <th>Amount</th>
+                                        <th>Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,10 +45,8 @@
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>{{ $bidding->user->name }}</td>
-                                            <td>{{ $bidding->total_price }}</td>
-                                            <td>{{ $bidding->require_date }}</td>
-                                            <td>{{ $bidding->delivery_id }}</td>
-                                            <td>{{ $bidding->payment_id }}</td>
+                                            <td>{{ $bidding->products->name }}</td>
+                                            <td>{{ $bidding->amount }}</td>
                                             <td>{{ $bidding->created_at }}</td>
                                             @php
                                             $i++;

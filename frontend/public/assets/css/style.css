@@ -6972,7 +6972,7 @@ Background Image
 }
 
 .bg_image--9 {
-  background-image: url(../images/bg/bg-image-9.jpg);
+  background-image: url(https://rainbowit.net/html/nuron/assets/images/bg/bg-image-9.jpg);
 }
 
 .bg_image--10 {
@@ -15223,6 +15223,7 @@ figcaption {
   margin-right: 15px;
   border: 1px solid var(--color-border);
   background: var(--background-color-4);
+  opacity: 1;
 }
 .odometer-area-slide .single-odometer:last-child {
   margin-right: 0;
@@ -15753,6 +15754,7 @@ figcaption {
   margin-bottom: 5px;
   width: 100%;
   margin-right: 0;
+  opacity: 1;
 }
 .expo-15-wrapper .odometer-area-slide .single-odometer:last-child {
   margin-bottom: 0;
@@ -16160,6 +16162,7 @@ figcaption {
 
 .single-odometer {
   transition: var(--transition);
+  opacity: 1;
 }
 .single-odometer.banner {
   padding: 92px 30px 25px 30px;
@@ -22734,7 +22737,8 @@ fieldset.checkbox-group {
 .forum-ans-box {
   margin-top: 30px;
   padding: 30px;
-  background: var(--background-color-1);
+  background: #80809557;
+  /* sara */
   border-radius: 8px;
   border: 1px solid var(--color-border);
   align-items: center;
@@ -22743,7 +22747,7 @@ fieldset.checkbox-group {
 .forum-single-ans .ans-header {
   display: flex;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 6px;
 }
 .forum-single-ans .ans-header img {
   border-radius: 50%;
@@ -22759,11 +22763,14 @@ fieldset.checkbox-group {
   margin-right: 10px;
 }
 .forum-single-ans .ans-content p {
-  margin-bottom: 25px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-left: 59px;
 }
 .forum-single-ans .ans-content .reaction {
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
 }
 .forum-single-ans .ans-content .reaction .like {
   margin-right: 15px;
@@ -24099,6 +24106,7 @@ body.active-light-mode {
   background-image: linear-gradient(to top, #0c0c2100 0%, #edf0f2 87%);
 }
 .active-light-mode .odometer-area-slide .single-odometer {
+  opacity: 1;
   background: #fff;
 }
 .active-light-mode .single-community-box .rn-community-footer .community-reaction a i {
@@ -24168,3 +24176,32 @@ body.active-light-mode {
   background-image: linear-gradient(to top, #0c0c2100 0%, #edf0f2ab 87%);
 }
 /*# sourceMappingURL=../maps/style.css.map */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.userProfile ul li a {
+  display: block;
+  position: relative;
+  z-index: 2;
+  background: var(--color-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.userProfile {
+  border: 0 none;
+    padding: 0;
+    width: 40px;
+    background: var(--color-secondary);
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    align-items: center;
+    border-radius: 100%;
+    border: 1px solid var(--color-border);
+    transition: 0.4s;
+}

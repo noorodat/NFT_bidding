@@ -32,16 +32,7 @@ Edit Category
                 </span>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="description">Category description:</label>
-            <input type="text" name="description" class="form-control " required
-                value="{{ old('description', $categories->description) }}">
-            {{-- @error('description')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror --}}
-        </div>
+    
         <div class="form-group">
             <label for="image">Category Image:</label>
             <input type="file" class="form-control" name="image" value="{{ $categories->image }}"  width="100px" height="100px">

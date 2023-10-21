@@ -9,11 +9,11 @@
 @endsection
 
 @section('title_page1')
-    Periods
+    Emails
 @endsection
 
 @section('title_page2')
-    Periods list
+Emails list
 @endsection
 
 @section('content')
@@ -29,12 +29,6 @@
                         </div>
                     @endif
                     <div class="card">
-                        <div class="card-header">
-                            <!-- Add a link to create a new job -->
-                            <a class="btn btn-primary btn-sm float-left" href="{{ route('emails.create') }}">
-                                <i class="fas fa-calendar nav-icon"></i> Add New Period
-                            </a>
-                        </div>
 
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -42,10 +36,10 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: center; vertical-align: middle;">#ID</th>
-                                        <th style="text-align: center; vertical-align: middle;">Plan Name</th>
-                                        <th style="text-align: center; vertical-align: middle;">Period_title</th>
-                                        <th style="text-align: center; vertical-align: middle;">Price</th>
-                                        <th style="text-align: center; vertical-align: middle;">Action</th>
+                                        <th style="text-align: center; vertical-align: middle;">Name</th>
+                                        <th style="text-align: center; vertical-align: middle;">Email</th>
+                                        <th style="text-align: center; vertical-align: middle;">Subject</th>
+                                        <th style="text-align: center; vertical-align: middle;">Messege</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,22 +49,10 @@
                                     @foreach ($emails as $email)
                                         <tr>
                                             <td style="text-align: center; vertical-align: middle;">{{ $i }}</td>
-                                            <td style="text-align: center; vertical-align: middle;">{{ $email->plan->name }}</td>
-                                            <td style="text-align: center; vertical-align: middle;">{{ $email->title}}</td>
-                                            <td style="text-align: center; vertical-align: middle;">{{ $email->price }}</td>
-
-                                            <td class="project-actions" style="text-align: center; vertical-align: middle;">
-                                                <a class="btn btn-info btn-sm" href="{{ route('emails.edit', $email->id) }}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                    Edit
-                                                </a>
-                                                <form action="{{ route('emails.destroy', $email->id) }}" method="POST" style="display: inline;">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this email?')">Delete</button>
-                                                </form>
-                                            </td>
-
+                                            <td style="text-align: center; vertical-align: middle;">{{ $email->name }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $email->email}}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $email->subject }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $email->messege }}</td>
                                         </tr>
                                         @php
                                             $i++;

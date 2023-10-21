@@ -294,12 +294,22 @@ const Header = ({ logoutSuccess }) => {
                                     404 <i data-feather="alert-triangle" />
                                   </Link>
                                 </li>
-                                <li>
+
+                                {isAuthenticated &&( <li>
                                   <Link to="Activity_pages">
                                     Forum &amp; Community
                                     <i data-feather="message-circle" />
                                   </Link>
-                                </li>
+                                </li>)}
+                                {!isAuthenticated &&( <li>
+                                  <Link to="/Login">
+                                    Forum &amp; Community
+                                    <i data-feather="message-circle" />
+                                  </Link>
+                                </li>)}
+
+                                
+                               
                               </ul>
                             </div>
                             <div className="col-lg-3 single-mega-item">
@@ -348,43 +358,7 @@ const Header = ({ logoutSuccess }) => {
                         </div>
                       </div>
                     </li>
-                    <li className=" has-menu-child-item">
-                      <Link className="down" href="blog.html">
-                        Blog
-                      </Link>
-                      <ul className="submenu">
-                        <li>
-                          <Link to="blog-single-col.html">
-                            Blog Single Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-col-two.html">
-                            Blog Two Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-col-three.html">
-                            Blog Three Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog.html">
-                            Blog Four Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-details.html">
-                            Blog Details
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
+                  
                     <li>
                       <Link to="contact.html">Contact</Link>
                     </li>
@@ -519,7 +493,7 @@ const Header = ({ logoutSuccess }) => {
 
                       {isAuthenticated && (
                         <>
-                          <ul className="list-inner">
+                         
                             <li>
                               <Link to="author.html">My Profile</Link>
                             </li>
@@ -532,7 +506,7 @@ const Header = ({ logoutSuccess }) => {
                             <li>
                               <Link to="/LogOut">Sign Out</Link>
                             </li>
-                          </ul>
+                       
                         </>
                       )}
                     </div>

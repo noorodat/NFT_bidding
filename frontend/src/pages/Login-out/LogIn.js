@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Col, Input, Row } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "../../components/axios";
-
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/actions/userActions';
 //Import Image;
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const LogIn = () => {
+  const dispatch = useDispatch();
   document.title = "Log In";
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -29,6 +31,7 @@ const LogIn = () => {
       setemail("");
       setpassword("");
       navigate("/");
+      dispatch(login(email, password));
       console.log(response.data); // Log the user information
     } catch (error) {
       console.log(error);

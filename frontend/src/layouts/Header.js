@@ -12,10 +12,10 @@ export default function Header() {
         <div className="header-left">
           <div className="logo-thumbnail logo-custom-css">
             <Link className="logo-light" href="index.html">
-              <img src="assets/images/logo/logo-white.png" alt="nft-logo" />
+              <img src="/assets/images/logo/logo-white.png" alt="nft-logo" />
             </Link>
             <Link className="logo-dark" href="index.html">
-              <img src="assets/images/logo/logo-dark.png" alt="nft-logo" />
+              <img src="/assets/images/logo/logo-dark.png" alt="nft-logo" />
             </Link>
           </div>
           <div className="mainmenu-wrapper">
@@ -400,7 +400,7 @@ export default function Header() {
             <div className="setting-option rn-icon-list user-account">
               <div className="icon-box">
                 <Link to ="author.html">
-                  <img src="assets/images/icons/boy-avater.png" alt="Images" />
+                  <img src="/assets/images/icons/boy-avater.png" alt="Images" />
                 </Link>
                 <div className="rn-dropdown">
                   <div className="rn-inner-top">
@@ -417,7 +417,7 @@ export default function Header() {
                         <div className="thumbnail">
                           <Link to ="product-details.html">
                             <img
-                              src="assets/images/portfolio/portfolio-07.jpg"
+                              src="/assets/images/portfolio/portfolio-07.jpg"
                               alt="Nft Product Images"
                             />
                           </Link>
@@ -434,7 +434,7 @@ export default function Header() {
                         <div className="thumbnail">
                           <Link to ="product-details.html">
                             <img
-                              src="assets/images/portfolio/portfolio-01.jpg"
+                              src="/assets/images/portfolio/portfolio-01.jpg"
                               alt="Nft Product Images"
                             />
                           </Link>
@@ -492,7 +492,7 @@ export default function Header() {
                 >
                   <img
                     className="sun-image"
-                    src="assets/images/icons/sun-01.svg"
+                    src="/assets/images/icons/sun-01.svg"
                     alt="Sun images"
                   />
                 </Link>
@@ -505,7 +505,7 @@ export default function Header() {
                 >
                   <img
                     className="Victor Image"
-                    src="assets/images/icons/vector.svg"
+                    src="/assets/images/icons/vector.svg"
                     alt="Vector Images"
                   />
                 </Link>
@@ -522,10 +522,10 @@ export default function Header() {
     <div className="header-top">
       <div className="logo logo-custom-css">
         <Link className="logo-light" href="index.html">
-          <img src="assets/images/logo/logo-white.png" alt="nft-logo" />
+          <img src="/assets/images/logo/logo-white.png" alt="nft-logo" />
         </Link>
         <Link className="logo-dark" href="index.html">
-          <img src="assets/images/logo/logo-dark.png" alt="nft-logo" />
+          <img src="/assets/images/logo/logo-dark.png" alt="nft-logo" />
         </Link>
       </div>
       <div className="close-menu">

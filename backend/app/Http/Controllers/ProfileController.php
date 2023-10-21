@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Product;
+
 
 class ProfileController extends Controller
 {
@@ -56,5 +59,27 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        return response()->json(['user' => $user]);
+    }
+
+    // public function updateUserProfile(Request $request, $id)
+    // {
+    //     $user = User::find($id);
+    //     $user->name = $request->input('name');
+    //     $user->email = $request->input('email');
+    //     $user->save();
+
+    //     return response()->json(['user' => $user]);
+    // }
+
+    public function ShowUserPost()
+    {
+        $products = Product::all();
+        return response()->json($products);
     }
 }

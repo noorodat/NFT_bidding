@@ -19,7 +19,7 @@ function useApiData(apiUrl) {
     }, [apiUrl]);
 
 
-    return { data};
+    return { data };
 }
 
 export default useApiData;

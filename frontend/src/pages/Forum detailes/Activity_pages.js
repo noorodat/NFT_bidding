@@ -1,26 +1,36 @@
-import React from 'react';
-import Comments from './Ques';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux"; // Import the connect function
+import Comments from "./Ques";
+import Sidebar from "./Sidebar";
+import { Container, Col, Row } from "reactstrap";
 
+const Activity_pages = ({ user }) => { // Pass 'user' as a prop
 
-
-const Activity_pages = () => {
-  const userID = useSelector((state) => state.user.id);
-  const userName = useSelector((state) => state.user.name);
-
-  
+  // ...
 
   return (
-    <div>
-      
-      <Comments
-        commentsUrl="http://localhost:3004/comments"
-        currentUserId={userID}
-        userName={userName}
-        
-      />
-    </div>
+    <React.Fragment>
+      <Container>
+        <Row>
+          <Col lg={8}>
+            <Comments
+              commentsUrl="http://localhost:3004/comments"
+              currentUserId={user.id}
+              userName={user.name}
+            />
+          </Col>
+          <Col lg={4}>
+            <Sidebar />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
   );
 };
 
-export default Activity_pages;
+// Connect the component to the Redux state
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Activity_pages);

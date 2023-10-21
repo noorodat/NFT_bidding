@@ -40,6 +40,7 @@ const Header = ({ logoutSuccess }) => {
   console.log("Is Logged In? ", sessionStorage.getItem('isLoggedIn'))
   const handleLogoutSession = () => {
     sessionStorage.setItem('isLoggedIn', false);
+    sessionStorage.removeItem('userID');
     console.log("IS NOW? ", sessionStorage.getItem('isLoggedIn'));
   }
 
@@ -295,21 +296,21 @@ const Header = ({ logoutSuccess }) => {
                                   </Link>
                                 </li>
 
-                                {isAuthenticated &&( <li>
+                                {isAuthenticated && (<li>
                                   <Link to="Activity_pages">
                                     Forum &amp; Community
                                     <i data-feather="message-circle" />
                                   </Link>
                                 </li>)}
-                                {!isAuthenticated &&( <li>
+                                {!isAuthenticated && (<li>
                                   <Link to="/Login">
                                     Forum &amp; Community
                                     <i data-feather="message-circle" />
                                   </Link>
                                 </li>)}
 
-                                
-                               
+
+
                               </ul>
                             </div>
                             <div className="col-lg-3 single-mega-item">
@@ -358,7 +359,7 @@ const Header = ({ logoutSuccess }) => {
                         </div>
                       </div>
                     </li>
-                  
+
                     <li>
                       <Link to="contact.html">Contact</Link>
                     </li>
@@ -402,20 +403,17 @@ const Header = ({ logoutSuccess }) => {
                   </div>
                 </form>
               </div>
-              <div
-                className="setting-option header-btn rbt-site-header"
-                id="rbt-site-header"
-              >
-                <div className="icon-box">
-                  <Link
-                    id="connectbtn"
-                    className="btn btn-primary-alta btn-small"
-                    href="connect.html"
-                  >
-                    Wallet
-                  </Link>
-                </div>
-              </div>
+              {
+                sessionStorage.getItem('isLoggedIn') === 'true' ? (
+                  <div className="setting-option header-btn rbt-site-header" id="rbt-site-header">
+                    <div className="icon-box">
+                      <Link to="/Wallet" id="connectbtn" className="btn btn-primary-alta btn-small">
+                        Wallet
+                      </Link>
+                    </div>
+                  </div>
+                ) : null // Added null for the case when the condition is false
+              }
               <div className="setting-option rn-icon-list notification-badge">
                 <div className="icon-box">
                   <Link to="activity.html">
@@ -493,20 +491,20 @@ const Header = ({ logoutSuccess }) => {
 
                       {isAuthenticated && (
                         <>
-                         
-                            <li>
-                              <Link to="author.html">My Profile</Link>
-                            </li>
-                            <li>
-                              <Link to="edit-profile.html">Edit Profile</Link>
-                            </li>
-                            <li>
-                              <Link to="connect.html">Manage funds</Link>
-                            </li>
-                            <li>
-                              <Link to="/LogOut">Sign Out</Link>
-                            </li>
-                       
+
+                          <li>
+                            <Link to="author.html">My Profile</Link>
+                          </li>
+                          <li>
+                            <Link to="edit-profile.html">Edit Profile</Link>
+                          </li>
+                          <li>
+                            <Link to="connect.html">Manage funds</Link>
+                          </li>
+                          <li>
+                            <Link to="/LogOut">Sign Out</Link>
+                          </li>
+
                         </>
                       )}
                     </div>
@@ -1018,4 +1016,3 @@ const Header = ({ logoutSuccess }) => {
 
 };
 export default Header;
-

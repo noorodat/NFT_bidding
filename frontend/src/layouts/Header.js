@@ -242,7 +242,7 @@ export default function Header() {
                               </Link>
                             </li>
                             <li>
-                              <Link to ="forum-community.html">
+                              <Link to ="Activity_pages">
                                 Forum &amp; Community
                                 <i data-feather="message-circle" />
                               </Link>
@@ -871,10 +871,10 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link to ="forum-community.html">
+                      {/* <Link to ="/Activity_pages">
                         Forum &amp; Community
                         <i data-feather="message-circle" />
-                      </Link>
+                      </Link> */}
                     </li>
                   </ul>
                 </div>
@@ -912,7 +912,7 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link to ="forum-details.html">
+                      <Link to ="Activity_pages">
                         Forum Details <i data-feather="message-circle" />
                       </Link>
                     </li>

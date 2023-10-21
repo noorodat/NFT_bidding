@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Login from './pages/Login-out/LogIn';
 import SignUp from './pages/Login-out/SignUp';
+import Activity_pages  from './pages/Forum detailes/Activity_pages';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/Login' element={<Login/>}></Route>
         <Route path='/SignUp' element={<SignUp/>}></Route>
+        <Route path='/Activity_pages' element={<Activity_pages/>}></Route>
         <Route path='ProductDetails' element={<ProductDetails/>}></Route>
       </Routes>
       {/* <Login/> */}

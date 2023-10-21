@@ -19,6 +19,7 @@ const LogIn = () => {
     try {
       const csrfResponse = await axios.get("/get-csrf-token");
       const csrfToken = csrfResponse.data.csrf_token;
+     
 
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 

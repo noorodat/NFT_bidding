@@ -119,7 +119,7 @@ const Comment = ({
                       </div>
                     </div>
                   </div>
-                  {  (isAuthenticated) && (
+                  {/* {  (isAuthenticated) && ( */}
                     <div>
                       <div className="community-content">
                         {!isEditing && (
@@ -187,10 +187,10 @@ const Comment = ({
                         </div>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
                 </div>
 
-                {(isAuthenticated) && (
+                {/* {(isAuthenticated) && ( */}
                   <div>
                     {isReplying && (
                       <>
@@ -209,7 +209,7 @@ const Comment = ({
                       </>
                     )}
                   </div>
-                )}
+                {/* } */}
               </div>
             </div>
           </div>

@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import axios from "../../components/axios";
-import { Form, FormControl } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
-// import axios from 'axios';
-
 import { connect } from 'react-redux';
-import { addUser } from '../../redux/actions/userActions';
+import { loginSuccess } from '../../redux/actions/userActions';
 
-// sara
+
 
 const SignUp = () => {
   document.title = "Sign Up";
 
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-  const [name, setname] = useState("");
-  const [password_confirmation, setpasswordConfirmation] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [password_confirmation, setPasswordConfirmation] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: '',
-    phone: '',
     email: '',
     password: '',
-    image: '',
+    balance: 0,
   });
+
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -31,37 +29,31 @@ const SignUp = () => {
     });
   };
 
-  // You need to define the `handleLogin` function
   const handleRegister = async (e) => {
-    e.preventDefault(); // Use e.preventDefault() to prevent form submission
-    addUser(user);
-    setUser({
-      name: '',
-      phone: '',
-      email: '',
-      password: '',
-      image: '',
-    });
+    e.preventDefault();
+    //  console.log(userData.data.user.name);
+// line 32
 
     try {
       const csrfResponse = await axios.get("/get-csrf-token");
       const csrfToken = csrfResponse.data.csrf_token;
-      console.log(name);
+      console.log(user.name);
+      console.log(user.email);
+      console.log(user.password);
       console.log(csrfToken);
-      console.log(csrfResponse );
+      console.log(csrfResponse);
 
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
       const response = await axios.post("/register", {
-        name,
-        email,
-        password,
-        password_confirmation,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        password_confirmation: user.password,
       });
-      setemail("");
-      setpassword("");
-      setname("");
-      setpasswordConfirmation("");
-      console.log("YESYESYESYES");
+      setEmail("");
+      setPassword("");
+      setName("");
+      setPasswordConfirmation("");
       console.log(response.data);
       navigate("/");
     } catch (e) {
@@ -74,7 +66,6 @@ const SignUp = () => {
       <div>
         <div className="main-content">
           <div className="page-content">
-            {/* <!-- start page title area --> */}
             <div className="rn-breadcrumb-inner ptb--30">
               <div className="container">
                 <div className="row align-items-center">
@@ -95,82 +86,66 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-            {/* <!-- end page title area --> */}
 
-            {/* <!-- login form --> */}
             <div className="login-area rn-section-gapTop">
               <div className="container">
                 <div className="row g-5">
                   <div className="offset-2 col-lg-4 col-md-6 ml_md--0 ml_sm--0 col-sm-12">
                     <div className="form-wrapper-one registration-area">
                       <h4>Sign up</h4>
-                      <Form onSubmit={handleRegister} className="auth-form">
+                      <Form method="POST" onSubmit={handleRegister} className="auth-form">
                         <div className="mb-5">
                           <label htmlFor="firstName" className="form-label">
-                            First name
+                            Name
                           </label>
                           <Form.Control
-                           type="text"
-                           value={name}
-                           id="firstName"
-                          // onChange={(e) =>setname(e.target.value)}
-                          onChange={handleChange}
-                          required />
+                            type="text"
+                            value={user.name} // Update to use user.name
+                            id="firstName"
+                            name="name" // Add name attribute for identification in handleChange
+                            onChange={handleChange} // Add onChange event handler
+                            required
+                          />
                         </div>
-                        {/* <div className="mb-5">
-                          <label htmlFor="lastName" className="form-label">
-                            Last name
-                          </label>
-                          <Form.Control type="text" id="lastName" />
-                        </div> */}
+
                         <div className="mb-5">
-                          <label
-                            htmlFor="exampleInputEmail1"
-                            className="form-label"
-                          >
+                          <label htmlFor="exampleInputEmail1" className="form-label">
                             Email address
                           </label>
                           <Form.Control
                             type="email"
-                            value={email}
-                            className="form-control"
+                            value={user.email} // Update to use user.email
                             id="usernameInput"
-                            placeholder="Enter your username"
-                            // onChange={(e) => setemail(e.target.value)}
-                            onChange={handleChange}
+                            name="email" // Add name attribute for identification in handleChange
+                            onChange={handleChange} // Add onChange event handler
                             required
                           />
                         </div>
+
                         <div className="mb-5">
                           <label htmlFor="passwordInput" className="form-label">
                             Password
                           </label>
                           <Form.Control
                             type="password"
-                            className="form-control"
                             id="passInput"
-                            placeholder="Enter your password"
-                            value={password}
-                            // onChange={(e) => setpassword(e.target.value)}
-                            onChange={handleChange}
+                            name="password" // Add name attribute for identification in handleChange
+                            value={user.password} // Update to use user.password
+                            onChange={handleChange} // Add onChange event handler
                             required
                           />
                         </div>
 
                         <div className="mb-5">
-                          <label htmlFor="emailInput" className="form-label">
+                          <label htmlFor="passwordInput" className="form-label">
                             Confirm Password
                           </label>
                           <Form.Control
                             type="password"
-                            value={password_confirmation}
-                            className="form-control"
+                            value={user.password_confirmation} // Update to use user.password_confirmation
                             id="passwordInput"
-                            placeholder="Enter your password"
-                            // onChange={(e) =>
-                            //   setpasswordConfirmation(e.target.value)
-                            // }
-                            onChange={handleChange}
+                            name="password_confirmation" // Add name attribute for identification in handleChange
+                            onChange={handleChange} // Add onChange event handler
                           />
                         </div>
 
@@ -187,13 +162,10 @@ const SignUp = () => {
                             Allow all terms & conditions
                           </label>
                         </div>
-                        <button
-                          type="submit"
-                          className="btn btn-primary mr--15"
-                        >
+                        <button type="submit" className="btn btn-primary mr--15">
                           Sign Up
                         </button>
-                        <Link to ="/Login" className="btn btn-primary-alta">
+                        <Link to="/Login" className="btn btn-primary-alta">
                           Log In
                         </Link>
                       </Form>
@@ -203,7 +175,6 @@ const SignUp = () => {
                     <div className="social-share-media form-wrapper-one">
                       <h6>Another way to sign up</h6>
                       <p>
-                        {" "}
                         Lorem ipsum dolor sit, amet sectetur adipisicing
                         elit.cumque.
                       </p>
@@ -244,13 +215,15 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-            {/* <!-- login form end --> */}
           </div>
         </div>
       </div>
     </React.Fragment>
   );
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.isAuthenticated,
+  user: state.user,
+});
 
-
-export default connect(null, { addUser })(SignUp);
+export default connect(mapStateToProps, { loginSuccess })(SignUp);

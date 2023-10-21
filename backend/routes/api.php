@@ -87,7 +87,7 @@ Route::delete('/products/{id}', [ProductController::class, 'deleteProduct']);
 // Get user data
 Route::get('/getUserData', [UserController::class,'getUserData']);
 // Charge wallet
-Route::post('/chargeWallet/${id)', [UserController::class,'chargeWallet']);
+Route::post('/chargeWallet/{id}', [UserController::class, 'chargeWallet']);
 
 
                 // login + register

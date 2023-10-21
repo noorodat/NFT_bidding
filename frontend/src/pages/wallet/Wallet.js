@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import useApiData from '../../hooks/fetchAPI';
+import axios from '../../components/axios';
 
 export default function Wallet() {
-
-
 
     let userID = sessionStorage.getItem('userID');
     console.log(userID);
@@ -11,6 +10,14 @@ export default function Wallet() {
     const userAPI = `http://127.0.0.1:8000/api/users/${userID}`;
 
     const { data: user } = useApiData(userAPI);
+
+    let userBalance = user.balance;
+
+    // axios.post(`/chargeWallet/${userID}`);
+
+    
+
+
 
   return (
 

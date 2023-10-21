@@ -112,13 +112,13 @@ export const getComments = async () => {
 };
 
 
-export const createComment = async (text, parentId = null, userID, userName) => {
+export const createComment = async (text, parentId = null, currentUserId, userName) => {
   if (useMockData) {
     return {
       id: Math.random().toString(36).substr(2, 9),
       body: text,
       parentId,
-      userId: userID, // Pass the user ID
+      userId: currentUserId, // Pass the user ID
       username: userName, // Pass the username
       createdAt: new Date().toISOString(),
     };
@@ -127,7 +127,7 @@ export const createComment = async (text, parentId = null, userID, userName) => 
   try {
     const response = await fetch('https://64db1943593f57e435b06f42.mockapi.io/comments', {
       method: 'POST',
-      body: JSON.stringify({ body: text, parentId, userId: userID, username: userName }), // Include the user ID and username
+      body: JSON.stringify({ body: text, parentId, userId: currentUserId, username: userName }), // Include the user ID and username
       headers: {
         'Content-Type': 'application/json',
       },

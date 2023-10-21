@@ -8,7 +8,7 @@ import axios from "../components/axios";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 
- const Header = (props) => {
+ const Header = (logoutSuccess) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log(user);
@@ -34,7 +34,7 @@ import { isAxiosError } from "axios";
     }
   };
 
-   console.log ( isAuthenticated );
+  //  console.log ( isAuthenticated );
 
    
   return (
@@ -287,12 +287,22 @@ import { isAxiosError } from "axios";
                                     404 <i data-feather="alert-triangle" />
                                   </Link>
                                 </li>
-                                <li>
+
+                                {isAuthenticated &&( <li>
                                   <Link to="Activity_pages">
                                     Forum &amp; Community
                                     <i data-feather="message-circle" />
                                   </Link>
-                                </li>
+                                </li>)}
+                                {!isAuthenticated &&( <li>
+                                  <Link to="/Login">
+                                    Forum &amp; Community
+                                    <i data-feather="message-circle" />
+                                  </Link>
+                                </li>)}
+
+                                
+                               
                               </ul>
                             </div>
                             <div className="col-lg-3 single-mega-item">
@@ -341,43 +351,7 @@ import { isAxiosError } from "axios";
                         </div>
                       </div>
                     </li>
-                    <li className=" has-menu-child-item">
-                      <Link className="down" href="blog.html">
-                        Blog
-                      </Link>
-                      <ul className="submenu">
-                        <li>
-                          <Link to="blog-single-col.html">
-                            Blog Single Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-col-two.html">
-                            Blog Two Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-col-three.html">
-                            Blog Three Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog.html">
-                            Blog Four Column
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="blog-details.html">
-                            Blog Details
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
+                  
                     <li>
                       <Link to="contact.html">Contact</Link>
                     </li>
@@ -425,15 +399,7 @@ import { isAxiosError } from "axios";
                 className="setting-option header-btn rbt-site-header"
                 id="rbt-site-header"
               >
-                <div className="icon-box">
-                  <Link
-                    id="connectbtn"
-                    className="btn btn-primary-alta btn-small"
-                    href="connect.html"
-                  >
-                    Wallet connect
-                  </Link>
-                </div>
+           
 
                 <div className="icon-box">
                   <Link
@@ -522,7 +488,7 @@ import { isAxiosError } from "axios";
 
                       {isAuthenticated && (
                         <>
-                          <ul className="list-inner">
+                         
                             <li>
                               <Link to="author.html">My Profile</Link>
                             </li>
@@ -535,7 +501,7 @@ import { isAxiosError } from "axios";
                             <li>
                               <Link to="/LogOut">Sign Out</Link>
                             </li>
-                          </ul>
+                       
                         </>
                       )}
                     </div>
@@ -557,11 +523,7 @@ import { isAxiosError } from "axios";
                       data-theme="light"
                       className="setColor light"
                     >
-                      <img
-                        className="sun-image"
-                        src="/assets/images/icons/sun-01.svg"
-                        alt="Sun images"
-                      />
+                      knskc
                     </Link>
                   </li>
                   <li>

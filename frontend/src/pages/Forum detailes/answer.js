@@ -3,8 +3,7 @@ import CommentForm from "./CommentForm";
 import AnswerForm from "./AnswerForm";
 import { Link } from "react-router-dom";
 // import { getUsers } from '../../redux/actions/userActions';
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 const Comment = ({
   comment,
@@ -15,29 +14,37 @@ const Comment = ({
   deleteComment,
   addComment,
   parentId = null,
-  
- 
 }) => {
   const userName = useSelector((state) => state.user.name);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const currentUserId = useSelector((state) => state.user.id);
-  const isEditing =
-    activeComment &&
-    activeComment.id === comment.id &&
-    activeComment.type === "editing";
-  const isReplying =
-    activeComment &&
-    activeComment.id === comment.id &&
-    activeComment.type === "replying";
-  const fiveMinutes = 300000;
-  const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
-  const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
-  const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.userId && !timePassed;
-  const replyId = parentId ? parentId : comment.id;
+  // const currentUserId = useSelector((state) => state.user);
+
+
+  // if (isAuthenticated) {
+    const isEditing =
+      activeComment &&
+      activeComment.id === comment.id &&
+      activeComment.type === "editing";
+    const isReplying =
+      activeComment &&
+      activeComment.id === comment.id &&
+      activeComment.type === "replying";
+    const fiveMinutes = 300000;
+    const timePassed = new Date() -  parseFloat(new Date (comment.createdAt)) > fiveMinutes;
+    
+      const canDelete =
+      currentUserId === comment.userId && replies.length === 0 && !timePassed;
+      const canReply = Boolean(currentUserId);
+   
+    
+    const canEdit = currentUserId === comment.userId && !timePassed;
+    const replyId = parentId ? parentId : comment.id;
+  // }
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
 
-  console.log('currentUserId',currentUserId);
+
+
   return (
     <div key={comment.id} className="comment-container">
       <div class="nu-community-area rn-section-gapTop">
@@ -58,7 +65,14 @@ const Comment = ({
                         <Link to="#" className="name">
                           {comment.username}
                         </Link>
-                        <span className="date">{createdAt}</span>
+                        <span className="date">
+                          {new Date(
+                            parseFloat(createdAt) * 1000
+                          ).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                          })}
+                        </span>
                       </div>
                     </div>
 
@@ -105,79 +119,96 @@ const Comment = ({
                       </div>
                     </div>
                   </div>
-                  <div className="community-content">
-                    {!isEditing && (
-                      <h3 className="title" style={{ textAlign: 'left', marginLeft: '50px' }}>{comment.body}</h3>
-                    )}
-                    {isEditing && (
-                      <CommentForm
-                        submitLabel="Update"
-                        hasCancelButton
-                        initialText={comment.body}
-                        handleSubmit={(text) => updateComment(text, comment.id)}
-                        handleCancel={() => {
-                          setActiveComment(null);
-                        }}
-                      />
-                    )}
+                  {  (isAuthenticated) && (
                     <div>
-                     
-                      {!canEdit && (
-                        <span
-                          className="comment-action edit-action"
-                          onClick={() =>
-                            setActiveComment({
-                              id: comment.id,
-                              type: "editing",
-                            })
-                          }
-                        >
-                          Edit
-                        </span>
-                      )}
-                      {!canDelete && (
-                        <span
-                          className="comment-action delete-action"
-                          onClick={() => deleteComment(comment.id)}
-                        >
-                          Delete
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="hr"></div>
-                    <div class="rn-community-footer">
-                      {!isReplying && (
-                        <div class="answer">
-                          <button
-                            class="btn btn-primary-alta rounded"
-                            onClick={() =>
-                              setActiveComment({
-                                id: comment.id,
-                                type: "replying",
-                              })
-                            }
+                      <div className="community-content">
+                        {!isEditing && (
+                          <h3
+                            className="title"
+                            style={{ textAlign: "left", marginLeft: "50px" }}
                           >
-                            Answer
-                          </button>
+                            {comment.body}
+                          </h3>
+                        )}
+                        {isEditing && (
+                          <CommentForm
+                            submitLabel="Update"
+                            hasCancelButton
+                            initialText={comment.body}
+                            handleSubmit={(text) =>
+                              updateComment(text, comment.id)
+                            }
+                            handleCancel={() => {
+                              setActiveComment(null);
+                            }}
+                          />
+                        )}
+                        <div>
+                          {!canEdit && (
+                            <span
+                              className="comment-action edit-action"
+                              onClick={() =>
+                                setActiveComment({
+                                  id: comment.id,
+                                  type: "editing",
+                                })
+                              }
+                            >
+                              Edit
+                            </span>
+                          )}
+                          {!canDelete && (
+                            <span
+                              className="comment-action delete-action"
+                              onClick={() => deleteComment(comment.id)}
+                            >
+                              Delete
+                            </span>
+                          )}
                         </div>
-                      )}
+
+                        <div className="hr"></div>
+                        <div class="rn-community-footer">
+                          {!isReplying && (
+                            <div class="answer">
+                              <button
+                                class="btn btn-primary-alta rounded"
+                                onClick={() =>
+                                  setActiveComment({
+                                    id: comment.id,
+                                    type: "replying",
+                                  })
+                                }
+                              >
+                                Answer
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-                {isReplying && (
-                  <>
-                    <AnswerForm
-                      submitLabel="Reply"
-                      handleSubmit={(text) => addComment(text, replyId,currentUserId,userName)}
-                    />
-                    <button
-                      class="btn btn-primary-alta rounded"
-                      onClick={() => setActiveComment(null)}
-                    >
-                      Cancel
-                    </button>
-                  </>
+
+                {(isAuthenticated) && (
+                  <div>
+                    {isReplying && (
+                      <>
+                        <AnswerForm
+                          submitLabel="Reply"
+                          handleSubmit={(text) =>
+                            addComment(text, replyId, currentUserId, userName)
+                          }
+                        />
+                        <button
+                          class="btn btn-primary-alta rounded"
+                          onClick={() => setActiveComment(null)}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
@@ -204,7 +235,7 @@ const Comment = ({
                                 />
                               </a>
                               <a href="author.html">
-                                <p class="name">{userName}</p>
+                                <p class="name">{filteredReply.username}</p>
                                 <br></br>
                                 <p class="name">{currentUserId}</p>
                               </a>

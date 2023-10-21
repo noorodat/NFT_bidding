@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -108,20 +109,8 @@ class UserController extends Controller
         User::destroy($id);
         return back()->with('success', 'User deleted successfully.');
     }
-}
-<?php
 
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-
-class UserController extends Controller
-{
-     public function getAllUsers()
+    public function getAllUsers()
     {
         $users = User::all();
         return response()->json($users);
@@ -135,7 +124,6 @@ class UserController extends Controller
         }
         return response()->json($user);
     }
-
     public function registerAPI(Request $request)
     {
 
@@ -212,3 +200,6 @@ class UserController extends Controller
         return response()->json(['message' => 'User deleted']);
     }
 }
+
+
+

@@ -158,4 +158,87 @@ class CategoryController extends Controller
         return $relativeImagePath;
 
     }
+
+    public function getAllCategory()
+    {
+        $categories = Category::all();
+        return response()->json($categories);
+    }
+
+    public function getCategory($id)
+    {
+        $categories = Category::find($id);
+        if (!$categories) {
+            return response()->json(['error' => 'categories not found'], 404);
+        }
+        return response()->json($categories);
+    }
+
+    public function createCategory(Request $request)
+    {
+
+        // $validator = Validator::make(
+        //     $request->all(),
+        //     [
+        //         'name' => 'required|string',
+        //         'email' => 'email|required|unique:users',
+        //         'password' => 'required|min:8',
+        //         'phone' => 'required|min:10|max:10',
+        //         'image' => 'required|max:5048',
+        //     ]
+        // );
+
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()->all()]);
+        // }
+
+
+        $categories = new Category();
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $categories->image = $filename;
+        }
+
+        $categories->name = $request->name;
+
+        $categories->save();
+
+        return response($categories, 201);
+    }
+
+    public function updateCategory(Request $request, $id)
+    {
+
+        $categories = new Category();
+        $categories->name = $request->name;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $categories->image = $filename;
+        }
+
+
+        $categories->save();
+        return response()->json($categories);
+
+    }
+
+
+
+    public function deleteCategory($id)
+    {
+        $categories = Category::find($id);
+        if (!$categories) {
+            return response()->json(['error' => 'Category not found'], 404);
+        }
+
+        $categories->delete();
+        return response()->json(['message' => 'Category deleted']);
+    }
 }

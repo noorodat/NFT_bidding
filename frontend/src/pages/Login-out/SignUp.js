@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { loginSuccess } from '../../redux/actions/userActions';
 
 
-
 const SignUp = () => {
   document.title = "Sign Up";
 

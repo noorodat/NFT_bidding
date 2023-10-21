@@ -19,7 +19,7 @@ class ProductController extends Controller
         $user = User::all();
         // dd($categoryName);
         return view('dashboard.products.index', compact('products', 'category','user'));
-        
+
     }
 
     public function productsAPI() {
@@ -27,7 +27,7 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function handleCountDownTimer($id) 
+    public function handleCountDownTimer($id)
     {
         $product = Product::find($id);
         $currentDate = Carbon::now();
@@ -66,26 +66,16 @@ class ProductController extends Controller
         $request->file('image')->move(public_path('assets/images'), $newImageName);
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'main_price' => [
-                'required',
-                'regex:/^\d{1,3}(\.\d{1,2})?$/',
-            ],
         ]);
 
 
         Product::create([
             'name' => $request->input('name'),
-            'main_price' => $request->input('price'),
             'description' => $request->input('description'),
-            'availability' => $request->input('availability'),
-            'Qty' => $request->input('Qty'),
-            'discount_id' => $request->input('discount_id'),
-            'main_unit' => $request->input('main_unit'),
-            'main_weight' => $request->input('main_weight'),
-            'Expiration_Date' => $request->input('Expiration_Date'),
-            'main_image' => $relativeImagePath,
+            'min_target' => $request->input('min_target'),
+            'timer' => $request->input('timer'),
             'category_id' => $request->input('category_id'),
+            'user_id' => $request->input('user_id'),
         ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
@@ -128,9 +118,6 @@ class ProductController extends Controller
         //
         $validatedData = $request->validate([
             'name' => 'required',
-            // 'image' => 'required',
-            'main_price' => 'required',
-            'description' => 'required',
         ]);
         $data = $request->except(['_token', '_method']);
 
@@ -139,7 +126,7 @@ class ProductController extends Controller
             $newImage = $this->storeImage($request);
 
             // Update the image column only if a new image was uploaded
-            $data['main_image'] = $newImage;
+            $data['image'] = $newImage;
         }
 
         Product::where('id', $id)->update($data);
@@ -175,4 +162,93 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+     public function getAllProduct()
+    {
+        $products = Product::all();
+        return response()->json($products);
+    }
+
+    public function getProduct($id)
+    {
+        $products = Product::find($id);
+        if (!$products) {
+            return response()->json(['error' => 'products not found'], 404);
+        }
+        return response()->json($products);
+    }
+
+    public function createCategory(Request $request)
+    {
+
+        // $validator = Validator::make(
+        //     $request->all(),
+        //     [
+        //         'name' => 'required|string',
+        //         'email' => 'email|required|unique:users',
+        //         'password' => 'required|min:8',
+        //         'phone' => 'required|min:10|max:10',
+        //         'image' => 'required|max:5048',
+        //     ]
+        // );
+
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()->all()]);
+        // }
+
+
+        $products = new Product();
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $products->image = $filename;
+        }
+
+        $products->name = $request->name;
+        $products->min_target = $request->min_target;
+        $products->description = $request->description;
+        $products->category_id = $request->category_id;
+        $products->user_id= $request->user_id;
+        $products->timer= $request->timer;
+
+        $products->save();
+
+        return response($products, 201);
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+
+        $products = new Product();
+        $products->name = $request->name;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+            $products->image = $filename;
+        }
+
+
+        $products->save();
+        return response()->json($products);
+
+    }
+
+
+
+    public function deleteProduct($id)
+    {
+        $products = Product::find($id);
+        if (!$products) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $products->delete();
+        return response()->json(['message' => 'Product deleted']);
+    }
 }

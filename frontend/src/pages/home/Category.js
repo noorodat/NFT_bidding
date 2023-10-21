@@ -5,11 +5,10 @@ import sal from 'sal.js';
 
 const Category = () => {
     const [data, setData] = useState([]);
-    const apiUrl = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories';
-    const productApiUrl = 'https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products'; // Use your product API URL here
+    const apiUrl = 'http://127.0.0.1:8000/api/categories';
+    const productApiUrl = 'http://127.0.0.1:8000/api/products'; 
     const [loading, setLoading] = useState(true);
     const [productCounts, setProductCounts] = useState({});
-    // const [categoryImages, setCategoryImages] = useState({}); // Store category images
 
 
     useEffect(() => {
@@ -34,7 +33,7 @@ const Category = () => {
             const response = await fetch(`${productApiUrl}?categoryId=${categoryId}`);
             if (response.ok) {
                 const products = await response.json();
-                console.log('Products:', products); // Log the products array
+                console.log('Products:', products); 
                 return products.length;
             }
         } catch (error) {
@@ -54,29 +53,6 @@ const Category = () => {
         });
     }, [data]);
 
-    // const getProductImagesForCategory = async (categoryId) => {
-    //     try {
-    //         const response = await fetch(`${productApiUrl}?categoryId=${categoryId}`);
-    //         if (response.ok) {
-    //             const products = await response.json();
-    //             if (products.length > 0) {
-    //                 return products[0].image;
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error(`Error fetching category image for category ${categoryId}:`, error);
-    //     }
-    //     return ''; // Return an empty string or a default image URL if no image is found
-    // };
-
-    // useEffect(() => {
-    //     const images = {};
-    //     data.forEach(async (Category) => {
-    //         const image = await getProductImagesForCategory(Category.id);
-    //         images[Category.id] = image;
-    //         setCategoryImages({ ...images });
-    //     });
-    // }, [data]);
 
     return (
         <div>
@@ -106,7 +82,7 @@ const Category = () => {
                                     <a href={Category.link} className="rn-collection-inner-one">
                                         <div className="collection-wrapper">
                                             <div className="collection-big-thumbnail">
-                                                <img src={Category.image} alt={Category.image} />
+                                            <img src={`http://127.0.0.1:8000/${Category.image}`} alt={Category.image} />
                                             </div>
 
                                             <div className="collection-deg">

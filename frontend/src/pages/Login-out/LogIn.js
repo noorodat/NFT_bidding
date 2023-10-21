@@ -36,6 +36,8 @@ const LogIn = ({isAuthenticated, user, loginSuccess}) => {
     console.log("USER DATA " ,data.data.name);
    
     sessionStorage.setItem('isLoggedIn', true);
+    sessionStorage.setItem('userID', data.data.user.id);
+
       
     loginSuccess(data.data)
 

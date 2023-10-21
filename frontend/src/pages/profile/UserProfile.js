@@ -7,8 +7,12 @@ const UserProfile = () => {
   return (
     <>
       <Cover />
+      <br></br>
       <UserInfo />
-      <UserPost />
+      <br></br>
+      <br></br>
+      {/* <UserPost /> */}
+
     </>
   )
 }

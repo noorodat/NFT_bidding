@@ -19,6 +19,8 @@ const Live = () => {
                 const filteredProducts = data.filter((product) => product.status === true);
                 setProducts(filteredProducts);
 
+                console.log("Filtered ProductsL: ", filteredProducts)
+
                 // Extract unique user IDs from the filtered products
                 const uniqueUserIds = [...new Set(filteredProducts.map((product) => product.winning_user))];
 

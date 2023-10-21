@@ -33,7 +33,10 @@ const LogIn = ({isAuthenticated, user, loginSuccess}) => {
     setpassword('');
     const data = await axios.get('/user')
    
+    sessionStorage.setItem('isLoggedIn', true);
+      
     loginSuccess(data.data.user)
+
     navigate(-1);
     // console.log(response.data); // Log the user information
   } catch (e) {

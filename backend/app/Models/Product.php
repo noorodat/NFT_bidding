@@ -20,6 +20,8 @@ class Product extends Model
         'status',
         'category_id',
         'user_id',
+        'highest_bid',
+        'winning_user',
     ];
 
     use HasFactory;

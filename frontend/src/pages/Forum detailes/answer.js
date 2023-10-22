@@ -248,16 +248,14 @@ const Comment = ({
                                 <p class="name">{filteredReply.username}</p>
                                 <br></br>
                               </a>
-                              <div class="date">
-                                <i class="feather-watch"></i>
+                              <div className="date">
+                                <i className="feather-watch"></i>
                                 <span>
-                                  {new Date(
-                                    filteredReply.createdAt
-                                  ).toLocaleDateString()}
+                                  {new Date(filteredReply.createdAt).toLocaleDateString()}
                                 </span>
                               </div>
                             </div>
-                            <div class="ans-content">
+                            <div className="ans-content">
                               <p>{filteredReply.body}</p>
                               <hr class="form-ans-separator" />
                             </div>

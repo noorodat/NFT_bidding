@@ -33,21 +33,25 @@ export default function ProductDetails() {
     };
 
     const { id } = useParams();// Replace with your target date
-    const productAPI = `https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products/${id}`;
-    const categoryAPI = `https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1`;
-    const usersAPI = `https://653009cd6c756603295e26df.mockapi.io/users/5`;
-    const biddingsAPI = `https://653195214d4c2e3f333d2615.mockapi.io/biddings`;
-
+    const productAPI = `http://127.0.0.1:8000/api/products/${id}`;
     const { data: product } = useApiData(productAPI);
+
+
+    const categoryAPI = `http://127.0.0.1:8000/api/categories/${product.category_id}`;
     const { data: category } = useApiData(categoryAPI);
-    const { data: user } = useApiData(usersAPI);
-    const { data: biddings } = useApiData(biddingsAPI);
+
+
+    const userAPI = `http://127.0.0.1:8000/api/users/${product.user_id}`;
+
+    const { data: user } = useApiData(userAPI);
+
+    // const { data: biddings } = useApiData(biddingsAPI);
 
     let targetDate = product.timer;
 
-    let currentBiddings = biddings.filter(bidding => bidding.product_id === product.id);
+    // let currentBiddings = biddings.filter(bidding => bidding.product_id === product.id);
 
-    console.log(currentBiddings);
+    // console.log(currentBiddings);
 
     return (
         <div>
@@ -71,7 +75,7 @@ export default function ProductDetails() {
                                         >
                                             <div className="rn-pd-thumbnail">
                                                 <img
-                                                    src={`${product.image}`}
+                                                    src={`http://127.0.0.1:8000/${product.image}`}
                                                     alt="Nft_Profile"
                                                 />
                                             </div>
@@ -306,7 +310,7 @@ export default function ProductDetails() {
                                                             </div>
                                                             <div className="top-seller-content">
                                                                 <a href="#">
-                                                                    <h6 className="name">{user.first_name} {user.last_name}</h6>
+                                                                    <h6 className="name">{user.name}</h6>
                                                                 </a>
                                                             </div>
                                                         </div>

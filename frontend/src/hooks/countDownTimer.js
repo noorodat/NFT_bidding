@@ -11,7 +11,8 @@ function CountdownTimer({ targetDate, productName }) {
       const newTimeRemaining = calculateTimeRemaining(targetDate);
       setTimeRemaining(newTimeRemaining);
 
-      // Check if the timer has reached 0 and not already deleted
+      // Check if the timer has reached 0 and not already deleted => send a requeset to change the status to the producs plus
+      // move the ownership to the highest bid user
       if (newTimeRemaining === 0 && !deleted) {
 
         setDeleted(true);

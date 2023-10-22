@@ -1,12 +1,49 @@
-
-import React, { useState, useEffect } from 'react';
-import sal from 'sal.js';export default function Contact()
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import { useState, useEffect } from 'react';
+import Swal from "sweetalert2";
+import sal from 'sal.js';
+export default function Contact()
  {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_7bde92c', 'template_poj6m2i', form.current, 'An3fxJE_cYgcz4q30')
+      .then((result) => {
+        Swal.fire({
+          icon: "success",
+          title: "Send Email Success",
+          text: "Your Send Email has been added successfully!",
+      });
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
+
+
+
+
+
     useEffect(() => {
         sal();
     }, []);
     return(
+
         <>
+        {/* <form ref={form} onSubmit={sendEmail}>
+      <label>Name</label>
+      <input type="text" name="user_name" />
+      <label>Email</label>
+      <input type="email" name="user_email" />
+      <label>Message</label>
+      <textarea name="message" />
+      <input type="submit" value="Send" />
+    </form> */}
+
+
   {/* start page title area */}
   <div className="rn-breadcrumb-inner ptb--30">
     <div className="container">
@@ -180,23 +217,23 @@ import sal from 'sal.js';export default function Contact()
         >
           <div className="form-wrapper-one registration-area">
             <h3 className="mb--30">Contact Us</h3>
-            <form
+            <form ref={form} onSubmit={sendEmail}
               className="rwt-dynamic-form"
               id="contact-form"
-              method="POST"
-              action="mail.php"
+              // method="POST"
+              // action="mail.php"
             >
               <div className="mb-5">
-                <label htmlFor="contact-name" className="form-label">
+                <label htmlFor="contact-name" className="form-label" >
                   Your Name
                 </label>
-                <input name="contact-name" id="contact-name" type="text" />
+                <input name="user_name" id="contact-name" type="text" />
               </div>
               <div className="mb-5">
                 <label htmlFor="contact-email" className="form-label">
                   Email
                 </label>
-                <input id="contact-email" name="contact-email" type="email" />
+                <input id="contact-email" name="user_email" type="email" />
               </div>
               {/* <div className="mb-5">
                 <label htmlFor="subject" className="form-label">
@@ -205,11 +242,11 @@ import sal from 'sal.js';export default function Contact()
                 <input id="subject" name="subject" type="text" />
               </div> */}
               <div className="mb-5">
-                <label htmlFor="contact-message" className="form-label">
+                <label htmlFor="contact-message"  className="form-label">
                   Write Message
                 </label>
                 <textarea
-                  name="contact-message"
+                  name="Write Message"
                   id="contact-message"
                   rows={3}
                   defaultValue={""}
@@ -225,9 +262,10 @@ import sal from 'sal.js';export default function Contact()
                   Allow to all tearms &amp; condition
                 </label>
               </div>
-              <button name="submit" type="submit" className="btn btn-primary">
-                Send Message
-              </button>
+              {/* <button name="submit" type="submit" className="btn btn-primary"> */}
+              <input type="submit" value="Send" />
+                {/* Send Message */}
+              {/* </button> */}
             </form>
           </div>
         </div>

@@ -40,7 +40,7 @@ function Banner() {
                   >
                     <h3 className="counter">
                       <span className="odometer" data-count={3091}>
-                        00
+                        40
                       </span>
                       <span className="counter-label">Collectibles</span>
                     </h3>
@@ -53,7 +53,7 @@ function Banner() {
                   >
                     <h3 className="counter">
                       <span className="odometer" data-count={1020}>
-                        00
+                        33
                       </span>
                       <span className="counter-label">Auctions</span>
                     </h3>
@@ -66,7 +66,7 @@ function Banner() {
                   >
                     <h3 className="counter">
                       <span className="odometer" data-count={5329}>
-                        00
+                        83
                       </span>
                       <span className="counter-label">NFT Artist</span>
                     </h3>

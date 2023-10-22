@@ -11,7 +11,6 @@ import UserProfile from './pages/profile/UserProfile';
 import EditProfile from './pages/profile/EditProfile';
 import { useEffect } from 'react';
 import ProductDetails from './pages/single-product/ProductDetails';
-// import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom"; // Import the necessary components from react-router-dom
 import { useLocation } from "react-router-dom";
 import Login from './pages/Login-out/LogIn';
 import SignUp from './pages/Login-out/SignUp';
@@ -22,10 +21,7 @@ import Wallet from './pages/wallet/Wallet';
 function App() {
   return (
     <div className="App">
-      {/* <Header/>
-      <Home/>
-      <Footer/> */}
-      {/* <Router> */}
+     
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -33,7 +29,6 @@ function App() {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/About" element={<About />} />
         <Route path="/EditProfile" element={<EditProfile />} />
-        {/* <Route path='/' element={<Home />}></Route> */}
         <Route path='/Login' element={<Login />}></Route>
         <Route path='/Category/:id/Products' element={<Products />}></Route>
         <Route path='/SignUp' element={<SignUp />}></Route>
@@ -43,9 +38,7 @@ function App() {
         <Route path='/AddProduct' element={<AddProduct />}></Route>
         <Route path='/Wallet' element={<Wallet/>}></Route>
       </Routes>
-      {/* <Login/> */}
       <Footer />
-      {/* </Router> */}
 
     </div>
   );

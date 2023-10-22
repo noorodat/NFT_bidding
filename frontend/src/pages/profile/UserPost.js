@@ -1,114 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import $ from 'jquery'; 
+// import React, { useState } from 'react';
+// import UserWonProducts from './Winning';
+// import UserCreatedProducts from './Created';
 
-function UserPost() {
-  const [products, setProducts] = useState([]);
-  const myElementRef = useRef(null);
+// function UserPost ()  {
+//   const [activeTab, setActiveTab] = useState('owned');
 
-  useEffect(() => {
-    axios.get('https://652f87fa0b8d8ddac0b29f71.mockapi.io/categories/1/products')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); 
+//   const handleTabClick = (tabName) => {
+//     setActiveTab(tabName);
+//   };
 
-//   const winningBiddings = products.filter(product => product.bidCount === 20);
+//   return (
+//     <div>
+//       <div className="rn-authore-profile-area">
+//         <div className="container">
+//           <div className="row">
+//             <div className="col-12">
+//               <div className="tab-wrapper-one">
+//                 <nav className="tab-button-one">
+//                   <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                   
+//                     <button
+//                       className={`nav-link ${activeTab === 'owned' ? 'active' : ''}`}
+//                       onClick={() => handleTabClick('owned')}
+//                     >
+//                       Owned
+//                     </button>
+//                     <button
+//                       className={`nav-link ${activeTab === 'created' ? 'active' : ''}`}
+//                       onClick={() => handleTabClick('created')}
+//                     >
+//                       Created
+//                     </button>
+                   
+//                   </div>
+//                 </nav>
+//               </div>
+//             </div>
+//           </div>
+//           <div className="tab-content">
+            
+//             {activeTab === 'owned' && (
+//               <div className="tab-pane show active" id="nav-profile" role="tabpanel" >
+//                 <UserWonProducts />
+//               </div>
+//             )}
+//             {activeTab === 'created' && (
+//               <div className="tab-pane" id="nav-contact" role="tabpanel">
+//                 <UserCreatedProducts />
+//               </div>
+//             )}
+           
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-  return (
-    <div className="rn-authore-profile-area">
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+// export default UserPost;
 
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div className="tab-wrapper-one">
-              <nav className="tab-button-one">
-                <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button
-                    className="nav-link active"
-                    id="nav-home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-home"
-                    type="button"
-                    role="tab"
-                    aria-controls="nav-home"
-                    aria-selected="true"
-                  >
-                    Winning Biddings
-                  </button>
-                  <button
-                    className="nav-link"
-                    id="nav-contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-contact"
-                    type="button"
-                    role="tab"
-                    aria-controls="nav-contact"
-                    aria-selected="false"
-                  >
-                    Created Biddings
-                  </button>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="tab-content rn-bid-content" id="nav-tabContent">
-        <div className="tab-pane row g-5 d-flex fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-          {products.map((product, index) => (
-            <div key={index} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <div className="product-style-one no-overlay with-placeBid">
-                <div className="card-thumbnail">
-                  <a href="product-details.html">
-                    <img src={product.image} alt={product.name} />
-                  </a>
-                  
-                </div>
-                <div className="product-share-wrapper" ref={myElementRef}>
-                  <div className="profile-share">
-                    {/* Author avatars and more */}
-                  </div>
-                  <div className="share-btn share-btn-activation dropdown">
-                    {/* Share and report buttons */}
-                  </div>
-                </div>
-                <a href="product-details.html">
-                  <span className="product-name">{product.name}</span>
-                </a>
-                <span className="latest-bid">Highest bid {product.bidCount}/20</span>
-                <div className="bid-react-area">
-                  <div className="last-bid">{product.highestBid}</div>
-                  <div className="react-area">
-                    <svg
-                      viewBox="0 0 17 16"
-                      fill="none"
-                      width="16"
-                      height="16"
-                      className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                    >
-                      <path
-                        d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                    </svg>
-                    <span className="number">{product.bidCount}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-    
-  );
-}
-
-export default UserPost;

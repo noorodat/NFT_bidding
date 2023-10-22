@@ -135,7 +135,7 @@ export default function ProductDetails() {
                                         >
                                             <div className="rn-pd-thumbnail">
                                                 <img
-                                                    src={`http://127.0.0.1:8000/${product.image}`}
+                                                    src={`http://127.0.0.1:8000/assets/images/${product.image}`}
                                                     alt="Nft_Profile"
                                                 />
                                             </div>

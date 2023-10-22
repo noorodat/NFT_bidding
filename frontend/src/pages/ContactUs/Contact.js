@@ -1,11 +1,49 @@
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import { useState, useEffect } from 'react';
+import Swal from "sweetalert2";
+import sal from 'sal.js';
+export default function Contact()
+ {
+  const form = useRef();
 
-import React, { useState, useEffect } from 'react';
-import sal from 'sal.js';export default function Contact() {
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_7bde92c', 'template_poj6m2i', form.current, 'An3fxJE_cYgcz4q30')
+      .then((result) => {
+        Swal.fire({
+          icon: "success",
+          title: "Send Email Success",
+          text: "Your Send Email has been added successfully!",
+      });
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
+
+
+
+
+
     useEffect(() => {
         sal();
     }, []);
     return(
+
         <>
+        {/* <form ref={form} onSubmit={sendEmail}>
+      <label>Name</label>
+      <input type="text" name="user_name" />
+      <label>Email</label>
+      <input type="email" name="user_email" />
+      <label>Message</label>
+      <textarea name="message" />
+      <input type="submit" value="Send" />
+    </form> */}
+
+
   {/* start page title area */}
   <div className="rn-breadcrumb-inner ptb--30">
     <div className="container">
@@ -40,8 +78,11 @@ import sal from 'sal.js';export default function Contact() {
           <div className="section-title mb--30 text-center">
             <h2 className="title">Quick Contact Address</h2>
             <p className="description">
-              There are many variations of passages of Lorem Ipsum available,{" "}
-              <br /> but the majority have suffered alteration.
+            Our goal is to provide an additional enjoyable experience.
+             We encourage you to explore offers and bids, and participate in tenders. 
+             We have a 24/7 support team and an outstanding experience.{" "}
+              <br /> 
+              
             </p>
           </div>
         </div>
@@ -74,10 +115,10 @@ import sal from 'sal.js';export default function Contact() {
             <div className="inner">
               <h4 className="title">Contact Phone Number</h4>
               <p>
-                <a href="tel:+444555666777">+444 555 666 777</a>
+                <a href="tel:+444555666777">00962777777777</a>
               </p>
               <p>
-                <a href="tel:+222222222333">+222 222 222 333</a>
+                <a href="tel:+222222222333">00962799999999</a>
               </p>
             </div>
           </div>
@@ -109,10 +150,10 @@ import sal from 'sal.js';export default function Contact() {
             <div className="inner">
               <h4 className="title">Our Email Address</h4>
               <p>
-                <a href="mailto:admin@gmail.com">admin@gmail.com</a>
+                <a href="mailto:admin@gmail.com">nuron@gmail.com</a>
               </p>
               <p>
-                <a href="mailto:example@gmail.com">example@gmail.com</a>
+                <a href="mailto:example@gmail.com">nuron@gmail.com</a>
               </p>
             </div>
           </div>
@@ -144,7 +185,7 @@ import sal from 'sal.js';export default function Contact() {
             <div className="inner">
               <h4 className="title">Our Location</h4>
               <p>
-                5678 Bangla Main Road, cities 580 <br /> GBnagla, example 54786
+                Jordan , Irbid  <br /> Down Town Bld 55
               </p>
             </div>
           </div>
@@ -176,36 +217,36 @@ import sal from 'sal.js';export default function Contact() {
         >
           <div className="form-wrapper-one registration-area">
             <h3 className="mb--30">Contact Us</h3>
-            <form
+            <form ref={form} onSubmit={sendEmail}
               className="rwt-dynamic-form"
               id="contact-form"
-              method="POST"
-              action="mail.php"
+              // method="POST"
+              // action="mail.php"
             >
               <div className="mb-5">
-                <label htmlFor="contact-name" className="form-label">
+                <label htmlFor="contact-name" className="form-label" >
                   Your Name
                 </label>
-                <input name="contact-name" id="contact-name" type="text" />
+                <input name="user_name" id="contact-name" type="text" />
               </div>
               <div className="mb-5">
                 <label htmlFor="contact-email" className="form-label">
                   Email
                 </label>
-                <input id="contact-email" name="contact-email" type="email" />
+                <input id="contact-email" name="user_email" type="email" />
               </div>
-              <div className="mb-5">
+              {/* <div className="mb-5">
                 <label htmlFor="subject" className="form-label">
                   Subject
                 </label>
                 <input id="subject" name="subject" type="text" />
-              </div>
+              </div> */}
               <div className="mb-5">
-                <label htmlFor="contact-message" className="form-label">
+                <label htmlFor="contact-message"  className="form-label">
                   Write Message
                 </label>
                 <textarea
-                  name="contact-message"
+                  name="Write Message"
                   id="contact-message"
                   rows={3}
                   defaultValue={""}
@@ -221,9 +262,10 @@ import sal from 'sal.js';export default function Contact() {
                   Allow to all tearms &amp; condition
                 </label>
               </div>
-              <button name="submit" type="submit" className="btn btn-primary">
-                Send Message
-              </button>
+              {/* <button name="submit" type="submit" className="btn btn-primary"> */}
+              <input type="submit" value="Send" />
+                {/* Send Message */}
+              {/* </button> */}
             </form>
           </div>
         </div>
@@ -241,7 +283,7 @@ import sal from 'sal.js';export default function Contact() {
           data-sal-duration={800}
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235495.62780269101!2d-73.932551722484!3d41.33466214858558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e1!3m2!1sen!2sbd!4v1637254792714!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1077045.414582196!2d35.3177625479389!3d31.182899955931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502f7d72ed883d1%3A0xb2d28ef2eb6f3a91!2sJordan!5e1!3m2!1sen!2sbd!4v1637254792714!5m2!1sen!2sbd"
             height={550}
             style={{ border: 0 }}
             allowFullScreen=""

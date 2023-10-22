@@ -22,24 +22,24 @@ const Comment = ({
 
 
   // if (isAuthenticated) {
-    const isEditing =
-      activeComment &&
-      activeComment.id === comment.id &&
-      activeComment.type === "editing";
-    const isReplying =
-      activeComment &&
-      activeComment.id === comment.id &&
-      activeComment.type === "replying";
-    const fiveMinutes = 300000;
-    const timePassed = new Date() -  parseFloat(new Date (comment.createdAt)) > fiveMinutes;
-    
-      const canDelete =
-      currentUserId === comment.userId && replies.length === 0 && !timePassed;
-      const canReply = Boolean(currentUserId);
-   
-    
-    const canEdit = currentUserId === comment.userId && !timePassed;
-    const replyId = parentId ? parentId : comment.id;
+  const isEditing =
+    activeComment &&
+    activeComment.id === comment.id &&
+    activeComment.type === "editing";
+  const isReplying =
+    activeComment &&
+    activeComment.id === comment.id &&
+    activeComment.type === "replying";
+  const fiveMinutes = 300000;
+  const timePassed = new Date() - parseFloat(new Date(comment.createdAt)) > fiveMinutes;
+
+  const canDelete =
+    currentUserId === comment.userId && replies.length === 0 && !timePassed;
+  const canReply = Boolean(currentUserId);
+
+
+  const canEdit = currentUserId === comment.userId && !timePassed;
+  const replyId = parentId ? parentId : comment.id;
   // }
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
 
@@ -119,7 +119,7 @@ const Comment = ({
                       </div>
                     </div>
                   </div>
-                  {  (isAuthenticated) && (
+                  {(isAuthenticated) && (
                     <div>
                       <div className="community-content">
                         {!isEditing && (
@@ -224,10 +224,12 @@ const Comment = ({
                   <div>
                     {replies
                       .filter((reply) => reply.parentId === comment.id)
+                      .slice()
+                      .reverse()
                       .map((filteredReply) => (
-                        <div class="forum-ans-box">
-                          <div class="forum-single-ans" key={filteredReply.id}>
-                            <div class="ans-header">
+                        <div className="forum-ans-box" key={filteredReply.id}>
+                          <div className="forum-single-ans">
+                            <div className="ans-header">
                               <a href="author.html">
                                 <img
                                   src="assets/images/client/client-3.png"
@@ -235,38 +237,38 @@ const Comment = ({
                                 />
                               </a>
                               <a href="author.html">
-                                <p class="name">{filteredReply.username}</p>
-                                <br></br>
-                                <p class="name">{currentUserId}</p>
+                                <p className="name">{filteredReply.username}</p>
+                                <br />
+                                <p className="name">{currentUserId}</p>
                               </a>
-                              <div class="date">
-                                <i class="feather-watch"></i>
+                              <div className="date">
+                                <i className="feather-watch"></i>
                                 <span>
-                                  {new Date(
-                                    filteredReply.createdAt
-                                  ).toLocaleDateString()}
+                                  {new Date(filteredReply.createdAt).toLocaleDateString()}
                                 </span>
                               </div>
                             </div>
-                            <div class="ans-content">
+                            <div className="ans-content">
                               <p>{filteredReply.body}</p>
-                              {/* <hr class="form-ans-separator" /> */}
-                              {/* <div class="reaction">
-                                <a href="#" class="like">
-                                  <span>27 Like</span>
-                                  <i class="feather-thumbs-up"></i>
-                                </a>
-                                <a href="#" class="dislike">
-                                  <span>27 dislike</span>
-                                  <i class="feather-thumbs-down"></i>
-                                </a>
-                              </div> */}
+                              {/* Uncomment these lines if needed */}
+                              {/* <hr className="form-ans-separator" /> */}
+                              {/* <div className="reaction">
+                <a href="#" className="like">
+                  <span>27 Like</span>
+                  <i className="feather-thumbs-up"></i>
+                </a>
+                <a href="#" className="dislike">
+                  <span>27 dislike</span>
+                  <i className="feather-thumbs-down"></i>
+                </a>
+              </div> */}
                             </div>
                           </div>
                         </div>
                       ))}
                   </div>
                 )}
+
               </div>
             </div>
           </div>

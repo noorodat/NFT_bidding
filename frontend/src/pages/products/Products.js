@@ -75,7 +75,7 @@ export default function Products() {
           </div>
         </div>
       </div>
-      <div className="default-exp-wrapper default-exp-expand" style={{display: 'block'}}>
+      {/* <div className="default-exp-wrapper default-exp-expand" style={{display: 'block'}}>
         <div className="inner">
           <div className="filter-select-option">
             <label className="filter-leble">LIKES</label>
@@ -114,7 +114,7 @@ export default function Products() {
               <option value={4}>Open for offers</option>
             </select>
           </div>
-          {/* <div className="filter-select-option">
+          <div className="filter-select-option">
             <label className="filter-leble">Price Range</label>
             <div className="price_filter s-filter clear">
               <form action="#" method="GET">
@@ -134,9 +134,9 @@ export default function Products() {
                 </div>
               </form>
             </div>
-          </div> */}
+          </div>
         </div>
-      </div>
+      </div> */}
       <div className="row g-5">
         {/* start single product */}
         {
@@ -155,7 +155,7 @@ export default function Products() {
                   <div className="card-thumbnail">
                     <Link to={`/ProductDetails/${product.id}`}>
                       <img
-                        src="/assets/images/portfolio/portfolio-01.jpg"
+                        src={`http://127.0.0.1:8000/${product.image}`}
                         alt="NFT_portfolio"
                       />
                     </Link>

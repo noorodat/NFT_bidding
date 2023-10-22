@@ -67,7 +67,7 @@ class BiddingController extends Controller
     public function getAllBidding()
     {
         //
-        $biddings = bidding::all();
+        $biddings = Bidding::all();
         return response()->json($biddings);
         
     }
@@ -75,7 +75,7 @@ class BiddingController extends Controller
    
     public function createBidding(Request $request)
     {
-        $biddings = new bidding();
+        $biddings = new Bidding();
 
         $biddings->user_id = $request->user_id;
 
@@ -85,7 +85,7 @@ class BiddingController extends Controller
 
         $biddings->save();
 
-        return response($biddings, 201);
+        return response()->json($biddings);
     }
 
     
@@ -145,6 +145,8 @@ class BiddingController extends Controller
         $highestBid = Bidding::where('product_id', $product_id)->max('amount');
         return response()->json($highestBid);
     }
+
+    
 
 }
 

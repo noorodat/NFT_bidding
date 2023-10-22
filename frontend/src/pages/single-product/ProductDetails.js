@@ -10,28 +10,13 @@ import axios from '../../components/axios';
 
 export default function ProductDetails() {
 
+    const userId = sessionStorage.getItem('userID');
+
     const [formData, setFormData] = useState({
         value: '',
     });
 
-    const formRef = useRef(null);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const bidValue = formData.value;
-        if (bidValue < product.min_target) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'You Can\'t Bid Lower Than The Minimum Traget',
-            });
-        }
-        // 
-        // else if(bidValue <= ) {
-
-        // }
-        // console.log("Bid Value:", bidValue); // Add this line to print the value
-    };
+    const formRef = useRef(null);    
 
     const { id } = useParams();// Replace with your target date
 
@@ -72,6 +57,51 @@ export default function ProductDetails() {
 
     console.log("HIGHEST BID: ", highestBidding);
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const bidValue = formData.value;
+    
+        if (bidValue < product.min_target || bidValue <= highestBidding) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You Can\'t Bid Lower Than The Minimum Target',
+            });
+        } else {
+            try {
+    
+                // Create the bidding object to send to the API
+                const biddingData = {
+                    user_id: userId,
+                    product_id: id,
+                    amount: bidValue,
+                };
+    
+                // Send a POST request to your API using Axios
+                const response = await axios.post('/Biddings', biddingData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (response.status === 200) {
+                    Swal.fire(
+                        'Done!',
+                        'You bid to that product',
+                        'success'
+                      )
+                } else {
+                    // Handle any errors if the request fails
+                    // You can display an error message or perform other actions
+                    console.error('Failed to create a bidding record');
+                }
+            } catch (error) {
+                console.error('An error occurred while creating a bidding record:', error);
+            }
+        }
+    };
+    
 
 
     return (

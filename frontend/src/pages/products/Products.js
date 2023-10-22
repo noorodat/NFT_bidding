@@ -155,7 +155,7 @@ export default function Products() {
                   <div className="card-thumbnail">
                     <Link to={`/ProductDetails/${product.id}`}>
                       <img
-                        src={`http://127.0.0.1:8000/${product.image}`}
+                        src={`http://127.0.0.1:8000/assets/images/${product.image}`}
                         alt="NFT_portfolio"
                       />
                     </Link>

@@ -50,6 +50,14 @@ Route::get('/user', [AuthenticatedSessionController::class, 'user'])
       Route::post('/Biddings', [BiddingController::class, 'createBidding'] );
       Route::put('/Biddings/{id}', [BiddingController::class, 'updateBidding']);
       Route::delete('/Biddings/{id}', [BiddingController::class, 'deleteBidding']);
+    // Get biddings on product 
+    Route::get('/Biddings/Product/{id}',[BiddingController::class, 'getBiddingsOnProduct']);
+    // Get Winner
+    Route::get('Winner/{id}',[BiddingController::class, 'getWinner']);
+    // Get Highest Bid
+    Route::get('HighestBid/{id}',[BiddingController::class, 'getHighestBid']);
+
+
 
 
       Route::get('/Comments',[CommentController::class, 'getAllComment']);

@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Products from '../products/Products'
 import useApiData from '../../hooks/fetchAPI';
 import { useParams } from 'react-router-dom';
 import CountdownTimer from '../../hooks/countDownTimer';
 import Swal from 'sweetalert2';
+import axios from '../../components/axios';
 
 
 
@@ -18,12 +19,12 @@ export default function ProductDetails() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const bidValue = formData.value;
-        if(bidValue < product.min_target) {
+        if (bidValue < product.min_target) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'You Can\'t Bid Lower Than The Minimum Traget',
-              });
+            });
         }
         // 
         // else if(bidValue <= ) {
@@ -33,27 +34,45 @@ export default function ProductDetails() {
     };
 
     const { id } = useParams();// Replace with your target date
+
     const productAPI = `http://127.0.0.1:8000/api/products/${id}`;
     const { data: product } = useApiData(productAPI);
-
 
     const categoryAPI = `http://127.0.0.1:8000/api/categories/${product.category_id}`;
     const { data: category } = useApiData(categoryAPI);
 
-
     const userAPI = `http://127.0.0.1:8000/api/users/${product.user_id}`;
-
     const { data: user } = useApiData(userAPI);
 
+    // const biddingsAPI = `http://127.0.0.1:8000/api/Biddings/Product/${id}`;
     // const { data: biddings } = useApiData(biddingsAPI);
+
+    const winningUserAPI = `http://127.0.0.1:8000/api/Winner/${id}`;
+    const { data: winner } = useApiData(winningUserAPI);
+
+    const HighsetBidAPI = `http://127.0.0.1:8000/api/HighestBid/${id}`;
+    // const { data: highestBid } = useApiData(HighsetBidAPI);
+    
+    const [highestBidding, setHighestBidding] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(HighsetBidAPI);
+                setHighestBidding(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [HighsetBidAPI]);
 
     let targetDate = product.timer;
 
-    console.log("USER Balance: ", user.balance)
+    console.log("HIGHEST BID: ", highestBidding);
 
-    // let currentBiddings = biddings.filter(bidding => bidding.product_id === product.id);
 
-    // console.log(currentBiddings);
 
     return (
         <div>
@@ -131,8 +150,8 @@ export default function ProductDetails() {
                                 <div className="rn-bid-details">
                                     <div className="tab-wrapper-one">
                                         <nav className="tab-button-one">
-                                            <div className="nav nav-tabs" style={{ justifyContent: 'space-around' }} id="nav-tab" role="tablist">
-                                                <button
+                                            <div className="nav nav-tabs" style={{ justifyContent: 'space-evenly' }} id="nav-tab" role="tablist">
+                                                {/* <button
                                                     className="nav-link"
                                                     id="nav-home-tab"
                                                     data-bs-toggle="tab"
@@ -143,7 +162,7 @@ export default function ProductDetails() {
                                                     aria-selected="false"
                                                 >
                                                     Bids
-                                                </button>
+                                                </button> */}
                                                 <button
                                                     className="nav-link active"
                                                     id="nav-profile-tab"
@@ -187,107 +206,6 @@ export default function ProductDetails() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* single creator */}
-                                                {/* single creator */}
-                                                <div className="top-seller-inner-one">
-                                                    <div className="top-seller-wrapper">
-                                                        <div className="thumbnail">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="assets/images/client/client-4.png"
-                                                                    alt="Nft_Profile"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="top-seller-content">
-                                                            <span>
-                                                                0.09wETH by <a href="#">Joe Biden</a>
-                                                            </span>
-                                                            <span className="count-number">1.30 hours ago</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* single creator */}
-                                                {/* single creator */}
-                                                <div className="top-seller-inner-one">
-                                                    <div className="top-seller-wrapper">
-                                                        <div className="thumbnail">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="assets/images/client/client-5.png"
-                                                                    alt="Nft_Profile"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="top-seller-content">
-                                                            <span>
-                                                                0.07wETH by <a href="#">Sonial mridha</a>
-                                                            </span>
-                                                            <span className="count-number">1.35 hours ago</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* single creator */}
-                                                {/* single creator */}
-                                                <div className="top-seller-inner-one">
-                                                    <div className="top-seller-wrapper">
-                                                        <div className="thumbnail">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="assets/images/client/client-6.png"
-                                                                    alt="Nft_Profile"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="top-seller-content">
-                                                            <span>
-                                                                0.07wETH by <a href="#">Tribute Dhusra</a>
-                                                            </span>
-                                                            <span className="count-number">1.55 hours ago</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* single creator */}
-                                                {/* single creator */}
-                                                <div className="top-seller-inner-one">
-                                                    <div className="top-seller-wrapper">
-                                                        <div className="thumbnail">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="assets/images/client/client-7.png"
-                                                                    alt="Nft_Profile"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="top-seller-content">
-                                                            <span>
-                                                                0.07wETH by <a href="#">Sonia Sobnom</a>
-                                                            </span>
-                                                            <span className="count-number">2 hours ago</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* single creator */}
-                                                {/* single creator */}
-                                                <div className="top-seller-inner-one">
-                                                    <div className="top-seller-wrapper">
-                                                        <div className="thumbnail">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="assets/images/client/client-8.png"
-                                                                    alt="Nft_Profile"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="top-seller-content">
-                                                            <span>
-                                                                0.02wETH by <a href="#">Sadia Rummon</a>
-                                                            </span>
-                                                            <span className="count-number">2.5 hours ago</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* single creator */}
                                             </div>
                                             <div
                                                 className="tab-pane fade show active"
@@ -445,10 +363,10 @@ export default function ProductDetails() {
                                                             </a>
                                                         </div>
                                                         <div className="top-seller-content" style={{ display: 'flex' }}>
-                                                            <span className="heighest-bid">
-                                                                Heighest bid <a href="#">{user.first_name} {user.last_name}</a>
-                                                            </span>
-                                                            <span className="count-number">0.115wETH</span>
+                                                            <div className="heighest-bid">
+                                                                Heighest bid: <a href="#">{winner.name}</a>
+                                                            </div>
+                                                            <div className="count-number">${highestBidding}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -493,621 +411,6 @@ export default function ProductDetails() {
                 </div>
             </div>
             {/* End product details area */}
-            {/* New items Start */}
-            <div className="rn-new-items rn-section-gapTop">
-                <div className="container">
-                    <div className="row mb--30 align-items-center">
-                        <div className="col-12">
-                            <h3
-                                className="title mb--0"
-                                data-sal-delay={150}
-                                data-sal="slide-up"
-                                data-sal-duration={800}
-                            >
-                                Related Item
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="row g-5">
-                        {/* start single product */}
-                        <div
-                            data-sal="slide-up"
-                            data-sal-delay={150}
-                            data-sal-duration={800}
-                            className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                        >
-                            <div className="product-style-one no-overlay">
-                                <div className="card-thumbnail">
-                                    <a href="product-details.html">
-                                        <img
-                                            src="assets/images/portfolio/portfolio-01.jpg"
-                                            alt="NFT_portfolio"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="product-share-wrapper">
-                                    <div className="profile-share">
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-1.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone Due"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-2.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Nisat Tara"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-3.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a className="more-author-text" href="#">
-                                            9+ Place Bit.
-                                        </a>
-                                    </div>
-                                    <div className="share-btn share-btn-activation dropdown">
-                                        <button
-                                            className="icon"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <svg
-                                                viewBox="0 0 14 4"
-                                                fill="none"
-                                                width={16}
-                                                height={16}
-                                                className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text share-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#shareModal"
-                                            >
-                                                Share
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text report-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"
-                                            >
-                                                Report
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="product-details.html">
-                                    <span className="product-name">Preatent</span>
-                                </a>
-                                <span className="latest-bid">Highest bid 1/20</span>
-                                <div className="bid-react-area">
-                                    <div className="last-bid">0.244wETH</div>
-                                    <div className="react-area">
-                                        <svg
-                                            viewBox="0 0 17 16"
-                                            fill="none"
-                                            width={16}
-                                            height={16}
-                                            className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                                        >
-                                            <path
-                                                d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            />
-                                        </svg>
-                                        <span className="number">322</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* end single product */}
-                        {/* start single product */}
-                        <div
-                            data-sal="slide-up"
-                            data-sal-delay={200}
-                            data-sal-duration={800}
-                            className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                        >
-                            <div className="product-style-one no-overlay">
-                                <div className="card-thumbnail">
-                                    <a href="product-details.html">
-                                        <img
-                                            src="assets/images/portfolio/portfolio-02.jpg"
-                                            alt="NFT_portfolio"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="product-share-wrapper">
-                                    <div className="profile-share">
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-4.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Nira Ara"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-5.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Fatima Afrafy"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-6.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a className="more-author-text" href="#">
-                                            10+ Place Bit.
-                                        </a>
-                                    </div>
-                                    <div className="share-btn share-btn-activation dropdown">
-                                        <button
-                                            className="icon"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <svg
-                                                viewBox="0 0 14 4"
-                                                fill="none"
-                                                width={16}
-                                                height={16}
-                                                className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text share-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#shareModal"
-                                            >
-                                                Share
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text report-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"
-                                            >
-                                                Report
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="product-details.html">
-                                    <span className="product-name">Diamond Dog</span>
-                                </a>
-                                <span className="latest-bid">Highest bid 5/11</span>
-                                <div className="bid-react-area">
-                                    <div className="last-bid">0.892wETH</div>
-                                    <div className="react-area">
-                                        <svg
-                                            viewBox="0 0 17 16"
-                                            fill="none"
-                                            width={16}
-                                            height={16}
-                                            className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                                        >
-                                            <path
-                                                d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            />
-                                        </svg>
-                                        <span className="number">420</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* end single product */}
-                        {/* start single product */}
-                        <div
-                            data-sal="slide-up"
-                            data-sal-delay={250}
-                            data-sal-duration={800}
-                            className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                        >
-                            <div className="product-style-one no-overlay">
-                                <div className="card-thumbnail">
-                                    <a href="product-details.html">
-                                        <img
-                                            src="assets/images/portfolio/portfolio-03.jpg"
-                                            alt="NFT_portfolio"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="product-share-wrapper">
-                                    <div className="profile-share">
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-1.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Janin Ara"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-8.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Atif Islam"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-9.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a className="more-author-text" href="#">
-                                            10+ Place Bit.
-                                        </a>
-                                    </div>
-                                    <div className="share-btn share-btn-activation dropdown">
-                                        <button
-                                            className="icon"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <svg
-                                                viewBox="0 0 14 4"
-                                                fill="none"
-                                                width={16}
-                                                height={16}
-                                                className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text share-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#shareModal"
-                                            >
-                                                Share
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text report-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"
-                                            >
-                                                Report
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="product-details.html">
-                                    <span className="product-name">OrBid6</span>
-                                </a>
-                                <span className="latest-bid">Highest bid 2/31</span>
-                                <div className="bid-react-area">
-                                    <div className="last-bid">0.2128wETH</div>
-                                    <div className="react-area">
-                                        <svg
-                                            viewBox="0 0 17 16"
-                                            fill="none"
-                                            width={16}
-                                            height={16}
-                                            className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                                        >
-                                            <path
-                                                d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            />
-                                        </svg>
-                                        <span className="number">12</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* end single product */}
-                        {/* start single product */}
-                        <div
-                            data-sal="slide-up"
-                            data-sal-delay={300}
-                            data-sal-duration={800}
-                            className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                        >
-                            <div className="product-style-one no-overlay">
-                                <div className="card-thumbnail">
-                                    <a href="product-details.html">
-                                        <img
-                                            src="assets/images/portfolio/portfolio-04.jpg"
-                                            alt="NFT_portfolio"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="product-share-wrapper">
-                                    <div className="profile-share">
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-1.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-3.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-5.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a className="more-author-text" href="#">
-                                            8+ Place Bit.
-                                        </a>
-                                    </div>
-                                    <div className="share-btn share-btn-activation dropdown">
-                                        <button
-                                            className="icon"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <svg
-                                                viewBox="0 0 14 4"
-                                                fill="none"
-                                                width={16}
-                                                height={16}
-                                                className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text share-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#shareModal"
-                                            >
-                                                Share
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text report-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"
-                                            >
-                                                Report
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="product-details.html">
-                                    <span className="product-name">Morgan11</span>
-                                </a>
-                                <span className="latest-bid">Highest bid 3/16</span>
-                                <div className="bid-react-area">
-                                    <div className="last-bid">0.265wETH</div>
-                                    <div className="react-area">
-                                        <svg
-                                            viewBox="0 0 17 16"
-                                            fill="none"
-                                            width={16}
-                                            height={16}
-                                            className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                                        >
-                                            <path
-                                                d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            />
-                                        </svg>
-                                        <span className="number">20</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* end single product */}
-                        {/* start single product */}
-                        <div
-                            data-sal="slide-up"
-                            data-sal-delay={350}
-                            data-sal-duration={800}
-                            className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                        >
-                            <div className="product-style-one no-overlay">
-                                <div className="card-thumbnail">
-                                    <a href="product-details.html">
-                                        <img
-                                            src="assets/images/portfolio/portfolio-05.jpg"
-                                            alt="NFT_portfolio"
-                                        />
-                                    </a>
-                                </div>
-                                <div className="product-share-wrapper">
-                                    <div className="profile-share">
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-2.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-7.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a
-                                            href="author.html"
-                                            className="avatar"
-                                            data-tooltip="Jone lee"
-                                        >
-                                            <img
-                                                src="assets/images/client/client-9.png"
-                                                alt="Nft_Profile"
-                                            />
-                                        </a>
-                                        <a className="more-author-text" href="#">
-                                            15+ Place Bit.
-                                        </a>
-                                    </div>
-                                    <div className="share-btn share-btn-activation dropdown">
-                                        <button
-                                            className="icon"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <svg
-                                                viewBox="0 0 14 4"
-                                                fill="none"
-                                                width={16}
-                                                height={16}
-                                                className="sc-bdnxRM sc-hKFxyN hOiKLt"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <div className="share-btn-setting dropdown-menu dropdown-menu-end">
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text share-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#shareModal"
-                                            >
-                                                Share
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-setting-text report-text"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"
-                                            >
-                                                Report
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="product-details.html">
-                                    <span className="product-name">mAtal8</span>
-                                </a>
-                                <span className="latest-bid">Highest bid 6/50</span>
-                                <div className="bid-react-area">
-                                    <div className="last-bid">0.244wETH</div>
-                                    <div className="react-area">
-                                        <svg
-                                            viewBox="0 0 17 16"
-                                            fill="none"
-                                            width={16}
-                                            height={16}
-                                            className="sc-bdnxRM sc-hKFxyN kBvkOu"
-                                        >
-                                            <path
-                                                d="M8.2112 14L12.1056 9.69231L14.1853 7.39185C15.2497 6.21455 15.3683 4.46116 14.4723 3.15121V3.15121C13.3207 1.46757 10.9637 1.15351 9.41139 2.47685L8.2112 3.5L6.95566 2.42966C5.40738 1.10976 3.06841 1.3603 1.83482 2.97819V2.97819C0.777858 4.36443 0.885104 6.31329 2.08779 7.57518L8.2112 14Z"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                            />
-                                        </svg>
-                                        <span className="number">205</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* end single product */}
-                    </div>
-                </div>
-            </div>
-            {/* New items End */}
 
             {/* Modal */}
             <div

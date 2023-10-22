@@ -43,7 +43,7 @@ class ProductStoreRequest extends FormRequest
             return [
                 'name.required' => 'Name is required!',
                 'image.required' => 'Image is required!',
-                'category_id.required' => 'category is required!',
+                'category_id.required' => 'category_id is required!',
                 'description.required' => 'Description is required!',
                 'min_target.required' => 'min_target is required!',
                 'timer.required' => 'timer is required!'
@@ -52,7 +52,7 @@ class ProductStoreRequest extends FormRequest
             return [
                 'name.required' => 'Name is required!',
                 'image.required' => 'Image is required!',
-                'category_id.required' => 'category is required!',
+                'category_id.required' => 'category_id is required!',
                 'description.required' => 'Description is required!',
                 'min_target.required' => 'min_target is required!',
                 'timer.required' => 'timer is required!'

@@ -27,7 +27,7 @@ export default function About() {
     <div className="container-fluid about-fluidimg ">
       <div className="row">
         <div className="img-wrapper">
-          <div className="bg_image--22 bg_image"></div>
+          <div style={{backgroundImage: 'url("assets/images/contact/bg-image-22.jpg")'}} className="bg_image--22 bg_image"></div>
         </div>
       </div>
     </div>
@@ -193,13 +193,18 @@ export default function About() {
   {/* call to action area */}
   <div className="rn-callto-action rn-section-gapTop">
     <div className="container-fluid about-fluidimg-cta">
+    
       <div className="row">
         <div className="col-lg-12">
+       
           <div
             className="bg_image--6 bg_image bg-image-border"
+            style={{backgroundImage: 'url("assets/images/contact/bg-image-6.jpg")'}}
             data-black-overlay={7}
           >
+             
             <div className="row">
+            
               <div className="col-lg-12">
                 <div className="call-to-action-wrapper">
                   <h3

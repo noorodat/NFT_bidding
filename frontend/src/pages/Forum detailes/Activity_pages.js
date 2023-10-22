@@ -1,51 +1,12 @@
-// import React from "react";
-// import Comments from "./Ques";
-// import Sidebar from "./Sidebar";
-// import { Container, Col, Row } from "reactstrap";
-// import { useSelector } from "react-redux";
-
-// const Activity_pages = () => {
-//   // const userID = useSelector((state) => state.user.id);
-//   // const userName = useSelector((state) => state.user.name);
-
-//   return (
-//     <React.Fragment>
-//       <Container>
-//         <Row>
-//           <Col lg={8} >
-//             <Comments
-//               commentsUrl="http://localhost:3004/comments"
-//               // currentUserId={userID}
-//               // userName={userName}
-//               userName="sara"
-//               currentUserId="1"
-//               // sara
-//             />
-//           </Col>
-//           <Col lg={4}>
-//             <Sidebar />
-//           </Col>
-//         </Row>
-//       </Container>
-//     </React.Fragment>
-//   );
-// };
-
-// export default Activity_pages;
-
-
-
 import React from "react";
+import { connect } from "react-redux"; // Import the connect function
 import Comments from "./Ques";
 import Sidebar from "./Sidebar";
 import { Container, Col, Row } from "reactstrap";
-import { useSelector } from "react-redux";
 
-const Activity_pages = () => {
-  
+const Activity_pages = ({ user }) => { // Pass 'user' as a prop
 
-  const userID = useSelector((state) => state.user.id);
-  const userName = useSelector((state) => state.user.name);
+  // ...
 
   return (
     <React.Fragment>
@@ -54,13 +15,8 @@ const Activity_pages = () => {
           <Col lg={8}>
             <Comments
               commentsUrl="http://localhost:3004/comments"
-      
-          
-              currentUserId={userID}
-              userName={userName}
-              // userName="sara"
-              // currentUserId="1"
-              // sara
+              currentUserId={user.id}
+              userName={user.name}
             />
           </Col>
           <Col lg={4}>
@@ -72,5 +28,9 @@ const Activity_pages = () => {
   );
 };
 
-export default Activity_pages;
+// Connect the component to the Redux state
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
 
+export default connect(mapStateToProps)(Activity_pages);

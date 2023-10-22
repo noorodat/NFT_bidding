@@ -25,7 +25,7 @@ const Comment = ({
   const [isUpdate, setisUpdate] = useState(true);
 
   // if (isAuthenticated) {
-  const isEditing =
+    const isEditing =
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "editing";
@@ -35,17 +35,21 @@ const Comment = ({
     activeComment.type === "replying";
   const fiveMinutes = 300000;
   const timePassed =
-    new Date() - parseFloat(new Date(comment.createdAt)) > fiveMinutes;
-
+    new Date() - new Date(comment.createdAt) > fiveMinutes;
+  
   const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
+    currentUserId === comment.userId &&
+    replies.length === 0 &&
+    !timePassed;
   const canReply = Boolean(currentUserId);
-
-  const canEdit = currentUserId === comment.userId && !timePassed;
+  
+  const canEdit =
+    currentUserId === comment.userId &&
+    !timePassed; // Check if less than 5 minutes
   const replyId = parentId ? parentId : comment.id;
-  // }
+  
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
-
+  
   const number = 0;
 
   return (
@@ -90,7 +94,7 @@ const Comment = ({
                                 <Link
                                   to="author.html"
                                   className="avatar"
-                                  data-tooltip={`Owner: ${reply.name}`}
+                                  data-tooltip={`Owner: ${reply.username}`}
                                   key={index}
                                 >
                                 
@@ -235,7 +239,8 @@ const Comment = ({
                     <div>
                       {replies
                         .filter((reply) => reply.parentId === comment.id)
-                        .map((filteredReply) => (
+                        .slice()
+                        .reverse().map((filteredReply) => (
                           <div class="forum-single-ans" key={filteredReply.id}>
                             <div class="ans-header">
                               <a href="author.html">

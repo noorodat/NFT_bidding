@@ -85,6 +85,12 @@ class BiddingController extends Controller
 
         $biddings->save();
 
+        $user = User::find($request->user_id);
+
+        $user->balance -= $request->amount;
+
+        $user->save();
+
         return response()->json($biddings);
     }
 
@@ -145,8 +151,6 @@ class BiddingController extends Controller
         $highestBid = Bidding::where('product_id', $product_id)->max('amount');
         return response()->json($highestBid);
     }
-
-    
 
 }
 

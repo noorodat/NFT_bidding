@@ -91,6 +91,7 @@ export default function ProductDetails() {
                         'You bid to that product',
                         'success'
                       )
+                      setHighestBidding(biddingData.amount);
                 } else {
                     // Handle any errors if the request fails
                     // You can display an error message or perform other actions
@@ -396,9 +397,11 @@ export default function ProductDetails() {
                                                             <div className="heighest-bid">
                                                                 Heighest bid: <a href="#">{winner.name}</a>
                                                             </div>
-                                                            <div className="count-number">${highestBidding}</div>
+                                                            
                                                         </div>
+                                                        
                                                     </div>
+                                                    <div className="count-number fs-2">${highestBidding}</div>
                                                 </div>
                                             </div>
                                             <div className="bid-list left-bid">

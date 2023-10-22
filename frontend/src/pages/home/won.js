@@ -19,16 +19,21 @@ const Won = ({ userID, userName }) => {
             .then((data) => {
                 // Filter products with status true
                 const filteredProducts = data.filter((product) => product.winning_user === userID);
+                const filteredProducts2 = data.filter((product) => product.user_id === userID);
                 setProducts(filteredProducts);
+                setProducts(filteredProducts2);
 
                 // Extract unique user IDs from the filtered products
                 const uniqueUserIds = [...new Set(filteredProducts.map((product) => product.winning_user))];
+                const uniqueUserIdss = [...new Set(filteredProducts2.map((product) => product.user_id))];
+
 
                 // Fetch user data for each unique user ID
                 Promise.all(
                     uniqueUserIds.map((userId) =>
                         fetch(`https://user-api-url/${userId}`).then((response) => response.json())
                     )
+                    
                 )
                     .then((userResponses) => {
                         // Create a user dictionary with user ID as the key
@@ -95,7 +100,50 @@ const Won = ({ userID, userName }) => {
                             );
                         })}
                     </div>
-
+                    <div className="row mb--50">
+                        <div className="col-lg-12">
+                            <div className="section-title">
+                                <h3 className="title mb--0 live-bidding-title "  style={{ textAlign: 'left' }}>
+                                    Created Bidding                                
+                                    </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        {products.map((product) => {
+                            const targetDate = product.timer; // Moved this line outside of the return statement
+                            return (
+                                <div key={product.id} className="col-lg-4">
+                                    <div className="single-slide-product">
+                                        <div className="product-style-one">
+                                            <div className="card-thumbnail">
+                                                {/* <a href={`product/${product.id}`}>
+                                                    <img src={product.image} alt={product.name} />
+                                                </a> */}
+                                                <Link to={`/ProductDetails/${product.id}`}>
+                                                    <img
+                                                        src={product.image} alt={product.name}
+                                                    />
+                                                </Link>
+                                                
+                                            </div>
+                                            <br />
+                                            <a href={`product-details.html/${product.id}`}>
+                                                <span className="product-name">{product.name}</span>
+                                                <span className="last-bid">Highest bid $ {product.highest_bid}</span>
+                                            </a>
+                                            <div className="bid-react-area">
+                                                <span className="last-bid">Start From $ {product.min_target}</span>
+                                                {/* <span className="last-bid">
+                                                    {user.first_name} {user.last_name}
+                                                </span> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

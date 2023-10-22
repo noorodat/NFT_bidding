@@ -166,9 +166,8 @@ export default function Products() {
                   <a href="product-details.html">
                     <span className="product-name">{product.name}</span>
                   </a>
-                  <span className="latest-bid">Highest bid 1/20</span>
+                  <span className="latest-bid">Highest bid: ${product.highest_bid}</span>
                   <div className="bid-react-area">
-                    <div className="last-bid">0.244wETH</div>
                   </div>
                   <CountdownTimer targetDate={targetDate} productName={product.id} />
                 </div>

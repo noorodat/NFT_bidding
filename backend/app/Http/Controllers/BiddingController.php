@@ -81,15 +81,15 @@ class BiddingController extends Controller
 
         $biddings->product_id = $request->product_id;
 
+        $product = Product::find($request->product_id);
+
+        $product->highest_bid = $request->amount;
+
+        $product->save();
+
         $biddings->amount = $request->amount;
 
         $biddings->save();
-
-        $user = User::find($request->user_id);
-
-        $user->balance -= $request->amount;
-
-        $user->save();
 
         return response()->json($biddings);
     }

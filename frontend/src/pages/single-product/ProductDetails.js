@@ -16,7 +16,7 @@ export default function ProductDetails() {
         value: '',
     });
 
-    const formRef = useRef(null);    
+    const formRef = useRef(null);
 
     const { id } = useParams();// Replace with your target date
 
@@ -37,7 +37,7 @@ export default function ProductDetails() {
 
     const HighsetBidAPI = `http://127.0.0.1:8000/api/HighestBid/${id}`;
     // const { data: highestBid } = useApiData(HighsetBidAPI);
-    
+
     const [highestBidding, setHighestBidding] = useState(null);
 
     useEffect(() => {
@@ -57,41 +57,49 @@ export default function ProductDetails() {
 
     console.log("HIGHEST BID: ", highestBidding);
 
+    console.log("USER BALANCE ", user.balance);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const bidValue = formData.value;
-    
+
         if (bidValue < product.min_target || bidValue <= highestBidding) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'You Can\'t Bid Lower Than The Minimum Target',
             });
-        } else {
+        } else if (user.balance < bidValue) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You Don\'t have enough money, Charge your wallet first',
+            });
+        }
+        else {
             try {
-    
+
                 // Create the bidding object to send to the API
                 const biddingData = {
                     user_id: userId,
                     product_id: id,
                     amount: bidValue,
                 };
-    
+
                 // Send a POST request to your API using Axios
                 const response = await axios.post('/Biddings', biddingData, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-    
+
                 if (response.status === 200) {
                     Swal.fire(
                         'Done!',
                         'You bid to that product',
                         'success'
-                      )
-                      setHighestBidding(biddingData.amount);
+                    )
+                    setHighestBidding(biddingData.amount);
                 } else {
                     // Handle any errors if the request fails
                     // You can display an error message or perform other actions
@@ -102,7 +110,7 @@ export default function ProductDetails() {
             }
         }
     };
-    
+
 
 
     return (
@@ -397,9 +405,9 @@ export default function ProductDetails() {
                                                             <div className="heighest-bid">
                                                                 Heighest bid: <a href="#">{winner.name}</a>
                                                             </div>
-                                                            
+
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div className="count-number fs-2">${highestBidding}</div>
                                                 </div>

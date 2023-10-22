@@ -251,4 +251,12 @@ class ProductController extends Controller
         $products->delete();
         return response()->json(['message' => 'Product deleted']);
     }
+
+
+    public function getProductsOnCategory($id) {
+        $products = Product::where('category_id', $id)->get();
+        return response()->json($products);
+    }
+
+
 }

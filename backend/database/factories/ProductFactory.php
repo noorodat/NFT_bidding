@@ -19,7 +19,7 @@ class ProductFactory extends Factory
             'image' => $this->faker->imageUrl($width = 200, $height = 200),
             'description' => $this->faker->sentence(),
             'min_target' => $this->faker->randomNumber(),
-            'timer' => $this->faker->dateTime(),
+            'timer' => $this->faker->date(),
             'status' => 1,
             'user_id' => $user->id,
             'category_id' => $category->id,

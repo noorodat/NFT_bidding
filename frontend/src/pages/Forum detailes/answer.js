@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import CommentForm from "./CommentForm";
+import UpQestion from "./UpQestion";
 import AnswerForm from "./AnswerForm";
 import { Link } from "react-router-dom";
+
 // import { getUsers } from '../../redux/actions/userActions';
 import { useSelector } from "react-redux";
 
@@ -18,39 +20,40 @@ const Comment = ({
   const userName = useSelector((state) => state.user.name);
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const currentUserId = useSelector((state) => state.user.id);
-  // const currentUserId = useSelector((state) => state.user);
-
+  // const userName = "sara";
+  // const currentUserId = 1;
+  const [isUpdate, setisUpdate] = useState(true);
 
   // if (isAuthenticated) {
-    const isEditing =
-      activeComment &&
-      activeComment.id === comment.id &&
-      activeComment.type === "editing";
-    const isReplying =
-      activeComment &&
-      activeComment.id === comment.id &&
-      activeComment.type === "replying";
-    const fiveMinutes = 300000;
-    const timePassed = new Date() -  parseFloat(new Date (comment.createdAt)) > fiveMinutes;
-    
-      const canDelete =
-      currentUserId === comment.userId && replies.length === 0 && !timePassed;
-      const canReply = Boolean(currentUserId);
-   
-    
-    const canEdit = currentUserId === comment.userId && !timePassed;
-    const replyId = parentId ? parentId : comment.id;
+  const isEditing =
+    activeComment &&
+    activeComment.id === comment.id &&
+    activeComment.type === "editing";
+  const isReplying =
+    activeComment &&
+    activeComment.id === comment.id &&
+    activeComment.type === "replying";
+  const fiveMinutes = 300000;
+  const timePassed =
+    new Date() - parseFloat(new Date(comment.createdAt)) > fiveMinutes;
+
+  const canDelete =
+    currentUserId === comment.userId && replies.length === 0 && !timePassed;
+  const canReply = Boolean(currentUserId);
+
+  const canEdit = currentUserId === comment.userId && !timePassed;
+  const replyId = parentId ? parentId : comment.id;
   // }
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
 
-
+  const number = 0;
 
   return (
     <div key={comment.id} className="comment-container">
       <div class="nu-community-area rn-section-gapTop">
         <div class="container">
           <div class="row g-5">
-            <div class="col-lg-8">
+            <div>
               <div class="community-content-wrapper">
                 <div className="single-community-box">
                   <div className="community-bx-header">
@@ -79,137 +82,144 @@ const Comment = ({
                     <div className="header-right">
                       <div className="product-share-wrapper">
                         <div className="profile-share">
-                          <Link
-                            to="author.html"
-                            className="avatar"
-                            data-tooltip="Owener:Mr.Jone-lee"
-                          >
-                            <img
-                              className="large"
-                              src="assets/images/client/client-1.png"
-                              alt="Nft_Profile"
-                            />
-                          </Link>
-                          <Link
-                            to="author.html"
-                            className="avatar"
-                            data-tooltip="Owener:Mr.Jone-lee"
-                          >
-                            <img
-                              className="large"
-                              src="assets/images/client/client-10.png"
-                              alt="Nft_Profile"
-                            />
-                          </Link>
-                          <Link
-                            to="author.html"
-                            className="avatar"
-                            data-tooltip="Owener:Mr.Jone-lee"
-                          >
-                            <img
-                              className="large"
-                              src="assets/images/client/client-11.png"
-                              alt="Nft_Profile"
-                            />
-                          </Link>
-                          <Link className="more-author-text" href="#">
-                            20+ People.
-                          </Link>
+                          <div className="profile-share-images">
+                            {replies
+                              .filter((reply) => reply.parentId === comment.id)
+                              .slice(0, 3) // Get the first 3 replies
+                              .map((reply, index) => (
+                                <Link
+                                  to="author.html"
+                                  className="avatar"
+                                  data-tooltip={`Owner: ${reply.name}`}
+                                  key={index}
+                                >
+                                
+                                     <img
+                                    class="large"
+                                    src="assets/images/client/client-11.png"
+                                    // src={reply.profileImage}
+                                    // alt="Nft_Profile"
+                                    alt={` ${reply.name}`}
+                                  />
+                                </Link>
+                              ))}
+                          </div>
+
+                          {replies.filter(
+                            (reply) => reply.parentId === comment.id
+                          ).length > 3 && (
+                            <Link className="more-author-text" href="#">
+                              +
+                              {replies.filter(
+                                (reply) => reply.parentId === comment.id
+                              ).length - 3}{" "}
+                              People
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
-                  {/* {  (isAuthenticated) && ( */}
-                    <div>
-                      <div className="community-content">
-                        {!isEditing && (
-                          <h3
-                            className="title"
-                            style={{ textAlign: "left", marginLeft: "50px" }}
-                          >
-                            {comment.body}
-                          </h3>
-                        )}
-                        {isEditing && (
-                          <CommentForm
+                  {/* {isAuthenticated && ( */}
+                  <div>
+                    <div className="community-content">
+                      {!isEditing && (
+                        <h3
+                          className="title"
+                          style={{ textAlign: "left", marginLeft: "50px" }}
+                        >
+                          {comment.body}
+                        </h3>
+                      )}
+
+                      {isEditing && (
+                        <>
+                          <UpQestion
                             submitLabel="Update"
                             hasCancelButton
                             initialText={comment.body}
-                            handleSubmit={(text) =>
-                              updateComment(text, comment.id)
-                            }
+                            handleSubmit={(text) => {
+                              updateComment(text, comment.id);
+                              setisUpdate(true); // Set isUpdate to true when submitting
+                            }}
                             handleCancel={() => {
                               setActiveComment(null);
+                              setisUpdate(true); // Set isUpdate to false when canceling editing
                             }}
                           />
-                        )}
-                        <div>
-                          {!canEdit && (
-                            <span
-                              className="comment-action edit-action"
+                        </>
+                      )}
+
+                      {!canEdit && isUpdate && (
+                        <span
+                          style={{ marginRight: "10px" }}
+                          className="comment-action edit-action"
+                          onClick={() => {
+                            setActiveComment({
+                              id: comment.id,
+                              type: "editing",
+                            });
+                            setisUpdate(false); // Set isUpdate to false when "Edit" is clicked
+                          }}
+                        >
+                          Edit
+                        </span>
+                      )}
+
+                      {!canDelete && (
+                        <span
+                          className="comment-action delete-action"
+                          onClick={() => deleteComment(comment.id)}
+                        >
+                          Delete
+                        </span>
+                      )}
+
+                      <div className="hr"></div>
+                      <div class="rn-community-footer">
+                        {!isReplying && (
+                          <div class="answer">
+                            <button
+                              class="btn btn-primary-alta rounded"
                               onClick={() =>
                                 setActiveComment({
                                   id: comment.id,
-                                  type: "editing",
+                                  type: "replying",
                                 })
                               }
                             >
-                              Edit
-                            </span>
-                          )}
-                          {!canDelete && (
-                            <span
-                              className="comment-action delete-action"
-                              onClick={() => deleteComment(comment.id)}
-                            >
-                              Delete
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="hr"></div>
-                        <div class="rn-community-footer">
-                          {!isReplying && (
-                            <div class="answer">
-                              <button
-                                class="btn btn-primary-alta rounded"
-                                onClick={() =>
-                                  setActiveComment({
-                                    id: comment.id,
-                                    type: "replying",
-                                  })
-                                }
-                              >
-                                Answer
-                              </button>
-                            </div>
-                          )}
-                        </div>
+                              Answer
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
+                  </div>
                   {/* )} */}
                 </div>
 
-                {/* {(isAuthenticated) && ( */}
-                  <div>
-                    {isReplying && (
-                      <>
-                        <AnswerForm
-                          submitLabel="Reply"
-                          handleSubmit={(text) =>
-                            addComment(text, replyId, currentUserId, userName)
-                          }
-                        />
-                        <button
+                {/* {isAuthenticated && ( */}
+                <div>
+                  {isReplying && (
+                    <>
+                      <AnswerForm
+                        submitLabel="Reply"
+                        isReplying={isReplying} // Pass isReplying as a prop
+                        setActiveComment={setActiveComment} // Pass isReplying as a prop
+                        handleSubmit={(text) =>
+                          addComment(text, replyId, currentUserId, userName)
+                        }
+                      />
+                         {/* <button
                           class="btn btn-primary-alta rounded"
                           onClick={() => setActiveComment(null)}
                         >
                           Cancel
-                        </button>
-                      </>
-                    )}
-                  </div>
-                {/* } */}
+                        </button> */}
+                    </>
+                  )}
+                </div>
+                {/* )} */}
               </div>
             </div>
           </div>
@@ -218,14 +228,14 @@ const Comment = ({
       <div class="nu-community-area">
         <div class="container">
           <div class="row">
-            <div class="col-lg-8">
+            <div>
               <div class="community-content-wrapper">
-                {replies.length > 0 && (
-                  <div>
-                    {replies
-                      .filter((reply) => reply.parentId === comment.id)
-                      .map((filteredReply) => (
-                        <div class="forum-ans-box">
+                <div class="forum-ans-box">
+                  {replies.length > 0 && (
+                    <div>
+                      {replies
+                        .filter((reply) => reply.parentId === comment.id)
+                        .map((filteredReply) => (
                           <div class="forum-single-ans" key={filteredReply.id}>
                             <div class="ans-header">
                               <a href="author.html">
@@ -237,7 +247,6 @@ const Comment = ({
                               <a href="author.html">
                                 <p class="name">{filteredReply.username}</p>
                                 <br></br>
-                                <p class="name">{currentUserId}</p>
                               </a>
                               <div class="date">
                                 <i class="feather-watch"></i>
@@ -250,23 +259,13 @@ const Comment = ({
                             </div>
                             <div class="ans-content">
                               <p>{filteredReply.body}</p>
-                              {/* <hr class="form-ans-separator" /> */}
-                              {/* <div class="reaction">
-                                <a href="#" class="like">
-                                  <span>27 Like</span>
-                                  <i class="feather-thumbs-up"></i>
-                                </a>
-                                <a href="#" class="dislike">
-                                  <span>27 dislike</span>
-                                  <i class="feather-thumbs-down"></i>
-                                </a>
-                              </div> */}
+                              <hr class="form-ans-separator" />
                             </div>
                           </div>
-                        </div>
-                      ))}
-                  </div>
-                )}
+                        ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

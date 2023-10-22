@@ -54,7 +54,7 @@ const SignUp = () => {
       setName("");
       setPasswordConfirmation("");
       console.log(response.data);
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       console.log(e);
     }

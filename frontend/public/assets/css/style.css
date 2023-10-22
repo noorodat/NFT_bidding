@@ -567,7 +567,10 @@ ol ul {
 }
 
 .rn-section-gap {
-  padding: 100px 0;
+  padding:  50px 0 10px;
+  margin-top: 30px;
+  margin: auto;
+  /* sara css */
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .rn-section-gap {

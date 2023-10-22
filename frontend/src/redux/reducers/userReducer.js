@@ -11,9 +11,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
         saveState(user,action.payload)
-
         console.log("USER FROM REDUCER", user.name);
-        
         saveState(isAuthenticated,true)
       return {
         ...state,

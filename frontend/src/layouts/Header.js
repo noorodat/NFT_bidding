@@ -40,6 +40,7 @@ const Header = ({ logoutSuccess }) => {
   console.log("Is Logged In? ", sessionStorage.getItem('isLoggedIn'))
   const handleLogoutSession = () => {
     sessionStorage.setItem('isLoggedIn', false);
+    sessionStorage.removeItem('userID');
     console.log("IS NOW? ", sessionStorage.getItem('isLoggedIn'));
   }
 
@@ -70,297 +71,17 @@ const Header = ({ logoutSuccess }) => {
                       <Link to="/">Home</Link>
                     </li>
                     <li>
-                      <Link to="about.html">About</Link>
+                      <Link to="/About">About</Link>
                     </li>
                     <li className="has-menu-child-item">
-                      <Link to="#">Explore</Link>
-                      <ul className="submenu">
-                        <li>
-                          <Link to="explore-one.html">
-                            Explore Filter
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-two.html">
-                            Explore Isotop
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-three.html">
-                            Explore Carousel
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-four.html">
-                            Explore Simple
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-five.html">
-                            Explore Place Bid
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-six.html">
-                            Place Bid With Filter
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-seven.html">
-                            Place Bid With Isotop
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-eight.html">
-                            Place Bid With Carousel
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-list-style.html">
-                            Explore Style List
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-list-column-two.html">
-                            Explore List Col-Two
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="explore-left-filter.html">
-                            Explore Left Filter
-                            <i className="feather-fast-forward" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link className="live-expo" href="explore-live.html">
-                            Live Explore
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="live-expo"
-                            href="explore-live-two.html"
-                          >
-                            Live Explore Carousel
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="live-expo"
-                            href="explore-live-three.html"
-                          >
-                            Live With Place Bid
-                          </Link>
-                        </li>
-                      </ul>
+                      <Link to="/Activity_pages">Activity</Link>
                     </li>
-                    <li className="with-megamenu">
-                      <Link to="#">Pages</Link>
-                      <div className="rn-megamenu">
-                        <div className="wrapper">
-                          <div className="row row--0">
-                            <div className="col-lg-3 single-mega-item">
-                              <ul className="mega-menu-item">
-                                <li>
-                                  <Link to="create.html">
-                                    Create NFT
-                                    <i data-feather="file-plus" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="upload-variants.html">
-                                    Upload Type
-                                    <i data-feather="layers" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="activity.html">
-                                    Activity
-                                    <i data-feather="activity" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="creator.html">
-                                    Creators
-                                    <i data-feather="users" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="collection.html">
-                                    Our Collection
-                                    <i data-feather="package" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="upcoming_projects.html">
-                                    Upcoming Projects
-                                    <i data-feather="loader" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="create-collection.html">
-                                    Create Collection
-                                    <i data-feather="edit-3" />
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="col-lg-3 single-mega-item">
-                              <ul className="mega-menu-item">
-                                <li>
-                                  <Link to="/Login">
-                                    Log In <i data-feather="log-in" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/SignUp">
-                                    Registration <i data-feather="user-plus" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="forget.html">
-                                    Forget Password <i data-feather="key" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="author.html">
-                                    Author/Profile(User){" "}
-                                    <i data-feather="user" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="connect.html">
-                                    Connect to Wallet{" "}
-                                    <i data-feather="pocket" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="privacy-policy.html">
-                                    Privacy Policy{" "}
-                                    <i data-feather="file-text" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="newsletter.html">
-                                    Newsletter
-                                    <i data-feather="book-open" />
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="col-lg-3 single-mega-item">
-                              <ul className="mega-menu-item">
-                                <li>
-                                  <Link to="product.html">
-                                    Product
-                                    <i data-feather="folder" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="product-details.html">
-                                    Product Details <i data-feather="layout" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="ranking.html">
-                                    NFT Ranking
-                                    <i data-feather="trending-up" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="edit-profile.html">
-                                    Edit Profile
-                                    <i data-feather="edit" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="blog-details.html">
-                                    Blog Details
-                                    <i data-feather="book-open" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="404.html">
-                                    404 <i data-feather="alert-triangle" />
-                                  </Link>
-                                </li>
-
-                                {isAuthenticated && (<li>
-                                  <Link to="Activity_pages">
-                                    Forum &amp; Community
-                                    <i data-feather="message-circle" />
-                                  </Link>
-                                </li>)}
-                                {!isAuthenticated && (<li>
-                                  <Link to="/Login">
-                                    Forum &amp; Community
-                                    <i data-feather="message-circle" />
-                                  </Link>
-                                </li>)}
-
-
-
-                              </ul>
-                            </div>
-                            <div className="col-lg-3 single-mega-item">
-                              <ul className="mega-menu-item">
-                                <li>
-                                  <Link to="about.html">
-                                    About Us
-                                    <i data-feather="award" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="contact.html">
-                                    Contact <i data-feather="headphones" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="support.html">
-                                    Support/FAQ <i data-feather="help-circle" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="terms-condition.html">
-                                    Terms &amp; Condition{" "}
-                                    <i data-feather="list" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="coming-soon.html">
-                                    Coming Soon <i data-feather="clock" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="maintenance.html">
-                                    Maintenance <i data-feather="cpu" />
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="forum-details.html">
-                                    Forum Details{" "}
-                                    <i data-feather="message-circle" />
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <li className="has-menu-child-item">
+                      <Link to="/AddProduct">Create NFT</Link>
                     </li>
 
                     <li>
-                      <Link to="contact.html">Contact</Link>
+                      <Link to="/Contact">Contact</Link>
                     </li>
                   </ul>
                   {/* End Mainmanu Nav */}
@@ -680,7 +401,7 @@ const Header = ({ logoutSuccess }) => {
                 </ul>
               </li>
               <li>
-                <Link to="about.html">About</Link>
+                <Link to="/About">About</Link>
               </li>
               <li className="has-droupdown">
                 <Link className="nav-link its_new" href="#">
@@ -909,13 +630,13 @@ const Header = ({ logoutSuccess }) => {
                       <div className="col-lg-3 single-mega-item">
                         <ul className="mega-menu-item">
                           <li>
-                            <Link to="about.html">
+                            <Link to="/About">
                               About Us
                               <i data-feather="award" />
                             </Link>
                           </li>
                           <li>
-                            <Link to="contact.html">
+                            <Link to="/Contact">
                               Contact <i data-feather="headphones" />
                             </Link>
                           </li>
@@ -988,7 +709,7 @@ const Header = ({ logoutSuccess }) => {
                 </ul>
               </li>
               <li>
-                <Link to="contact.html">Contact</Link>
+                <Link to="/About">Contact</Link>
               </li>
             </ul>
             {/* End Mainmanu Nav */}
@@ -1015,4 +736,3 @@ const Header = ({ logoutSuccess }) => {
 
 };
 export default Header;
-

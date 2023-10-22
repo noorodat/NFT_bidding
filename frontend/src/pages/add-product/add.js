@@ -2,21 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "../../components/axios";
 import sal from "sal.js";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.user);
   const apiUrl = "http://127.0.0.1:8000/api/categories";
   const productApiUrl = "http://127.0.0.1:8000/api/products";
   const [loading, setLoading] = useState(true);
   const [imageURL, setImageURL] = useState(null);
-  const [fileimage, setPhoto] = useState("");
+  const [fileImage, setFileImage] = useState(null); // Use setFileImage to store the image file
   const csrfToken = window.csrfToken;
 
   const [message, setMessage] = useState("");
   const [product, setProduct] = useState({
     name: "",
-    category_id: "",
-    user_id: 1,
+    category_id: 1,
     image: "",
     description: "",
     min_target: "",
@@ -26,12 +27,26 @@ export default function AddProduct() {
     winning_user: null,
   });
 
-  const [data, setData] = useState([]); // Initialize an empty array for data
-  const [submissionStatus, setSubmissionStatus] = useState(""); // Track submission status
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const csrfResponse = await axios.get("/get-csrf-token");
+  //       const csrfToken = csrfResponse.data.csrf_token;
+  //       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+  //       const response = await axios.get("/products");
+  //       setProduct(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+  // console.log(typeof product.category_id);
+
+  const [data, setData] = useState([]);
+  const [submissionStatus, setSubmissionStatus] = useState("");
 
   useEffect(() => {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken; // Remove the curly braces and quotes
-
     sal();
   }, []);
 
@@ -56,28 +71,41 @@ export default function AddProduct() {
     });
   };
 
-  const uploadProduct = async () => {
-    console.log(fileimage);
-    const formData = new FormData();
-    formData.append("name", product);
-    formData.append("description", product);
-    formData.append("category_id", product);
-    formData.append("user_id", product);
-    formData.append("timer", product);
-    formData.append("highest_bid", product);
-    formData.append("status", product);
-    formData.append("winning_user", product);
-    formData.append("image", fileimage);
-    const responce = await axios.post(productApiUrl, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFileImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImageURL(imageUrl);
+    }
+  };
 
-    if (responce) {
-      console.log(responce);
-      setMessage(responce.message); //"message": "Product successfully created."
-      setTimeout(() => {
-        navigate("/AddProduct");
-      }, 2000);
+  const uploadProduct = async () => {
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("min_target", product.min_target);
+    formData.append("category_id", product.category_id);
+    formData.append("user_id", userData.id);
+    formData.append("timer", product.timer);
+    formData.append("highest_bid", product.highest_bid);
+    formData.append("status", product.status);
+    formData.append("winning_user", product.winning_user);
+    formData.append("image", product.image); // Use fileImage here
+
+    try {
+      const csrfResponse = await axios.get("/get-csrf-token");
+      const csrfToken = csrfResponse.data.csrf_token;
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+      const response = await axios.post("/products", formData);
+      alert("Product added successfully!");
+      navigate("/UserProfile"); // Replace "/profile" with the actual URL of your profile page
+
+      // Reset your form or navigate to another page
+    } catch (error) {
+      console.error("API request error:", error);
+      // Handle the error
     }
   };
 
@@ -85,56 +113,18 @@ export default function AddProduct() {
     e.preventDefault();
     await uploadProduct();
   };
+  console.log("Image URL:", imageURL);
 
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const csrfToken = window.csrfToken;
-  //     const csrfResponse = await axios.get("/get-csrf-token");
-  //     console.log(product.name);
-  //     console.log(product.category);
-  //     console.log(product.description);
-  //     console.log(product.min_target);
-  //     console.log(product.timer);
-  //     console.log(csrfToken);
-  //     console.log(csrfResponse);
-
-  //     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-  //     const response = await axios.post(productApiUrl, {
-  //       _token: csrfToken, // Include the CSRF token here
-  //       name: product.name,
-  //       category_id: product.category,
-  //       image: imageURL,
-  //       description: product.description,
-  //       min_target: product.min_target,
-  //       timer: product.timer,
-  //       user_id: 2, // Replace with the actual user_id
-  //       highest_bid: 0,
-  //       status: 1,
-  //       winning_user: null,
-  //     });
-
-  //     console.log("Product data to be sent:", response);
-
-  //     setProduct({
-  //       name: "",
-  //       category_id: "",
-  //       user_id: "",
-  //       image: "",
-  //       description: "",
-  //       min_target: "",
-  //       timer: "",
-  //       highest_bid: "",
-  //       status: "",
-  //       winning_user: "",
-  //     });
-  //     setSubmissionStatus("success");
-  //     console.log(response.data);
-  //   } catch (e) {
-  //     setSubmissionStatus("failure");
-  //     console.log(e);
-  //   }
-  // };
+  const handleImage = (e) => {
+    setProduct({ ...product, image: e.target.files[0] });
+  };
+  const handleCategorySelect = (categoryId) => {
+    // Update the selected category in your component's state
+    setProduct({
+      ...product,
+      category_id: categoryId,
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -146,16 +136,7 @@ export default function AddProduct() {
             <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
               {/* file upload area */}
               <div className="brows-file-wrapper">
-                <input
-                  type="file"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const imageUrl = URL.createObjectURL(file);
-                      setImageURL(imageUrl);
-                    }
-                  }}
-                />
+                <input type="file" name="image" onChange={handleImage} />
                 <img
                   src={imageURL}
                   alt="Uploaded Image"
@@ -179,22 +160,54 @@ export default function AddProduct() {
                     />
                   </div>
                 </div>
-                <div className="col-lg-12"></div>
-                <select
-                  id="category"
-                  name="category"
-                  value={product.category}
-                  onChange={handleInputChange}
-                >
-                  {data.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="collection-single-wized">
-                  <label className="title">Category</label>
+
+                <div className="col-lg-12">
+                  <div className="collection-single-wized">
+                    <label className="title">Category</label>
+                    <div className="create-collection-input">
+                      <div className="nice-select mb--30" tabIndex={0}>
+                        <span className="current">
+                          {product.category_id &&
+                            data.find(
+                              (category) => category.id === product.category_id
+                            )?.name}
+                        </span>
+
+                        <ul className="list">
+                          {data.map((category) => (
+                            <li
+                              key={category.id}
+                              className="option"
+                              onClick={() => handleCategorySelect(category.id)}
+                            >
+                              {category.name}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                {/* <div className="col-lg-12">
+                  <label className="title">Category</label>
+                  <select className="list" style ={{display :'block' }}
+                    id="category_id"
+                    name="category_id"
+                    value={product.category_id}
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        category_id: e.target.value,
+                      })
+                    }
+                  >
+                    {data.map((category) => (
+                      <option key={category.id} value={category.id} className="option">
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div> */}
 
                 <div className="col-md-12">
                   <div className="input-box pb--20">
@@ -211,6 +224,7 @@ export default function AddProduct() {
                     />
                   </div>
                 </div>
+
                 <div className="col-md-4">
                   <div className="input-box pb--20">
                     <label htmlFor="dollerValue" className="form-label">

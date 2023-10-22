@@ -155,7 +155,37 @@ export default function AddProduct() {
                       />
                     </div>
                   </div>
+
                   <div className="col-lg-12">
+                    <div className="collection-single-wized">
+                      <label className="title">Category</label>
+                      <div className="create-collection-input">
+                        <div className="nice-select mb--30" tabIndex={0}>
+                          <span className="current">Collectibles</span>
+                          <ul className="list">
+                            <li
+                              data-value="Art"
+                              data-display="Art"
+                              className="option focus"
+                            >
+                              Art
+                            </li>
+                            <li data-value={1} className="option selected">
+                              Collectibles
+                            </li>
+                            <li data-value={2} className="option">
+                              Music
+                            </li>
+                            <li data-value={4} className="option">
+                              Sports
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* <div className="col-lg-12">
                     <div className="collection-single-wized">
                       <label className="title">Category</label>
                       <div className="create-collection-input">
@@ -187,7 +217,7 @@ export default function AddProduct() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-md-12">
                     <div className="input-box pb--20">

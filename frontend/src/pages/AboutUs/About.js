@@ -27,7 +27,7 @@ export default function About() {
     <div className="container-fluid about-fluidimg ">
       <div className="row">
         <div className="img-wrapper">
-          <div className="bg_image--22 bg_image"></div>
+          <div style={{backgroundImage: 'url("assets/images/contact/bg-image-22.jpg")'}} className="bg_image--22 bg_image"></div>
         </div>
       </div>
     </div>
@@ -150,7 +150,7 @@ export default function About() {
           <div className="single-counter-up text-center">
             <h3 className="counter">
               <span className="odometer" data-count={309}>
-                00
+                60
               </span>
             </h3>
             <div className="botton-title">Nuron All NFT's</div>
@@ -160,7 +160,7 @@ export default function About() {
           <div className="single-counter-up text-center">
             <h3 className="counter">
               <span className="odometer" data-count={508}>
-                00
+                44
               </span>
             </h3>
             <div className="botton-title">All Creators</div>
@@ -170,7 +170,7 @@ export default function About() {
           <div className="single-counter-up text-center">
             <h3 className="counter">
               <span className="odometer" data-count={1032}>
-                00
+                20
               </span>
             </h3>
             <div className="botton-title">Nuron Earning</div>
@@ -180,7 +180,7 @@ export default function About() {
           <div className="single-counter-up text-center">
             <h3 className="counter">
               <span className="odometer" data-count={650}>
-                00
+                10
               </span>
             </h3>
             <div className="botton-title">Level One Seller</div>
@@ -193,13 +193,18 @@ export default function About() {
   {/* call to action area */}
   <div className="rn-callto-action rn-section-gapTop">
     <div className="container-fluid about-fluidimg-cta">
+    
       <div className="row">
         <div className="col-lg-12">
+       
           <div
             className="bg_image--6 bg_image bg-image-border"
+            style={{backgroundImage: 'url("assets/images/contact/bg-image-6.jpg")'}}
             data-black-overlay={7}
           >
+             
             <div className="row">
+            
               <div className="col-lg-12">
                 <div className="call-to-action-wrapper">
                   <h3

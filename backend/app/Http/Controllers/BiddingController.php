@@ -67,7 +67,7 @@ class BiddingController extends Controller
     public function getAllBidding()
     {
         //
-        $biddings = bidding::all();
+        $biddings = Bidding::all();
         return response()->json($biddings);
         
     }
@@ -75,9 +75,7 @@ class BiddingController extends Controller
    
     public function createBidding(Request $request)
     {
-        $biddings = new bidding();
-
-       
+        $biddings = new Bidding();
 
         $biddings->user_id = $request->user_id;
 
@@ -87,7 +85,7 @@ class BiddingController extends Controller
 
         $biddings->save();
 
-        return response($biddings, 201);
+        return response()->json($biddings);
     }
 
     
@@ -97,6 +95,11 @@ class BiddingController extends Controller
         if (!$biddings) {
             return response()->json(['error' => 'bidding not found'], 404);
         }
+        return response()->json($biddings);
+    }
+
+    public function getBiddingsOnProduct($id) {
+        $biddings = Bidding::where('product_id', $id)->get();
         return response()->json($biddings);
     }
 
@@ -126,8 +129,25 @@ class BiddingController extends Controller
     
         return response()->json(['message' => 'Bidding deleted']);
     }
+
+    public function getWinner($product_id) {
+        $maxAmount = Bidding::where('product_id', $product_id)->max('amount');
+
+        $highestBid = Bidding::where('product_id', $product_id)
+            ->where('amount', $maxAmount)
+            ->first();
+
+        $user = User::where('id', $highestBid->user_id)->first();
+        return response()->json($user);
+    }
+
+    public function getHighestBid($product_id) {
+        $highestBid = Bidding::where('product_id', $product_id)->max('amount');
+        return response()->json($highestBid);
+    }
+
+    
+
 }
-        //
-    
-    
+
 

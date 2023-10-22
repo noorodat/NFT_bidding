@@ -40,6 +40,7 @@ const Header = ({ logoutSuccess }) => {
   console.log("Is Logged In? ", sessionStorage.getItem('isLoggedIn'))
   const handleLogoutSession = () => {
     sessionStorage.setItem('isLoggedIn', false);
+    sessionStorage.removeItem('userID');
     console.log("IS NOW? ", sessionStorage.getItem('isLoggedIn'));
   }
 

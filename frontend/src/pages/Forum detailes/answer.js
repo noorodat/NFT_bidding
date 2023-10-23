@@ -25,7 +25,7 @@ const Comment = ({
   const [isUpdate, setisUpdate] = useState(true);
 
   // if (isAuthenticated) {
-    const isEditing =
+  const isEditing =
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "editing";
@@ -36,20 +36,20 @@ const Comment = ({
   const fiveMinutes = 300000;
   const timePassed =
     new Date() - new Date(comment.createdAt) > fiveMinutes;
-  
+
   const canDelete =
     currentUserId === comment.userId &&
     replies.length === 0 &&
     !timePassed;
   const canReply = Boolean(currentUserId);
-  
+
   const canEdit =
     currentUserId === comment.userId &&
     !timePassed; // Check if less than 5 minutes
   const replyId = parentId ? parentId : comment.id;
-  
+
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
-  
+
   const number = 0;
 
   return (
@@ -97,8 +97,8 @@ const Comment = ({
                                   data-tooltip={`Owner: ${reply.username}`}
                                   key={index}
                                 >
-                                
-                                     <img
+
+                                  <img
                                     class="large"
                                     src="assets/images/client/client-11.png"
                                     // src={reply.profileImage}
@@ -112,14 +112,14 @@ const Comment = ({
                           {replies.filter(
                             (reply) => reply.parentId === comment.id
                           ).length > 3 && (
-                            <Link className="more-author-text" href="#">
-                              +
-                              {replies.filter(
-                                (reply) => reply.parentId === comment.id
-                              ).length - 3}{" "}
-                              People
-                            </Link>
-                          )}
+                              <Link className="more-author-text" href="#">
+                                +
+                                {replies.filter(
+                                  (reply) => reply.parentId === comment.id
+                                ).length - 3}{" "}
+                                People
+                              </Link>
+                            )}
                         </div>
                       </div>
                     </div>
@@ -127,57 +127,61 @@ const Comment = ({
                   {/* {isAuthenticated && ( */}
                   <div>
                     <div className="community-content">
-                      {!isEditing && (
-                        <h3
-                          className="title"
-                          style={{ textAlign: "left", marginLeft: "50px" }}
-                        >
-                          {comment.body}
-                        </h3>
+
+                      {comment.userId === currentUserId && (
+                        <div>
+                          {!isEditing && (
+                            <h3
+                              className="title"
+                              style={{ textAlign: "left", marginLeft: "50px" }}
+                            >
+                              {comment.body}
+                            </h3>
+                          )}
+
+                          {isEditing && (
+                            <UpQestion
+                              submitLabel="Update"
+                              hasCancelButton
+                              initialText={comment.body}
+                              handleSubmit={(text) => {
+                                updateComment(text, comment.id);
+                                setisUpdate(true); // Set isUpdate to true when submitting
+                              }}
+                              handleCancel={() => {
+                                setActiveComment(null);
+                                setisUpdate(true); // Set isUpdate to false when canceling editing
+                              }}
+                            />
+                          )}
+
+                          {!canEdit && isUpdate && (
+                            <span
+                              style={{ marginRight: "10px" }}
+                              className="comment-action edit-action"
+                              onClick={() => {
+                                setActiveComment({
+                                  id: comment.id,
+                                  type: "editing",
+                                });
+                                setisUpdate(false); // Set isUpdate to false when "Edit" is clicked
+                              }}
+                            >
+                              Edit
+                            </span>
+                          )}
+
+                          {!canDelete && (
+                            <span
+                              className="comment-action delete-action"
+                              onClick={() => deleteComment(comment.id)}
+                            >
+                              Delete
+                            </span>
+                          )}
+                        </div>
                       )}
 
-                      {isEditing && (
-                        <>
-                          <UpQestion
-                            submitLabel="Update"
-                            hasCancelButton
-                            initialText={comment.body}
-                            handleSubmit={(text) => {
-                              updateComment(text, comment.id);
-                              setisUpdate(true); // Set isUpdate to true when submitting
-                            }}
-                            handleCancel={() => {
-                              setActiveComment(null);
-                              setisUpdate(true); // Set isUpdate to false when canceling editing
-                            }}
-                          />
-                        </>
-                      )}
-
-                      {!canEdit && isUpdate && (
-                        <span
-                          style={{ marginRight: "10px" }}
-                          className="comment-action edit-action"
-                          onClick={() => {
-                            setActiveComment({
-                              id: comment.id,
-                              type: "editing",
-                            });
-                            setisUpdate(false); // Set isUpdate to false when "Edit" is clicked
-                          }}
-                        >
-                          Edit
-                        </span>
-                      )}
-
-                      {!canDelete && (
-                        <span
-                          className="comment-action delete-action"
-                          onClick={() => deleteComment(comment.id)}
-                        >
-                          Delete
-                        </span>
-                      )}
 
                       <div className="hr"></div>
                       <div class="rn-community-footer">
@@ -214,7 +218,7 @@ const Comment = ({
                           addComment(text, replyId, currentUserId, userName)
                         }
                       />
-                         {/* <button
+                      {/* <button
                           class="btn btn-primary-alta rounded"
                           onClick={() => setActiveComment(null)}
                         >

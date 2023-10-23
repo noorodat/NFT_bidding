@@ -29,8 +29,8 @@ export default function ProductDetails() {
     const userAPI = `http://127.0.0.1:8000/api/users/${product.user_id}`;
     const { data: user } = useApiData(userAPI);
 
-    // const biddingsAPI = `http://127.0.0.1:8000/api/Biddings/Product/${id}`;
-    // const { data: biddings } = useApiData(biddingsAPI);
+    const loggedAPI = `http://127.0.0.1:8000/api/users/${userId}`
+    const { data: loggedUser } = useApiData(loggedAPI);
 
     const winningUserAPI = `http://127.0.0.1:8000/api/Winner/${id}`;
     const { data: winner } = useApiData(winningUserAPI);
@@ -57,7 +57,7 @@ export default function ProductDetails() {
 
     console.log("HIGHEST BID: ", highestBidding);
 
-    console.log("USER BALANCE ", user.balance);
+    console.log("USER BALANCE ", loggedUser.balance);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,7 +69,7 @@ export default function ProductDetails() {
                 title: 'Oops...',
                 text: 'You Can\'t Bid Lower Than The Minimum Target',
             });
-        } else if (user.balance < bidValue) {
+        } else if (loggedUser.balance < bidValue) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -612,7 +612,7 @@ export default function ProductDetails() {
                                             <span>Total bid amount</span>
                                         </div>
                                         <div className="bid-content-right">
-                                            <span>${user.balance}</span>
+                                            <span>${loggedUser.balance}</span>
                                             <span>$0</span>
                                         </div>
                                     </div>

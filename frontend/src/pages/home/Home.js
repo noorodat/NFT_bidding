@@ -12,7 +12,7 @@ export default function Home() {
       <Banner />
       <Category />
       <Service />
-      <Live/>
+      {/* <Live/> */}
       <Video />
     </div>
   );

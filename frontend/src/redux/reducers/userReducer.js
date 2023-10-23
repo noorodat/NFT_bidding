@@ -2,6 +2,7 @@
 import { loadState, saveState } from "../sessionStorage";
 const user = "user";
 const isAuthenticated = "isAuthenticated";
+
 const initialState = {
   user: loadState(user,null),
   isAuthenticated: loadState(isAuthenticated,false),
@@ -10,9 +11,11 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
+
         saveState(user,action.payload)
         console.log("USER FROM REDUCER", user.name);
         saveState(isAuthenticated,true)
+        
       return {
         ...state,
         user: action.payload,

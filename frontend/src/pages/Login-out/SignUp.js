@@ -13,7 +13,10 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
+
   const navigate = useNavigate();
+  //back 
+
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -49,12 +52,17 @@ const SignUp = () => {
         password: user.password,
         password_confirmation: user.password,
       });
+
+
       setEmail("");
       setPassword("");
       setName("");
       setPasswordConfirmation("");
+
       console.log(response.data);
+
       navigate("/login");
+
     } catch (e) {
       console.log(e);
     }
@@ -220,9 +228,11 @@ const SignUp = () => {
     </React.Fragment>
   );
 };
+
 const mapStateToProps = (state) => ({
   isAuthenticated: state.isAuthenticated,
   user: state.user,
 });
+//for redux
 
 export default connect(mapStateToProps, { loginSuccess })(SignUp);

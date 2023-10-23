@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 const LogIn = ({isAuthenticated, user, loginSuccess}) => {
   
   document.title = "Log In";
+
   const [email,setemail] = useState("");
   const [password,setpassword] = useState("");
   const [errors,seterrors] = useState([]);
@@ -19,6 +20,7 @@ const LogIn = ({isAuthenticated, user, loginSuccess}) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     seterrors([])
     try {
     
@@ -31,6 +33,7 @@ const LogIn = ({isAuthenticated, user, loginSuccess}) => {
 
     setemail('');
     setpassword('');
+    
     const data = await axios.get('/user')
    
     sessionStorage.setItem('isLoggedIn', true);
